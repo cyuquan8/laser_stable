@@ -1,6 +1,6 @@
 # ==========================================================================================================================================================
 # training functions
-# purpose: training functions to be imported labview
+# purpose: training functions to be called in python nodes in labview
 # ==========================================================================================================================================================
 
 import json
@@ -20,15 +20,19 @@ def initialise():
 	MODE 														= "train"
 	TRAINING_NAME 												= SCENARIO_NAME + MODEL + "_500_time_steps"
 	CSV_LOG_DIRECTORY											= "csv_log" + '/' + SCENARIO_NAME
+	GOAL_PATH													= "goal.csv"
 	NUMBER_OF_EPISODES 											= 100000
 	EPISODE_TIME_STEP_LIMIT										= 500
+	SAVE_MODEL_RATE 											= 100
+	SAVE_CSV_LOG												= True
 
 	# env options
 	NUMBER_OF_AGENTS 											= 1
-	NUMBER_OF_STATE_DATAPOINTS									= 2000
-	STATE_DIMENSIONS 											= NUMBER_OF_STATE_DATAPOINTS + 1
+	GOAL_DIMENSIONS												= 2000
+	STATE_DIMENSIONS 											= GOAL_DIMENSIONS + 1
 	ACTION_DIMENSIONS  											= 1
 	ACTION_NOISE												= 1
+	ACTION_RANGE												= 1
 
 	# define hyperparameters for maddpgv2_mlp
 	MADDPGV2_MLP_DISCOUNT_RATE 									= 0.99
@@ -42,7 +46,7 @@ def initialise():
 	MADDPGV2_MLP_UPDATE_TARGET 									= None
 	MADDPGV2_MLP_GRADIENT_CLIPPING								= True
 	MADDPGV2_MLP_GRADIENT_NORM_CLIP								= 1
-	MADDPGV2_MLP_GOAL 											= None
+	MADDPGV2_MLP_GOAL 											= np.loadtxt(open(GOAL_PATH), delimiter = ",")
 	MADDPGV2_MLP_ADDITIONAL_GOALS								= 4
 	MADDPGV2_MLP_GOAL_STRATEGY									= "future"
 
@@ -52,13 +56,15 @@ def initialise():
 	# check model
 	if MODEL == "maddpgv2_mlp":
 
-		maddpgv2_mlp(mode = MODE, scenario_name = SCENARIO_NAME, training_name = TRAINING_NAME, discount_rate = MADDPGV2_MLP_DISCOUNT_RATE, lr_actor = MADDPGV2_MLP_LEARNING_RATE_ACTOR, 
-					 lr_critic = MADDPGV2_MLP_LEARNING_RATE_CRITIC, num_agents = NUMBER_OF_AGENTS, actor_dropout_p = MADDPGV2_MLP_ACTOR_DROPOUT, critic_dropout_p = MADDPGV2_MLP_CRITIC_DROPOUT, 
-					 state_fc_input_dims = [STATE_DIMENSIONS for i in range(NUMBER_OF_AGENTS)], actor_state_fc_output_dims = MADDPGV2_MLP_ACTOR_OUTPUT_DIMENSIONS, 
-					 critic_state_fc_output_dims = MADDPGV2_MLP_CRITIC_FC_OUTPUT_DIMS, action_dims = ACTION_DIMENSIONS, goal_fc_input_dims = [STATE_DIMENSIONS for i in range(NUMBER_OF_AGENTS)], 
-					 tau = MADDPGV2_MLP_TAU, actor_action_noise = ACTION_NOISE, mem_size = MADDPGV2_MLP_MEMORY_SIZE, batch_size = MADDPGV2_MLP_BATCH_SIZE, update_target = MADDPGV2_MLP_UPDATE_TARGET, 
-					 grad_clipping = MADDPGV2_MLP_GRADIENT_CLIPPING, grad_norm_clip = MADDPGV2_MLP_GRADIENT_NORM_CLIP, num_of_add_goals = MADDPGV2_MLP_ADDITIONAL_GOALS, 
-					 goal_strategy = MADDPGV2_MLP_GOAL_STRATEGY)
+		maddpgv2_mlp_agents = maddpgv2_mlp(mode = MODE, scenario_name = SCENARIO_NAME, training_name = TRAINING_NAME, discount_rate = MADDPGV2_MLP_DISCOUNT_RATE, 
+										   lr_actor = MADDPGV2_MLP_LEARNING_RATE_ACTOR, lr_critic = MADDPGV2_MLP_LEARNING_RATE_CRITIC, num_agents = NUMBER_OF_AGENTS, 
+										   actor_dropout_p = MADDPGV2_MLP_ACTOR_DROPOUT, critic_dropout_p = MADDPGV2_MLP_CRITIC_DROPOUT, 
+										   state_fc_input_dims = [STATE_DIMENSIONS for i in range(NUMBER_OF_AGENTS)], actor_state_fc_output_dims = MADDPGV2_MLP_ACTOR_OUTPUT_DIMENSIONS, 
+										   critic_state_fc_output_dims = MADDPGV2_MLP_CRITIC_FC_OUTPUT_DIMS, action_dims = ACTION_DIMENSIONS, 
+										   goal_fc_input_dims = [GOAL_DIMENSIONS for i in range(NUMBER_OF_AGENTS)], tau = MADDPGV2_MLP_TAU, actor_action_noise = ACTION_NOISE, 
+										   actor_action_range = ACTION_RANGE, mem_size = MADDPGV2_MLP_MEMORY_SIZE, batch_size = MADDPGV2_MLP_BATCH_SIZE, update_target = MADDPGV2_MLP_UPDATE_TARGET, 
+										   grad_clipping = MADDPGV2_MLP_GRADIENT_CLIPPING, grad_norm_clip = MADDPGV2_MLP_GRADIENT_NORM_CLIP, num_of_add_goals = MADDPGV2_MLP_ADDITIONAL_GOALS, 
+										   goal_strategy = MADDPGV2_MLP_GOAL_STRATEGY)
 
 	# dictionary of parameters
 	param_dict = {
@@ -69,15 +75,19 @@ def initialise():
 		"MODE" 														: MODE,
 		"TRAINING_NAME" 											: TRAINING_NAME,
 		"CSV_LOG_DIRECTORY"											: CSV_LOG_DIRECTORY,
+		"GOAL_PATH"													: GOAL_PATH,
 		"NUMBER_OF_EPISODES" 										: NUMBER_OF_EPISODES,
 		"EPISODE_TIME_STEP_LIMIT"									: EPISODE_TIME_STEP_LIMIT,
+		"SAVE_MODEL_RATE" 											: SAVE_MODEL_RATE,
+		"SAVE_CSV_LOG"												: SAVE_CSV_LOG,
 
 		# env options
 		"NUMBER_OF_AGENTS" 											: NUMBER_OF_AGENTS,
-		"NUMBER_OF_STATE_DATAPOINTS"								: NUMBER_OF_STATE_DATAPOINTS,
+		"GOAL_DIMENSIONS"											: GOAL_DIMENSIONS,
 		"STATE_DIMENSIONS" 											: STATE_DIMENSIONS,
 		"ACTION_DIMENSIONS"  										: ACTION_DIMENSIONS,
 		"ACTION_NOISE"												: ACTION_NOISE,
+		"ACTION_RANGE"												: ACTION_RANGE,
 
 		# define hyperparameters for maddpgv2_mlp
 		"MADDPGV2_MLP_DISCOUNT_RATE" 								: MADDPGV2_MLP_DISCOUNT_RATE,
@@ -112,7 +122,8 @@ def initialise():
 		"AVERAGE_CRITIC_LOSS_LIST" 									: []
 		"AVERAGE_ACTOR_GRAD_NORM_LIST" 								: []
 		"AVERAGE_CRITIC_GRAD_NORM_LIST" 							: []
-		"GOALS_LIST" 												: []
+		"AVERAGE_REWARD_LIST" 										: []
+		"WIN_TIME_STEP_LIST" 										: []
 
 	}
 
@@ -162,14 +173,12 @@ def initialise():
 			# append to list
 			replay_buffer_list.append(replay_buffer_goal_dict)
 
-	
-
 	# save model
-	maddpgv2_mlp.save_all_models
+	maddpgv2_mlp_agents.save_all_models()
 
 	return [json.dumps(param_dict), json.dumps(metrics_dict), json.dumps(replay_buffer_list)] 
 
-def select_actions(param_dict_json, metrics_dict_json, replay_buffer_list_json):
+def select_actions(mode, actor_state_list, param_dict_json, metrics_dict_json, replay_buffer_list_json):
 
 	""" function to select actions """
 
@@ -177,21 +186,24 @@ def select_actions(param_dict_json, metrics_dict_json, replay_buffer_list_json):
 	param_dict = json.loads(param_dict_json)
 
 	# reinitialise model
-	maddpgv2_mlp(mode = param_dict["MODE"], scenario_name = param_dict["SCENARIO_NAME"], training_name = param_dict["TRAINING_NAME"], discount_rate = param_dict["MADDPGV2_MLP_DISCOUNT_RATE"], 
-				 lr_actor = param_dict["MADDPGV2_MLP_LEARNING_RATE_ACTOR"], lr_critic = param_dict["MADDPGV2_MLP_LEARNING_RATE_CRITIC"], num_agents = param_dict["NUMBER_OF_AGENTS"], 
-				 actor_dropout_p = param_dict["MADDPGV2_MLP_ACTOR_DROPOUT"], critic_dropout_p = param_dict["MADDPGV2_MLP_CRITIC_DROPOUT"], 
-				 state_fc_input_dims = [param_dict["STATE_DIMENSIONS"] for i in range(param_dict["NUMBER_OF_AGENTS"])], 
-				 actor_state_fc_output_dims = param_dict["MADDPGV2_MLP_ACTOR_OUTPUT_DIMENSIONS"], critic_state_fc_output_dims = param_dict["MADDPGV2_MLP_CRITIC_FC_OUTPUT_DIMS"], 
-				 action_dims = param_dict["ACTION_DIMENSIONS"], goal_fc_input_dims = [param_dict["STATE_DIMENSIONS"] for i in range(param_dict["NUMBER_OF_AGENTS"])], 
-				 tau = param_dict["MADDPGV2_MLP_TAU"], actor_action_noise = param_dict["ACTION_NOISE"], mem_size = param_dict["MADDPGV2_MLP_MEMORY_SIZE"], 
-				 batch_size = param_dict["MADDPGV2_MLP_BATCH_SIZE"], update_target = param_dict["MADDPGV2_MLP_UPDATE_TARGET"], grad_clipping = param_dict["MADDPGV2_MLP_GRADIENT_CLIPPING"], 
-				 grad_norm_clip = param_dict["MADDPGV2_MLP_GRADIENT_NORM_CLIP"], num_of_add_goals = param_dict["MADDPGV2_MLP_ADDITIONAL_GOALS"], 
-				 goal_strategy = param_dict["MADDPGV2_MLP_GOAL_STRATEGY"])
+	maddpgv2_mlp_agents = maddpgv2_mlp(mode = param_dict["MODE"], scenario_name = param_dict["SCENARIO_NAME"], training_name = param_dict["TRAINING_NAME"], 
+									   discount_rate = param_dict["MADDPGV2_MLP_DISCOUNT_RATE"], lr_actor = param_dict["MADDPGV2_MLP_LEARNING_RATE_ACTOR"], 
+									   lr_critic = param_dict["MADDPGV2_MLP_LEARNING_RATE_CRITIC"], num_agents = param_dict["NUMBER_OF_AGENTS"], 
+									   actor_dropout_p = param_dict["MADDPGV2_MLP_ACTOR_DROPOUT"], critic_dropout_p = param_dict["MADDPGV2_MLP_CRITIC_DROPOUT"], 
+									   state_fc_input_dims = [param_dict["STATE_DIMENSIONS"] for i in range(param_dict["NUMBER_OF_AGENTS"])], 
+									   actor_state_fc_output_dims = param_dict["MADDPGV2_MLP_ACTOR_OUTPUT_DIMENSIONS"], 
+									   critic_state_fc_output_dims = param_dict["MADDPGV2_MLP_CRITIC_FC_OUTPUT_DIMS"], 
+									   action_dims = param_dict["ACTION_DIMENSIONS"], goal_fc_input_dims = [param_dict["GOAL_DIMENSIONS"] for i in range(param_dict["NUMBER_OF_AGENTS"])], 
+									   tau = param_dict["MADDPGV2_MLP_TAU"], actor_action_noise = param_dict["ACTION_NOISE"], actor_action_range = param_dict["ACTION_RANGE"], 
+									   mem_size = param_dict["MADDPGV2_MLP_MEMORY_SIZE"], batch_size = param_dict["MADDPGV2_MLP_BATCH_SIZE"], 
+									   update_target = param_dict["MADDPGV2_MLP_UPDATE_TARGET"], grad_clipping = param_dict["MADDPGV2_MLP_GRADIENT_CLIPPING"], 
+									   grad_norm_clip = param_dict["MADDPGV2_MLP_GRADIENT_NORM_CLIP"], num_of_add_goals = param_dict["MADDPGV2_MLP_ADDITIONAL_GOALS"], 
+									   goal_strategy = param_dict["MADDPGV2_MLP_GOAL_STRATEGY"])
 
 	# load saved model
-	maddpgv2_mlp.load_all_models()
+	maddpgv2_mlp_agents = maddpgv2_mlp.load_all_models()
 
 	# select actions 
-	return maddpgv2_mlp.select_actions(state), param_dict_json, metrics_dict_json, replay_buffer_list_json
+	return maddpgv2_mlp_agents.select_actions(mode = mode, actor_state_list = actor_state_list), param_dict_json, metrics_dict_json, replay_buffer_list_json
 
 def step():

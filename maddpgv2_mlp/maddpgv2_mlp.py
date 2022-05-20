@@ -13,8 +13,8 @@ from maddpgv2_mlp.maddpgv2_mlp_replay_buffer import maddpgv2_mlp_replay_buffer
 class maddpgv2_mlp:
     
     def __init__(self, mode, scenario_name, training_name, discount_rate, lr_actor, lr_critic, num_agents, actor_dropout_p, critic_dropout_p, state_fc_input_dims, actor_state_fc_output_dims, 
-                 critic_state_fc_output_dims, action_dims, goal_fc_input_dims, tau, actor_action_noise, mem_size, batch_size, update_target, grad_clipping, grad_norm_clip, num_of_add_goals, 
-                 goal_strategy):
+                 critic_state_fc_output_dims, action_dims, goal_fc_input_dims, tau, actor_action_noise, actor_action_range, mem_size, batch_size, update_target, grad_clipping, grad_norm_clip, 
+                 num_of_add_goals, goal_strategy):
             
         """ class constructor for attributes of the maddpg class (for multiple agents) """
         
@@ -48,7 +48,7 @@ class maddpgv2_mlp:
                                                                     lr_critic = lr_critic, num_agents = num_agents, actor_dropout_p = actor_dropout_p, critic_dropout_p = critic_dropout_p, 
                                                                     state_fc_input_dims = state_fc_input_dims[i], actor_state_fc_output_dims = actor_state_fc_output_dims, 
                                                                     critic_state_fc_output_dims = critic_state_fc_output_dims, action_dims = action_dims, goal_fc_input_dims = goal_fc_input_dims[i], 
-                                                                    tau = tau, actor_action_noise = actor_action_noise))
+                                                                    tau = tau, actor_action_noise = actor_action_noise, actor_action_range = actor_action_range))
             
             # update actor model_names attributes for checkpoints
             self.maddpgv2_mlp_agents_list[i].maddpgv2_mlp_actor.model_name = "maddpgv2_mlp_actor"

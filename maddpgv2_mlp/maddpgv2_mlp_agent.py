@@ -9,7 +9,7 @@ from utils.nn import maddpgv2_mlp_actor_model, maddpgv2_mlp_critic_model
 class maddpgv2_mlp_agent:
     
     def __init__(self, mode, scenario_name, training_name, discount_rate, lr_actor, lr_critic, num_agents, actor_dropout_p, critic_dropout_p, state_fc_input_dims, actor_state_fc_output_dims, 
-                 critic_state_fc_output_dims, action_dims, goal_fc_input_dims, tau, actor_action_noise):
+                 critic_state_fc_output_dims, action_dims, goal_fc_input_dims, tau, actor_action_noise, actor_action_range):
         
         """ class constructor for maddpg agent attributes """
           
@@ -30,6 +30,9 @@ class maddpgv2_mlp_agent:
         
         # actor_action_noise (constant multiplied to N(0, 1) gaussian)
         self.actor_action_noise = actor_action_noise
+
+        # range of action
+        self.actor_action_range = actor_action_range
 
         # intialise actor model 
         self.maddpgv2_mlp_actor = maddpgv2_mlp_actor_model(model = "maddpgv2_mlp_actor", model_name = None, mode = mode, scenario_name = scenario_name, training_name = training_name, 
@@ -90,16 +93,19 @@ class maddpgv2_mlp_agent:
     
         # feed actor_input to obtain motor and communication actions 
         action = self.maddpgv2_mlp_actor.forward(actor_input)
-        
+
         # add gaussian noise if not test
         if mode != "test":
 
             # generate gaussian noise for motor and communication actions
-            action_noise = T.mul(T.normal(mean = 0.0, std = 1, size = action.size()), actor_action_noise).to(self.maddpgv2_mlp_actor.device)
+            action_noise = T.mul(T.normal(mean = 0.0, std = 1, size = action.size()), self.actor_action_noise).to(self.maddpgv2_mlp_actor.device)
 
             # add to noise to motor and communication actions 
             action = T.add(action, action_noise)
         
+        # multiply action by actor_action_range
+        action = T.mul(action, self.actor_action_range)
+
         # set actor model to training mode (for batch norm and dropout)
         self.maddpgv2_mlp_actor.train()
          
