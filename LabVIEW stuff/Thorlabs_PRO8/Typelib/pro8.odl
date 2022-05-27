@@ -1,0 +1,2377 @@
+[uuid(b42e5686-0ce4-40a5-b5bc-31558b7a7c6e), helpfile("pro8.hlp"), helpcontext(379), helpstring("Thorlabs PRO800/8000 VXIpnp Instr Driver")]
+library pro8{
+typedef [public] long           ViAttr;
+typedef [public] long           ViStatus;
+typedef [public] long*          ViAStatus;
+typedef [public] long*          ViPStatus;
+typedef [public] short        ViBoolean;
+typedef [public] short*       ViABoolean;
+typedef [public] short*       ViPBoolean;
+typedef [public] char           ViChar;
+typedef [public] LPSTR          ViAChar;
+typedef [public] LPSTR          ViPChar;
+typedef [public] unsigned char  ViByte;
+typedef [public] unsigned char* ViAByte;
+typedef [public] unsigned char* ViPByte;
+typedef [public] unsigned char           ViInt8;
+typedef [public] unsigned char*         ViAInt8;
+typedef [public] unsigned char*         ViPInt8;
+typedef [public] unsigned char  ViUInt8;
+typedef [public] unsigned char* ViAUInt8;
+typedef [public] unsigned char* ViPUInt8;
+typedef [public] short          ViInt16;
+typedef [public] short*         ViAInt16;
+typedef [public] short*         ViPInt16;
+typedef [public] short          ViUInt16;
+typedef [public] short*         ViAUInt16;
+typedef [public] short*         ViPUInt16;
+typedef [public] long           ViInt32;
+typedef [public] long*          ViAInt32;
+typedef [public] long*          ViPInt32;
+typedef [public] long           ViUInt32;
+typedef [public] long*          ViAUInt32;
+typedef [public] long*          ViPUInt32;
+typedef [public] float          ViReal32;
+typedef [public] float*         ViAReal32;
+typedef [public] float*         ViPReal32;
+typedef [public] double         ViReal64;
+typedef [public] double*        ViAReal64;
+typedef [public] double*        ViPReal64;
+typedef [public] LPSTR ViBuf;
+typedef [public] LPSTR ViPBuf;
+typedef [public] LPSTR           ViString;
+typedef [public] LPSTR*          ViAString;
+typedef [public] LPSTR          ViPString;
+typedef [public] LPSTR           ViRsrc;
+typedef [public] LPSTR*          ViARsrc;
+typedef [public] LPSTR          ViPRsrc;
+typedef [public] LPSTR           ViKeyId;
+typedef [public] LPSTR          ViPKeyId;
+typedef [public] LPSTR          ViClass;
+typedef [public] LPSTR          ViPClass;
+typedef [public] long           ViAddr;
+typedef [public] long*           ViAAddr;
+typedef [public] long*           ViPAddr;
+typedef [public] long           ViVersion;
+typedef [public] long*          ViAVersion;
+typedef [public] long*          ViPVersion;
+typedef [public] long           ViAccessMode;
+typedef [public] long           ViJobId;
+typedef [public] long*          ViPJobId;
+typedef [public] long           ViJobStatus;
+typedef [public] long*          ViPJobStatus;
+typedef [public] long           ViEventType;
+typedef [public] long*          ViPEventType;
+typedef [public] long           ViFilterType;
+typedef [public] long*          ViPFilterType;
+typedef [public] long           ViBusAddress;
+typedef [public] long*          ViPBusAddress;
+typedef [public] long           ViBusSize;
+typedef [public] long           ViHndlr;
+typedef [public] long           ViObject;
+typedef [public] long           ViSession;
+typedef [public] long*           ViPSession;
+typedef [public] long           ViEvent;
+typedef [public] long*           ViPEvent;
+typedef [public] long           ViEventFilter;
+typedef [public] long           ViFindList;
+typedef [public] long*          ViPFindList;
+typedef [public] long           ViAttrState;
+typedef [public] long*          ViPAttrState;
+typedef [public] LPSTR          ViConstString;
+typedef [public] __int64        ViBusAddress64;
+typedef [public] __int64*       ViPBusAddress64;
+typedef [public] __int64        ViInt64;
+typedef [public] __int64*       ViAInt64;
+typedef [public] __int64*       ViPInt64;
+typedef [public] __int64        ViUInt64;
+typedef [public] __int64*       ViAUInt64;
+typedef [public] __int64*       ViPUInt64;
+	[dllname("pro8.dll"), helpstring("VISA Attributes")]
+	module VISAAttributes {
+		const long VI_ATTR_RSRC_NAME                   = 0xBFFF0002;
+		const long VI_ATTR_RSRC_IMPL_VERSION           = 0x3FFF0003;
+		const long VI_ATTR_RSRC_LOCK_STATE             = 0x3FFF0004;
+		const long VI_ATTR_MAX_QUEUE_LENGTH            = 0x3FFF0005;
+		const long VI_ATTR_USER_DATA                   = 0x3FFF0007;
+		const long VI_ATTR_FDC_CHNL                    = 0x3FFF000D;
+		const long VI_ATTR_FDC_MODE                    = 0x3FFF000F;
+		const long VI_ATTR_FDC_GEN_SIGNAL_EN           = 0x3FFF0011;
+		const long VI_ATTR_FDC_USE_PAIR                = 0x3FFF0013;
+		const long VI_ATTR_SEND_END_EN                 = 0x3FFF0016;
+		const long VI_ATTR_TERMCHAR                    = 0x3FFF0018;
+		const long VI_ATTR_TMO_VALUE                   = 0x3FFF001A;
+		const long VI_ATTR_GPIB_READDR_EN             = 0x3FFF001B;
+		const long VI_ATTR_IO_PROT                     = 0x3FFF001C;
+		const long VI_ATTR_ASRL_BAUD                   = 0x3FFF0021; 
+		const long VI_ATTR_ASRL_DATA_BITS              = 0x3FFF0022; 
+		const long VI_ATTR_ASRL_PARITY                 = 0x3FFF0023; 
+		const long VI_ATTR_ASRL_STOP_BITS              = 0x3FFF0024; 
+		const long VI_ATTR_ASRL_FLOW_CNTRL             = 0x3FFF0025; 
+		const long VI_ATTR_RD_BUF_OPER_MODE            = 0x3FFF002A;
+		const long VI_ATTR_WR_BUF_OPER_MODE            = 0x3FFF002D;
+		const long VI_ATTR_SUPPRESS_END_EN             = 0x3FFF0036;
+		const long VI_ATTR_TERMCHAR_EN                 = 0x3FFF0038;
+		const long VI_ATTR_DEST_ACCESS_PRIV           = 0x3FFF0039;
+		const long VI_ATTR_DEST_BYTE_ORDER            = 0x3FFF003A;
+		const long VI_ATTR_SRC_ACCESS_PRIV            = 0x3FFF003C;
+		const long VI_ATTR_SRC_BYTE_ORDER             = 0x3FFF003D;
+		const long VI_ATTR_SRC_INCREMENT               = 0x3FFF0040;
+		const long VI_ATTR_DEST_INCREMENT              = 0x3FFF0041;
+		const long VI_ATTR_WIN_ACCESS_PRIV            = 0x3FFF0045;
+		const long VI_ATTR_WIN_BYTE_ORDER             = 0x3FFF0047;
+		const long VI_ATTR_CMDR_LA                     = 0x3FFF006B;
+		const long VI_ATTR_MAINFRAME_LA                = 0x3FFF0070;
+		const long VI_ATTR_WIN_BASE_ADDR               = 0x3FFF0098;
+		const long VI_ATTR_WIN_SIZE                    = 0x3FFF009A;
+		const long VI_ATTR_ASRL_AVAIL_NUM              = 0x3FFF00AC;
+		const long VI_ATTR_MEM_BASE                    = 0x3FFF00AD;
+		const long VI_ATTR_ASRL_CTS_STATE             = 0x3FFF00AE;
+		const long VI_ATTR_ASRL_DCD_STATE             = 0x3FFF00AF;
+		const long VI_ATTR_ASRL_DSR_STATE             = 0x3FFF00B1;
+		const long VI_ATTR_ASRL_DTR_STATE             = 0x3FFF00B2;
+		const long VI_ATTR_ASRL_END_IN                 = 0x3FFF00B3; 
+		const long VI_ATTR_ASRL_END_OUT                = 0x3FFF00B4; 
+		const long VI_ATTR_ASRL_RI_STATE              = 0x3FFF00BF;
+		const long VI_ATTR_ASRL_RTS_STATE             = 0x3FFF00C0;
+		const long VI_ATTR_WIN_ACCESS                  = 0x3FFF00C3;
+		const long VI_ATTR_RM_SESSION                  = 0x3FFF00C4;
+		const long VI_ATTR_VXI_LA                      = 0x3FFF00D5;
+		const long VI_ATTR_MANF_ID                     = 0x3FFF00D9;
+		const long VI_ATTR_MEM_SIZE                    = 0x3FFF00DD;
+		const long VI_ATTR_MEM_SPACE                   = 0x3FFF00DE;
+		const long VI_ATTR_MODEL_CODE                  = 0x3FFF00DF;
+		const long VI_ATTR_SLOT                        = 0x3FFF00E8;
+		const long VI_ATTR_INTF_INST_NAME             = 0xBFFF00E9;
+		const long VI_ATTR_IMMEDIATE_SERV              = 0x3FFF0100; 
+		const long VI_ATTR_INTF_PARENT_NUM             = 0x3FFF0101;
+		const long VI_ATTR_RSRC_SPEC_VERSION           = 0x3FFF0170;
+		const long VI_ATTR_INTF_TYPE                   = 0x3FFF0171;
+		const long VI_ATTR_GPIB_PRIMARY_ADDR           = 0x3FFF0172;
+		const long VI_ATTR_GPIB_SECONDARY_ADDR         = 0x3FFF0173;
+		const long VI_ATTR_RSRC_MANF_NAME              = 0xBFFF0174;
+		const long VI_ATTR_RSRC_MANF_ID                = 0x3FFF0175;
+		const long VI_ATTR_INTF_NUM                    = 0x3FFF0176;
+		const long VI_ATTR_TRIG_ID                     = 0x3FFF0177;
+		const long VI_ATTR_GPIB_UNADDR_EN             = 0x3FFF0184;
+		const long VI_ATTR_JOB_ID                      = 0x3FFF4006;
+		const long VI_ATTR_EVENT_TYPE                  = 0x3FFF4010;
+		const long VI_ATTR_SIGP_STATUS_ID              = 0x3FFF4011;
+		const long VI_ATTR_RECV_TRIG_ID                = 0x3FFF4012;
+		const long VI_ATTR_INTR_STATUS_ID             = 0x3FFF4023;
+		const long VI_ATTR_STATUS                      = 0x3FFF4025;
+		const long VI_ATTR_RET_COUNT                   = 0x3FFF4026;
+		const long VI_ATTR_BUFFER                      = 0x3FFF4027;
+		const long VI_ATTR_RECV_INTR_LEVEL            = 0x3FFF4041;
+		const long VI_ATTR_RSRC_CLASS                  = 0xBFFF0001;
+		const long VI_ATTR_GPIB_ATN_STATE              = 0x3FFF0057;
+		const long VI_ATTR_GPIB_ADDR_STATE             = 0x3FFF005C;
+		const long VI_ATTR_GPIB_CIC_STATE              = 0x3FFF005E;
+		const long VI_ATTR_GPIB_NDAC_STATE             = 0x3FFF0062;
+		const long VI_ATTR_GPIB_SRQ_STATE              = 0x3FFF0067;
+		const long VI_ATTR_GPIB_SYS_CNTRL_STATE        = 0x3FFF0068;
+		const long VI_ATTR_GPIB_HS488_CBL_LEN          = 0x3FFF0069;
+		const long VI_ATTR_VXI_DEV_CLASS               = 0x3FFF006C;
+		const long VI_ATTR_MANF_NAME                   = 0xBFFF0072;
+		const long VI_ATTR_MODEL_NAME                  = 0xBFFF0077;
+		const long VI_ATTR_VXI_VME_INTR_STATUS         = 0x3FFF008B;
+		const long VI_ATTR_VXI_TRIG_STATUS             = 0x3FFF008D;
+		const long VI_ATTR_VXI_VME_SYSFAIL_STATE       = 0x3FFF0094;
+		const long VI_ATTR_ASRL_XON_CHAR               = 0x3FFF00C1;
+		const long VI_ATTR_ASRL_XOFF_CHAR              = 0x3FFF00C2;
+		const long VI_ATTR_GPIB_REN_STATE              = 0x3FFF0181;
+		const long VI_ATTR_DEV_STATUS_BYTE             = 0x3FFF0189;
+		const long VI_ATTR_FILE_APPEND_EN              = 0x3FFF0192;
+		const long VI_ATTR_VXI_TRIG_SUPPORT            = 0x3FFF0194;
+		const long VI_ATTR_TCPIP_ADDR                  = 0xBFFF0195;
+		const long VI_ATTR_TCPIP_HOSTNAME              = 0xBFFF0196;
+		const long VI_ATTR_TCPIP_PORT                  = 0x3FFF0197;
+		const long VI_ATTR_TCPIP_DEVICE_NAME           = 0xBFFF0199;
+		const long VI_ATTR_TCPIP_NODELAY               = 0x3FFF019A;
+		const long VI_ATTR_TCPIP_KEEPALIVE             = 0x3FFF019B;
+		const long VI_ATTR_4882_COMPLIANT              = 0x3FFF019F;
+		const long VI_ATTR_USB_SERIAL_NUM              = 0xBFFF01A0;
+		const long VI_ATTR_USB_INTFC_NUM               = 0x3FFF01A1;
+		const long VI_ATTR_USB_PROTOCOL                = 0x3FFF01A7;
+		const long VI_ATTR_USB_MAX_INTR_SIZE           = 0x3FFF01AF;
+		const long VI_ATTR_OPER_NAME                   = 0xBFFF4042;
+		const long VI_ATTR_GPIB_RECV_CIC_STATE         = 0x3FFF4193;
+		const long VI_ATTR_RECV_TCPIP_ADDR             = 0xBFFF4198;
+		const long VI_ATTR_USB_RECV_INTR_SIZE          = 0x3FFF41B0;
+		const long VI_ATTR_USB_RECV_INTR_DATA          = 0xBFFF41B1;
+		const long VI_ATTR_RD_BUF_SIZE                 = 0x3FFF002B;
+		const long VI_ATTR_WR_BUF_SIZE                 = 0x3FFF002E;
+	};
+	[dllname("pro8.dll"), helpstring("VISA Event Types")]
+	module VISAEventTypes {
+		const long VI_EVENT_IO_COMPLETION              = 0x3FFF2009;
+		const long VI_EVENT_TRIG                       = 0xBFFF200A;
+		const long VI_EVENT_SERVICE_REQ                = 0x3FFF200B;
+		const long VI_EVENT_VXI_SIGP                   = 0x3FFF2020;
+		const long VI_EVENT_VXI_VME_INTR               = 0xBFFF2021;
+		const long VI_ALL_ENABLED_EVENTS               = 0x3FFF7FFF;
+		const long VI_EVENT_CLEAR                      = 0x3FFF200D;
+		const long VI_EVENT_EXCEPTION                  = 0xBFFF200E;
+		const long VI_EVENT_GPIB_CIC                   = 0x3FFF2012;
+		const long VI_EVENT_GPIB_TALK                  = 0x3FFF2013;
+		const long VI_EVENT_GPIB_LISTEN                = 0x3FFF2014;
+		const long VI_EVENT_VXI_VME_SYSFAIL            = 0x3FFF201D;
+		const long VI_EVENT_VXI_VME_SYSRESET           = 0x3FFF201E;
+		const long VI_EVENT_TCPIP_CONNECT              = 0x3FFF2036;
+		const long VI_EVENT_USB_INTR                   = 0x3FFF2037;
+	};
+	[dllname("pro8.dll"), helpstring("VISA Completion and Error Codes")]
+	module VISACompletionAndErrorCodes {
+		const long VI_SUCCESS                    = 0x0;
+		const long VI_SUCCESS_EVENT_EN           = 0x3FFF0002;
+		const long VI_SUCCESS_EVENT_DIS          = 0x3FFF0003;
+		const long VI_SUCCESS_QUEUE_EMPTY        = 0x3FFF0004;
+		const long VI_SUCCESS_TERM_CHAR          = 0x3FFF0005;
+		const long VI_SUCCESS_MAX_CNT            = 0x3FFF0006;
+		const long VI_SUCCESS_DEV_NPRESENT       = 0x3FFF007D;
+		const long VI_SUCCESS_QUEUE_NEMPTY       = 0x3FFF0080;
+		const long VI_SUCCESS_NESTED_SHARED      = 0x3FFF0099;
+		const long VI_SUCCESS_NESTED_EXCLUSIVE   = 0x3FFF009A;
+		const long VI_SUCCESS_SYNC               = 0x3FFF009B;
+		const long VI_WARN_CONFIG_NLOADED        = 0x3FFF0077;
+		const long VI_WARN_NULL_OBJECT           = 0x3FFF0082;
+		const long VI_WARN_NSUP_ATTR_STATE       = 0x3FFF0084;
+		const long VI_WARN_UNKNOWN_STATUS        = 0x3FFF0085;
+		const long VI_WARN_NSUP_BUF              = 0x3FFF0088;
+		const long VI_WARN_NSUP_ID_QUERY         = 0x3FFC0101;
+		const long VI_WARN_NSUP_RESET            = 0x3FFC0102;
+		const long VI_WARN_NSUP_SELF_TEST        = 0x3FFC0103;
+		const long VI_WARN_NSUP_ERROR_QUERY      = 0x3FFC0104;
+		const long VI_WARN_NSUP_REV_QUERY        = 0x3FFC0105;
+		const long VI_ERROR                      = 0x80000000;
+		const long VI_ERROR_SYSTEM_ERROR         = 0xBFFF0000;
+		const long VI_ERROR_INV_OBJECT           = 0xBFFF000E;
+		const long VI_ERROR_RSRC_LOCKED          = 0xBFFF000F;
+		const long VI_ERROR_INV_EXPR             = 0xBFFF0010;
+		const long VI_ERROR_RSRC_NFOUND          = 0xBFFF0011;
+		const long VI_ERROR_INV_RSRC_NAME        = 0xBFFF0012;
+		const long VI_ERROR_INV_ACC_MODE         = 0xBFFF0013;
+		const long VI_ERROR_TMO                  = 0xBFFF0015;
+		const long VI_ERROR_CLOSING_FAILED       = 0xBFFF0016;
+		const long VI_ERROR_INV_DEGREE           = 0xBFFF001B;
+		const long VI_ERROR_INV_JOB_ID           = 0xBFFF001C;
+		const long VI_ERROR_NSUP_ATTR            = 0xBFFF001D;
+		const long VI_ERROR_NSUP_ATTR_STATE      = 0xBFFF001E;
+		const long VI_ERROR_ATTR_READONLY        = 0xBFFF001F;
+		const long VI_ERROR_INV_LOCK_TYPE        = 0xBFFF0020;
+		const long VI_ERROR_INV_ACCESS_KEY       = 0xBFFF0021;
+		const long VI_ERROR_INV_EVENT            = 0xBFFF0026;
+		const long VI_ERROR_INV_MECH             = 0xBFFF0027;
+		const long VI_ERROR_HNDLR_NINSTALLED     = 0xBFFF0028;
+		const long VI_ERROR_INV_HNDLR_REF        = 0xBFFF0029;
+		const long VI_ERROR_INV_CONTEXT          = 0xBFFF002A;
+		const long VI_ERROR_ABORT                = 0xBFFF0030;
+		const long VI_ERROR_RAW_WR_PROT_VIOL     = 0xBFFF0034;
+		const long VI_ERROR_RAW_RD_PROT_VIOL     = 0xBFFF0035;
+		const long VI_ERROR_OUTP_PROT_VIOL       = 0xBFFF0036;
+		const long VI_ERROR_INP_PROT_VIOL        = 0xBFFF0037;
+		const long VI_ERROR_BERR                 = 0xBFFF0038;
+		const long VI_ERROR_INV_SETUP            = 0xBFFF003A;
+		const long VI_ERROR_QUEUE_ERROR          = 0xBFFF003B;
+		const long VI_ERROR_ALLOC                = 0xBFFF003C;
+		const long VI_ERROR_INV_MASK             = 0xBFFF003D;
+		const long VI_ERROR_IO                   = 0xBFFF003E;
+		const long VI_ERROR_INV_FMT              = 0xBFFF003F;
+		const long VI_ERROR_NSUP_FMT             = 0xBFFF0041;
+		const long VI_ERROR_LINE_IN_USE          = 0xBFFF0042;
+		const long VI_ERROR_SRQ_NOCCURRED        = 0xBFFF004A;
+		const long VI_ERROR_INV_SPACE            = 0xBFFF004E;
+		const long VI_ERROR_INV_OFFSET           = 0xBFFF0051;
+		const long VI_ERROR_INV_WIDTH            = 0xBFFF0052;
+		const long VI_ERROR_NSUP_OFFSET          = 0xBFFF0054;
+		const long VI_ERROR_NSUP_VAR_WIDTH       = 0xBFFF0055;
+		const long VI_ERROR_WINDOW_NMAPPED       = 0xBFFF0057;
+		const long VI_ERROR_NLISTENERS           = 0xBFFF005F;
+		const long VI_ERROR_NCIC                 = 0xBFFF0060;
+		const long VI_ERROR_NSUP_OPER            = 0xBFFF0067;
+		const long VI_ERROR_ASRL_PARITY          = 0xBFFF006A;
+		const long VI_ERROR_ASRL_FRAMING         = 0xBFFF006B;
+		const long VI_ERROR_ASRL_OVERRUN         = 0xBFFF006C;
+		const long VI_ERROR_NSUP_ALIGN_OFFSET    = 0xBFFF0070;
+		const long VI_ERROR_USER_BUF             = 0xBFFF0071;
+		const long VI_ERROR_RSRC_BUSY            = 0xBFFF0072;
+		const long VI_ERROR_NSUP_WIDTH           = 0xBFFF0076;
+		const long VI_ERROR_INV_PARAMETER        = 0xBFFF0078;
+		const long VI_ERROR_INV_PROT             = 0xBFFF0079;
+		const long VI_ERROR_INV_SIZE             = 0xBFFF007B;
+		const long VI_ERROR_WINDOW_MAPPED        = 0xBFFF0080;
+		const long VI_ERROR_NIMPL_OPER           = 0xBFFF0081;
+		const long VI_ERROR_INV_LENGTH           = 0xBFFF0083;
+		const long VI_ERROR_SESN_NLOCKED         = 0xBFFF009C;
+		const long VI_ERROR_MEM_NSHARED          = 0xBFFF009D;
+		const long VI_ERROR_INV_SESSION          = 0xBFFF000E;
+		const long VI_ERROR_PARAMETER1           = 0xBFFC0001;
+		const long VI_ERROR_PARAMETER2           = 0xBFFC0002;
+		const long VI_ERROR_PARAMETER3           = 0xBFFC0003;
+		const long VI_ERROR_PARAMETER4           = 0xBFFC0004;
+		const long VI_ERROR_PARAMETER5           = 0xBFFC0005;
+		const long VI_ERROR_PARAMETER6           = 0xBFFC0006;
+		const long VI_ERROR_PARAMETER7           = 0xBFFC0007;
+		const long VI_ERROR_PARAMETER8           = 0xBFFC0008;
+		const long VI_ERROR_FAIL_ID_QUERY        = 0xBFFC0011;
+		const long VI_ERROR_INV_RESPONSE         = 0xBFFC0012;
+		const long VI_SUCCESS_TRIG_MAPPED        = 0x3FFF007E;
+		const long VI_SUCCESS_NCHAIN             = 0x3FFF0098;
+		const long VI_ERROR_IN_PROGRESS          = 0xBFFF0039;
+		const long VI_ERROR_NSUP_MODE            = 0xBFFF0046;
+		const long VI_ERROR_RESP_PENDING         = 0xBFFF0059;
+		const long VI_ERROR_NSYS_CNTLR           = 0xBFFF0061;
+		const long VI_ERROR_INTR_PENDING         = 0xBFFF0068;
+		const long VI_ERROR_TRIG_NMAPPED         = 0xBFFF006E;
+		const long VI_ERROR_INV_MODE             = 0xBFFF0091;
+		const long VI_ERROR_LIBRARY_NFOUND       = 0xBFFF009E;
+		const long VI_ERROR_NSUP_INTR            = 0xBFFF009F;
+		const long VI_ERROR_INV_LINE             = 0xBFFF00A0;
+		const long VI_ERROR_FILE_ACCESS          = 0xBFFF00A1;
+		const long VI_ERROR_FILE_IO              = 0xBFFF00A2;
+		const long VI_ERROR_NSUP_LINE            = 0xBFFF00A3;
+		const long VI_ERROR_NSUP_MECH            = 0xBFFF00A4;
+		const long VI_ERROR_INTF_NUM_NCONFIG     = 0xBFFF00A5;
+		const long VI_ERROR_CONN_LOST            = 0xBFFF00A6;
+		const long VI_ERROR_MACHINE_NAVAIL       = 0xBFFF00A7;
+		const long VI_ERROR_NPERMISSION          = 0xBFFF00A8;
+		const long VI_WARN_QUEUE_OVERFLOW        = 0x3FFF000C;
+		const long VI_WARN_EXT_FUNC_NIMPL        = 0x3FFF00A9;
+	};
+	[dllname("pro8.dll"), helpstring("VISA National Instruments Extensions")]
+	module VISANIExtensions {
+		const long VI_ATTR_UNSAFE_CALLBACK_EN          = 0x3FFF0008;
+		const long VI_ATTR_KRNL_VIIN8_ADDR             = 0x3FFF810A;
+		const long VI_ATTR_KRNL_VIIN16_ADDR            = 0x3FFF810B;
+		const long VI_ATTR_KRNL_VIIN32_ADDR            = 0x3FFF810C;
+		const long VI_ATTR_KRNL_VIOUT8_ADDR            = 0x3FFF810D;
+		const long VI_ATTR_KRNL_VIOUT16_ADDR           = 0x3FFF810E;
+		const long VI_ATTR_KRNL_VIOUT32_ADDR           = 0x3FFF810F;
+		const long VI_ATTR_RESMAN_STATUS               = 0x3FFF8110;
+		const long VI_ATTR_FIND_NEEDS_REFRESH          = 0x3FFF018F;
+		const long VI_ATTR_FIND_RSRC_MODE              = 0x3FFF0190;
+		const int  VI_FIND_SEARCH_NOALIAS              = 0;
+		const int  VI_FIND_SEARCH_MATCHALIASES         = 2;
+		const int  VI_FIND_NOSEARCH_ALLALIASES         = 3;
+		const int  VI_FIND_SEARCH_ALLALIASES           = 4;
+		const long VI_EVENT_VXI_DEV_CMD                = 0xBFFF200F;
+		const long VI_ATTR_VXI_DEV_CMD_TYPE            = 0x3FFF4037;
+		const long VI_ATTR_VXI_DEV_CMD_VALUE           = 0x3FFF4038;
+		const int  VI_VXI_DEV_CMD_TYPE_16              = 16;
+		const int  VI_VXI_DEV_CMD_TYPE_32              = 32;
+		const int  VI_VXI_RESP_NONE                    = 0;
+		const int  VI_VXI_RESP_PROT_ERROR              = -1;
+		const long VI_ATTR_ASRL_DISCARD_NULL           = 0x3FFF00B0;
+		const long VI_ATTR_ASRL_BREAK_STATE            = 0x3FFF01BC;
+		const long VI_ATTR_ASRL_BREAK_LEN              = 0x3FFF01BD;
+		const long VI_ATTR_ASRL_ALLOW_TRANSMIT         = 0x3FFF01BE;
+		const long VI_ATTR_ASRL_WIRE_MODE              = 0x3FFF01BF;
+		const int  VI_ASRL_WIRE_485_4                  = 0;
+		const int  VI_ASRL_WIRE_485_2_DTR_ECHO         = 1;
+		const int  VI_ASRL_WIRE_485_2_DTR_CTRL         = 2;
+		const int  VI_ASRL_WIRE_485_2_AUTO             = 3;
+		const long VI_EVENT_ASRL_BREAK                 = 0x3FFF2023;
+		const long VI_EVENT_ASRL_CTS                   = 0x3FFF2029;
+		const long VI_EVENT_ASRL_DSR                   = 0x3FFF202A;
+		const long VI_EVENT_ASRL_DCD                   = 0x3FFF202C;
+		const long VI_EVENT_ASRL_RI                    = 0x3FFF202E;
+		const long VI_EVENT_ASRL_CHAR                  = 0x3FFF2035;
+		const long VI_EVENT_ASRL_TERMCHAR              = 0x3FFF2024;
+		const long VI_ATTR_PXI_DEV_NUM                 = 0x3FFF0201;
+		const long VI_ATTR_PXI_FUNC_NUM                = 0x3FFF0202;
+		const long VI_ATTR_PXI_BUS_NUM                 = 0x3FFF0205;
+		const long VI_ATTR_PXI_CHASSIS                 = 0x3FFF0206;
+		const long VI_ATTR_PXI_SLOTPATH                = 0xBFFF0207;
+		const long VI_ATTR_PXI_SLOT_LBUS_LEFT          = 0x3FFF0208;
+		const long VI_ATTR_PXI_SLOT_LBUS_RIGHT         = 0x3FFF0209;
+		const long VI_ATTR_PXI_TRIG_BUS                = 0x3FFF020A;
+		const long VI_ATTR_PXI_STAR_TRIG_BUS           = 0x3FFF020B;
+		const long VI_ATTR_PXI_STAR_TRIG_LINE          = 0x3FFF020C;
+		const long VI_ATTR_PXI_MEM_TYPE_BAR0           = 0x3FFF0211;
+		const long VI_ATTR_PXI_MEM_TYPE_BAR1           = 0x3FFF0212;
+		const long VI_ATTR_PXI_MEM_TYPE_BAR2           = 0x3FFF0213;
+		const long VI_ATTR_PXI_MEM_TYPE_BAR3           = 0x3FFF0214;
+		const long VI_ATTR_PXI_MEM_TYPE_BAR4           = 0x3FFF0215;
+		const long VI_ATTR_PXI_MEM_TYPE_BAR5           = 0x3FFF0216;
+		const long VI_ATTR_PXI_MEM_BASE_BAR0           = 0x3FFF0221;
+		const long VI_ATTR_PXI_MEM_BASE_BAR1           = 0x3FFF0222;
+		const long VI_ATTR_PXI_MEM_BASE_BAR2           = 0x3FFF0223;
+		const long VI_ATTR_PXI_MEM_BASE_BAR3           = 0x3FFF0224;
+		const long VI_ATTR_PXI_MEM_BASE_BAR4           = 0x3FFF0225;
+		const long VI_ATTR_PXI_MEM_BASE_BAR5           = 0x3FFF0226;
+		const long VI_ATTR_PXI_MEM_SIZE_BAR0           = 0x3FFF0231;
+		const long VI_ATTR_PXI_MEM_SIZE_BAR1           = 0x3FFF0232;
+		const long VI_ATTR_PXI_MEM_SIZE_BAR2           = 0x3FFF0233;
+		const long VI_ATTR_PXI_MEM_SIZE_BAR3           = 0x3FFF0234;
+		const long VI_ATTR_PXI_MEM_SIZE_BAR4           = 0x3FFF0235;
+		const long VI_ATTR_PXI_MEM_SIZE_BAR5           = 0x3FFF0236;
+		const long VI_EVENT_PXI_INTR                   = 0x3FFF2022;
+		const int  VI_INTF_PXI                         = 5;
+		const int  VI_PXI_ALLOC_SPACE                  = 9;
+		const int  VI_PXI_CFG_SPACE                    = 10;
+		const int  VI_PXI_BAR0_SPACE                   = 11;
+		const int  VI_PXI_BAR1_SPACE                   = 12;
+		const int  VI_PXI_BAR2_SPACE                   = 13;
+		const int  VI_PXI_BAR3_SPACE                   = 14;
+		const int  VI_PXI_BAR4_SPACE                   = 15;
+		const int  VI_PXI_BAR5_SPACE                   = 16;
+		const int  VI_PXI_ADDR_NONE                    = 0;
+		const int  VI_PXI_ADDR_MEM                     = 1;
+		const int  VI_PXI_ADDR_IO                      = 2;
+		const int  VI_PXI_ADDR_CFG                     = 3;
+		const long VI_ATTR_USB_BULK_OUT_PIPE           = 0x3FFF01A2;
+		const long VI_ATTR_USB_BULK_IN_PIPE            = 0x3FFF01A3;
+		const long VI_ATTR_USB_INTR_IN_PIPE            = 0x3FFF01A4;
+		const long VI_ATTR_USB_CLASS                   = 0x3FFF01A5;
+		const long VI_ATTR_USB_SUBCLASS                = 0x3FFF01A6;
+		const long VI_ATTR_USB_ALT_SETTING             = 0x3FFF01A8;
+		const long VI_ATTR_USB_NUM_INTFCS              = 0x3FFF01AA;
+		const long VI_ATTR_USB_NUM_PIPES               = 0x3FFF01AB;
+		const long VI_ATTR_USB_BULK_OUT_STATUS         = 0x3FFF01AC;
+		const long VI_ATTR_USB_BULK_IN_STATUS          = 0x3FFF01AD;
+		const long VI_ATTR_USB_INTR_IN_STATUS          = 0x3FFF01AE;
+		const int  VI_USB_PIPE_STATE_UNKNOWN           = -1;
+		const int  VI_USB_PIPE_READY                   = 0;
+		const int  VI_USB_PIPE_STALLED                 = 1;
+		const long VI_ATTR_PXI_RECV_INTR_SEQ           = 0x3FFF4240;
+		const long VI_ATTR_PXI_RECV_INTR_DATA          = 0x3FFF4241;
+		const long VI_ATTR_ASRL_CONNECTED              = 0x3FFF01BB;
+		const long VI_ATTR_PXI_SRC_TRIG_BUS            = 0x3FFF020D;
+		const long VI_ATTR_PXI_DEST_TRIG_BUS           = 0x3FFF020E;
+		const int  VI_ASRL_WIRE_232_DTE                = 128;
+		const int  VI_ASRL_WIRE_232_DCE                = 129;
+		const int  VI_ASRL_WIRE_232_AUTO               = 130;
+		const int  VI_TRIG_PROT_RESERVE                = 6;
+		const int  VI_TRIG_PROT_UNRESERVE              = 7;
+		const int  VI_INTF_RIO                         = 8;
+		const long VI_ATTR_USB_END_IN                  = 0x3FFF01A9;
+		const int  VI_USB_END_NONE                     = 0;
+		const int  VI_USB_END_SHORT                    = 4;
+		const int  VI_USB_END_SHORT_OR_COUNT           = 5;
+		const int  VI_INTF_FIREWIRE                    = 9;
+		const long VI_ATTR_FIREWIRE_DEST_UPPER_OFFSET  = 0x3FFF01F0;
+		const long VI_ATTR_FIREWIRE_SRC_UPPER_OFFSET   = 0x3FFF01F1;
+		const long VI_ATTR_FIREWIRE_WIN_UPPER_OFFSET   = 0x3FFF01F2;
+		const long VI_ATTR_FIREWIRE_VENDOR_ID          = 0x3FFF01F3;
+		const long VI_ATTR_FIREWIRE_LOWER_CHIP_ID      = 0x3FFF01F4;
+		const long VI_ATTR_FIREWIRE_UPPER_CHIP_ID      = 0x3FFF01F5;
+		const long VI_ATTR_USB_CTRL_PIPE               = 0x3FFF01B0;
+		const long VI_ATTR_PXI_IS_EXPRESS              = 0x3FFF0240;
+		const long VI_ATTR_PXI_SLOT_LWIDTH             = 0x3FFF0241;
+		const long VI_ATTR_PXI_MAX_LWIDTH              = 0x3FFF0242;
+		const long VI_ATTR_PXI_ACTUAL_LWIDTH           = 0x3FFF0243;
+		const long VI_ATTR_PXI_DSTAR_BUS               = 0x3FFF0244;
+		const long VI_ATTR_PXI_DSTAR_SET               = 0x3FFF0245;
+	};
+	[dllname("pro8.dll"), helpstring("Other VISA Definitions")]
+	module VISAOtherDefinitions {
+		const int VI_FIND_BUFLEN                      = 256;
+		const int VI_NULL                             = 0;
+		const int VI_TRUE                             = 1;
+		const int VI_FALSE                            = 0;
+		const int VI_INTF_GPIB                        = 1;
+		const int VI_INTF_VXI                         = 2;
+		const int VI_INTF_GPIB_VXI                    = 3;
+		const int VI_INTF_ASRL                        = 4;
+		const int VI_NORMAL                           = 1;
+		const int VI_FDC                              = 2;
+		const int VI_HS488                            = 3;
+		const int VI_ASRL488                          = 4;
+		const int VI_FDC_NORMAL                       = 1;
+		const int VI_FDC_STREAM                       = 2;
+		const int VI_LOCAL_SPACE                      = 0;
+		const int VI_A16_SPACE                        = 1;
+		const int VI_A24_SPACE                        = 2;
+		const int VI_A32_SPACE                        = 3;
+		const int VI_UNKNOWN_LA                       = -1;
+		const int VI_UNKNOWN_SLOT                     = -1;
+		const int VI_UNKNOWN_LEVEL                    = -1;
+		const int VI_QUEUE                            = 1;
+		const int VI_HNDLR                            = 2;
+		const int VI_SUSPEND_HNDLR                    = 4;
+		const int VI_ALL_MECH                         = 0xFFFF;
+		const int VI_ANY_HNDLR                        = 0;
+		const int VI_TRIG_SW                          = -1;
+		const int VI_TRIG_TTL0                        = 0;
+		const int VI_TRIG_TTL1                        = 1;
+		const int VI_TRIG_TTL2                        = 2;
+		const int VI_TRIG_TTL3                        = 3;
+		const int VI_TRIG_TTL4                        = 4;
+		const int VI_TRIG_TTL5                        = 5;
+		const int VI_TRIG_TTL6                        = 6;
+		const int VI_TRIG_TTL7                        = 7;
+		const int VI_TRIG_ECL0                        = 8;
+		const int VI_TRIG_ECL1                        = 9;
+		const int VI_TRIG_PROT_DEFAULT                = 0;
+		const int VI_TRIG_PROT_ON                     = 1;
+		const int VI_TRIG_PROT_OFF                    = 2;
+		const int VI_TRIG_PROT_SYNC                   = 5;
+		const int VI_READ_BUF                         = 1;
+		const int VI_WRITE_BUF                        = 2;
+		const int VI_READ_BUF_DISCARD                 = 4;
+		const int VI_WRITE_BUF_DISCARD                = 8;
+		const int VI_ASRL_IN_BUF                      = 16;
+		const int VI_ASRL_OUT_BUF                     = 32;
+		const int VI_ASRL_IN_BUF_DISCARD              = 64;
+		const int VI_ASRL_OUT_BUF_DISCARD             = 128;
+		const int VI_FLUSH_ON_ACCESS                  = 1;
+		const int VI_FLUSH_WHEN_FULL                  = 2;
+		const int VI_FLUSH_DISABLE                    = 3;
+		const int VI_NMAPPED                          = 1;
+		const int VI_USE_OPERS                        = 2;
+		const int VI_DEREF_ADDR                       = 3;
+		const int VI_TMO_IMMEDIATE                    = 0x0;
+		const int VI_TMO_INFINITE                     = 0xFFFFFFFF;
+		const int VI_INFINITE                         = 0xFFFFFFFF;
+		const int VI_NO_LOCK                          = 0;
+		const int VI_EXCLUSIVE_LOCK                   = 1;
+		const int VI_SHARED_LOCK                      = 2;
+		const int VI_LOAD_CONFIG                      = 4;
+		const int VI_NO_SEC_ADDR                      = 0xFFFF;
+		const int VI_ASRL_PAR_NONE                    = 0;
+		const int VI_ASRL_PAR_ODD                     = 1;
+		const int VI_ASRL_PAR_EVEN                    = 2;
+		const int VI_ASRL_PAR_MARK                    = 3;
+		const int VI_ASRL_PAR_SPACE                   = 4;
+		const int VI_ASRL_STOP_ONE                    = 10;
+		const int VI_ASRL_STOP_TWO                    = 20;
+		const int VI_ASRL_FLOW_NONE                   = 0;
+		const int VI_ASRL_FLOW_XON_XOFF               = 1;
+		const int VI_ASRL_FLOW_RTS_CTS                = 2;
+		const int VI_ASRL_END_NONE                    = 0;
+		const int VI_ASRL_END_LAST_BIT                = 1;
+		const int VI_ASRL_END_TERMCHAR                = 2;
+		const int VI_ASRL_END_BREAK                   = 3;
+		const int VI_STATE_ASSERTED                   = 1;
+		const int VI_STATE_UNASSERTED                 = 0;
+		const int VI_STATE_UNKNOWN                    = -1;
+		const int VI_BIG_ENDIAN                       = 0;
+		const int VI_LITTLE_ENDIAN                    = 1;
+		const int VI_DATA_PRIV                        = 0;
+		const int VI_DATA_NPRIV                       = 1;
+		const int VI_PROG_PRIV                        = 2;
+		const int VI_PROG_NPRIV                       = 3;
+		const int VI_BLCK_PRIV                        = 4;
+		const int VI_BLCK_NPRIV                       = 5;
+		const int VI_D64_PRIV                         = 6;
+		const int VI_D64_NPRIV                        = 7;
+		const int VI_WIDTH_8                          = 1;
+		const int VI_WIDTH_16                         = 2;
+		const int VI_WIDTH_32                         = 4;
+		const int VI_ON                              =  1;
+		const int VI_OFF                             =  0;
+		const int VI_INTF_TCPIP                       = 6;
+		const int VI_INTF_USB                         = 7;
+		const int VI_PROT_4882_STRS                   = 4;
+		const int VI_TRIG_ALL                         = -2;
+		const int VI_TRIG_PANEL_IN                    = 27;
+		const int VI_TRIG_PANEL_OUT                   = 28;
+		const int VI_IO_IN_BUF                        = 16;
+		const int VI_IO_OUT_BUF                       = 32;
+		const int VI_IO_IN_BUF_DISCARD                = 64;
+		const int VI_IO_OUT_BUF_DISCARD               = 128;
+		const int VI_ASRL_STOP_ONE5                   = 15;
+		const int VI_ASRL_FLOW_DTR_DSR                = 4;
+		const int VI_GPIB_REN_DEASSERT                = 0;
+		const int VI_GPIB_REN_ASSERT                  = 1;
+		const int VI_GPIB_REN_DEASSERT_GTL            = 2;
+		const int VI_GPIB_REN_ASSERT_ADDRESS          = 3;
+		const int VI_GPIB_REN_ASSERT_LLO              = 4;
+		const int VI_GPIB_REN_ASSERT_ADDRESS_LLO      = 5;
+		const int VI_GPIB_REN_ADDRESS_GTL             = 6;
+		const int VI_GPIB_ATN_DEASSERT                = 0;
+		const int VI_GPIB_ATN_ASSERT                  = 1;
+		const int VI_GPIB_ATN_DEASSERT_HANDSHAKE      = 2;
+		const int VI_GPIB_ATN_ASSERT_IMMEDIATE        = 3;
+		const int VI_GPIB_HS488_DISABLED              = 0;
+		const int VI_GPIB_HS488_NIMPL                 = -1;
+		const int VI_GPIB_UNADDRESSED                 = 0;
+		const int VI_GPIB_TALKER                      = 1;
+		const int VI_GPIB_LISTENER                    = 2;
+		const int VI_VXI_CMD16                        = 0x0200;
+		const int VI_VXI_CMD16_RESP16                 = 0x0202;
+		const int VI_VXI_RESP16                       = 0x0002;
+		const int VI_VXI_CMD32                        = 0x0400;
+		const int VI_VXI_CMD32_RESP16                 = 0x0402;
+		const int VI_VXI_CMD32_RESP32                 = 0x0404;
+		const int VI_VXI_RESP32                       = 0x0004;
+		const int VI_ASSERT_SIGNAL                    = -1;
+		const int VI_ASSERT_USE_ASSIGNED              = 0;
+		const int VI_ASSERT_IRQ1                      = 1;
+		const int VI_ASSERT_IRQ2                      = 2;
+		const int VI_ASSERT_IRQ3                      = 3;
+		const int VI_ASSERT_IRQ4                      = 4;
+		const int VI_ASSERT_IRQ5                      = 5;
+		const int VI_ASSERT_IRQ6                      = 6;
+		const int VI_ASSERT_IRQ7                      = 7;
+		const int VI_UTIL_ASSERT_SYSRESET             = 1;
+		const int VI_UTIL_ASSERT_SYSFAIL              = 2;
+		const int VI_UTIL_DEASSERT_SYSFAIL            = 3;
+		const int VI_VXI_CLASS_MEMORY                 = 0;
+		const int VI_VXI_CLASS_EXTENDED               = 1;
+		const int VI_VXI_CLASS_MESSAGE                = 2;
+		const int VI_VXI_CLASS_REGISTER               = 3;
+		const int VI_VXI_CLASS_OTHER                  = 4;
+		const int VI_PROT_NORMAL                      = 1;
+		const int VI_PROT_FDC                         = 2;
+		const int VI_PROT_HS488                       = 3;
+		const int VI_PROT_USBTMC_VENDOR               = 5;
+		const int VI_DEREF_ADDR_BYTE_SWAP             = 4;
+	};
+	[dllname("pro8.dll"), helpcontext(379), helpstring("Initialize")]
+	module Initialize{
+		[helpcontext(1), entry("Pro8_init"), helpstring("Initialize")]
+		ViStatus __stdcall Pro8_init(
+			[in] ViRsrc resourceName, 
+			[in] ViBoolean IDQuery, 
+			[in] ViBoolean resetDevice, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViSession *instrumentHandle);
+	};
+	[dllname("pro8.dll"), helpcontext(379), helpstring("Configuration Functions")]
+	module ConfigurationFunctions{
+		[helpcontext(2), entry("Pro8_SetSlot"), helpstring("Set Slot")]
+		ViStatus __stdcall Pro8_SetSlot(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 slot);
+		[helpcontext(3), entry("Pro8_GetSlot"), helpstring("Get Slot")]
+		ViStatus __stdcall Pro8_GetSlot(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot);
+		[helpcontext(4), entry("Pro8_SetPort"), helpstring("Set Port")]
+		ViStatus __stdcall Pro8_SetPort(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 port);
+		[helpcontext(5), entry("Pro8_GetPort"), helpstring("Get Port")]
+		ViStatus __stdcall Pro8_GetPort(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *port);
+		[helpcontext(6), entry("Pro8_LdcSetMode"), helpstring("LDC Set Mode")]
+		ViStatus __stdcall Pro8_LdcSetMode(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 mode);
+		[helpcontext(7), entry("Pro8_LdcGetMode"), helpstring("LDC Get Mode")]
+		ViStatus __stdcall Pro8_LdcGetMode(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *mode);
+		[helpcontext(8), entry("Pro8_LdcSetLdPol"), helpstring("LDC Set Laser Polarity")]
+		ViStatus __stdcall Pro8_LdcSetLdPol(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 polarity);
+		[helpcontext(9), entry("Pro8_LdcGetLdPol"), helpstring("LDC Get Laser Polarity")]
+		ViStatus __stdcall Pro8_LdcGetLdPol(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *polarity);
+		[helpcontext(10), entry("Pro8_LdcSetPdPol"), helpstring("LDC Set Photo Diode Polarity")]
+		ViStatus __stdcall Pro8_LdcSetPdPol(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 polarity);
+		[helpcontext(11), entry("Pro8_LdcGetPdPol"), helpstring("LDC Get Photo Diode Polarity")]
+		ViStatus __stdcall Pro8_LdcGetPdPol(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *polarity);
+		[helpcontext(12), entry("Pro8_LdcSetBias"), helpstring("LDC Set Photo Diode Bias")]
+		ViStatus __stdcall Pro8_LdcSetBias(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 bias);
+		[helpcontext(13), entry("Pro8_LdcGetBias"), helpstring("LDC Get Photo Diode Bias")]
+		ViStatus __stdcall Pro8_LdcGetBias(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *bias);
+		[helpcontext(14), entry("Pro8_LdcSetTpSlot"), helpstring("LDC Set Temp. Protection Slot")]
+		ViStatus __stdcall Pro8_LdcSetTpSlot(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 slot);
+		[helpcontext(15), entry("Pro8_LdcGetTpSlot"), helpstring("LDC Get Temp. Protection Slot")]
+		ViStatus __stdcall Pro8_LdcGetTpSlot(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot);
+		[helpcontext(16), entry("Pro8_LdcSetTempProt"), helpstring("LDC Set Temperature Protection")]
+		ViStatus __stdcall Pro8_LdcSetTempProt(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 tempProtection);
+		[helpcontext(17), entry("Pro8_LdcGetTempProt"), helpstring("LDC Get Temperature Protection")]
+		ViStatus __stdcall Pro8_LdcGetTempProt(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *temperatureProtection);
+		[helpcontext(18), entry("Pro8_LdcSetLdOutput"), helpstring("LDC Set Laser Output")]
+		ViStatus __stdcall Pro8_LdcSetLdOutput(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 output);
+		[helpcontext(19), entry("Pro8_LdcGetLdOutput"), helpstring("LDC Get Laser Output")]
+		ViStatus __stdcall Pro8_LdcGetLdOutput(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *output);
+		[helpcontext(20), entry("Pro8_MlcSetMode"), helpstring("MLC Set Mode")]
+		ViStatus __stdcall Pro8_MlcSetMode(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 mode);
+		[helpcontext(21), entry("Pro8_MlcGetMode"), helpstring("MLC Get Mode")]
+		ViStatus __stdcall Pro8_MlcGetMode(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *mode);
+		[helpcontext(22), entry("Pro8_MlcSetRange"), helpstring("MLC Set Range")]
+		ViStatus __stdcall Pro8_MlcSetRange(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 range);
+		[helpcontext(23), entry("Pro8_MlcGetRange"), helpstring("MLC Get Range")]
+		ViStatus __stdcall Pro8_MlcGetRange(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *range);
+		[helpcontext(24), entry("Pro8_MlcSetTpSlot"), helpstring("MLC Set Temp. Protection Slot")]
+		ViStatus __stdcall Pro8_MlcSetTpSlot(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 slot);
+		[helpcontext(25), entry("Pro8_MlcGetTpSlot"), helpstring("MLC Get Temp. Protection Slot")]
+		ViStatus __stdcall Pro8_MlcGetTpSlot(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot);
+		[helpcontext(26), entry("Pro8_MlcSetTempProt"), helpstring("MLC Set Temperature Protection")]
+		ViStatus __stdcall Pro8_MlcSetTempProt(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 tempProtection);
+		[helpcontext(27), entry("Pro8_MlcGetTempProt"), helpstring("MLC Get Temperature Protection")]
+		ViStatus __stdcall Pro8_MlcGetTempProt(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *temperatureProtection);
+		[helpcontext(28), entry("Pro8_MlcSetLdOutput"), helpstring("MLC Set Laser Output")]
+		ViStatus __stdcall Pro8_MlcSetLdOutput(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 output);
+		[helpcontext(29), entry("Pro8_MlcGetLdOutput"), helpstring("MLC Get Laser Output")]
+		ViStatus __stdcall Pro8_MlcGetLdOutput(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *output);
+		[helpcontext(30), entry("Pro8_TecSetSensor"), helpstring("TEC Set Sensor")]
+		ViStatus __stdcall Pro8_TecSetSensor(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 sensor);
+		[helpcontext(31), entry("Pro8_TecGetSensor"), helpstring("TEC Get Sensor")]
+		ViStatus __stdcall Pro8_TecGetSensor(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *sensor);
+		[helpcontext(32), entry("Pro8_TecSetIShare"), helpstring("TEC Set I-Share")]
+		ViStatus __stdcall Pro8_TecSetIShare(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 iShare);
+		[helpcontext(33), entry("Pro8_TecGetIShare"), helpstring("TEC Get I-Share")]
+		ViStatus __stdcall Pro8_TecGetIShare(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *iShare);
+		[helpcontext(34), entry("Pro8_TecSetPtOutput"), helpstring("TEC Set Peltier Output")]
+		ViStatus __stdcall Pro8_TecSetPtOutput(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 output);
+		[helpcontext(35), entry("Pro8_TecGetPtOutput"), helpstring("TEC Get Peltier Output")]
+		ViStatus __stdcall Pro8_TecGetPtOutput(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *output);
+		[helpcontext(36), entry("Pro8_ItcSetMode"), helpstring("ITC Set Mode")]
+		ViStatus __stdcall Pro8_ItcSetMode(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 mode);
+		[helpcontext(37), entry("Pro8_ItcGetMode"), helpstring("ITC Get Mode")]
+		ViStatus __stdcall Pro8_ItcGetMode(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *mode);
+		[helpcontext(38), entry("Pro8_ItcSetLdPol"), helpstring("ITC Set Laser Polarity")]
+		ViStatus __stdcall Pro8_ItcSetLdPol(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 polarity);
+		[helpcontext(39), entry("Pro8_ItcGetLdPol"), helpstring("ITC Get Laser Polarity")]
+		ViStatus __stdcall Pro8_ItcGetLdPol(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *polarity);
+		[helpcontext(40), entry("Pro8_ItcSetPdPol"), helpstring("ITC Set Photo Diode Polarity")]
+		ViStatus __stdcall Pro8_ItcSetPdPol(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 polarity);
+		[helpcontext(41), entry("Pro8_ItcGetPdPol"), helpstring("ITC Get Photo Diode Polarity")]
+		ViStatus __stdcall Pro8_ItcGetPdPol(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *polarity);
+		[helpcontext(42), entry("Pro8_ItcSetTempProt"), helpstring("ITC Set Temperature Protection")]
+		ViStatus __stdcall Pro8_ItcSetTempProt(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 tempProtection);
+		[helpcontext(43), entry("Pro8_ItcGetTempProt"), helpstring("ITC Get Temperature Protection")]
+		ViStatus __stdcall Pro8_ItcGetTempProt(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *temperatureProtection);
+		[helpcontext(44), entry("Pro8_ItcSetLdOutput"), helpstring("ITC Set Laser Output")]
+		ViStatus __stdcall Pro8_ItcSetLdOutput(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 output);
+		[helpcontext(45), entry("Pro8_ItcGetLdOutput"), helpstring("ITC Get Laser Output")]
+		ViStatus __stdcall Pro8_ItcGetLdOutput(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *output);
+		[helpcontext(46), entry("Pro8_ItcSetSensor"), helpstring("ITC Set Sensor")]
+		ViStatus __stdcall Pro8_ItcSetSensor(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 sensor);
+		[helpcontext(47), entry("Pro8_ItcGetSensor"), helpstring("ITC Get Sensor")]
+		ViStatus __stdcall Pro8_ItcGetSensor(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *sensor);
+		[helpcontext(48), entry("Pro8_ItcSetIShare"), helpstring("ITC Set I-Share")]
+		ViStatus __stdcall Pro8_ItcSetIShare(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 iShare);
+		[helpcontext(49), entry("Pro8_ItcGetIShare"), helpstring("ITC Get I-Share")]
+		ViStatus __stdcall Pro8_ItcGetIShare(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *iShare);
+		[helpcontext(50), entry("Pro8_ItcSetPtOutput"), helpstring("ITC Set Peltier Output")]
+		ViStatus __stdcall Pro8_ItcSetPtOutput(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 output);
+		[helpcontext(51), entry("Pro8_ItcGetPtOutput"), helpstring("ITC Get Peltier Output")]
+		ViStatus __stdcall Pro8_ItcGetPtOutput(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *output);
+		[helpcontext(52), entry("Pro8_PdaSetPdPol"), helpstring("PDA Set Photo Diode Polarity")]
+		ViStatus __stdcall Pro8_PdaSetPdPol(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 polarity);
+		[helpcontext(53), entry("Pro8_PdaGetPdPol"), helpstring("PDA Get Photo Diode Polarity")]
+		ViStatus __stdcall Pro8_PdaGetPdPol(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *polarity);
+		[helpcontext(54), entry("Pro8_PdaSetBias"), helpstring("PDA Set Photo Diode Bias")]
+		ViStatus __stdcall Pro8_PdaSetBias(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 bias);
+		[helpcontext(55), entry("Pro8_PdaGetBias"), helpstring("PDA Get Photo Diode Bias")]
+		ViStatus __stdcall Pro8_PdaGetBias(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *bias);
+		[helpcontext(56), entry("Pro8_PdaSetRange"), helpstring("PDA Set Range")]
+		ViStatus __stdcall Pro8_PdaSetRange(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 range);
+		[helpcontext(57), entry("Pro8_PdaGetRange"), helpstring("PDA Get Range")]
+		ViStatus __stdcall Pro8_PdaGetRange(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *range);
+		[helpcontext(58), entry("Pro8_OswSetState"), helpstring("OSW Set State")]
+		ViStatus __stdcall Pro8_OswSetState(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 state);
+		[helpcontext(59), entry("Pro8_OswGetState"), helpstring("OSW Get State")]
+		ViStatus __stdcall Pro8_OswGetState(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *state);
+		[helpcontext(60), entry("Pro8_LsSetOutput"), helpstring("LS Set Output")]
+		ViStatus __stdcall Pro8_LsSetOutput(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 output);
+		[helpcontext(61), entry("Pro8_LsGetOutput"), helpstring("LS Get Output")]
+		ViStatus __stdcall Pro8_LsGetOutput(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *output);
+		[helpcontext(62), entry("Pro8_LsSetSyncMod"), helpstring("LS Set Synchronous Modulation")]
+		ViStatus __stdcall Pro8_LsSetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 synchronousModulation);
+		[helpcontext(63), entry("Pro8_LsGetSyncMod"), helpstring("LS Get Synchronous Modulation")]
+		ViStatus __stdcall Pro8_LsGetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *synchronousModulation);
+		[helpcontext(64), entry("Pro8_SledSetOutput"), helpstring("SLED Set Output")]
+		ViStatus __stdcall Pro8_SledSetOutput(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 output);
+		[helpcontext(65), entry("Pro8_SledGetOutput"), helpstring("SLED Get Output")]
+		ViStatus __stdcall Pro8_SledGetOutput(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *output);
+		[helpcontext(66), entry("Pro8_SledSetSyncMod"), helpstring("SLED Set Synchronous Modulation")]
+		ViStatus __stdcall Pro8_SledSetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 synchronousModulation);
+		[helpcontext(67), entry("Pro8_SledGetSyncMod"), helpstring("SLED Get Synchronous Modulation")]
+		ViStatus __stdcall Pro8_SledGetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *synchronousModulation);
+		[helpcontext(68), entry("Pro8_WdmCwSetOutput"), helpstring("CW Set Output")]
+		ViStatus __stdcall Pro8_WdmCwSetOutput(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 output);
+		[helpcontext(69), entry("Pro8_WdmCwGetOutput"), helpstring("CW Get Output")]
+		ViStatus __stdcall Pro8_WdmCwGetOutput(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *output);
+		[helpcontext(70), entry("Pro8_WdmCwSetSyncMod"), helpstring("CW Set Synchronous Modulation")]
+		ViStatus __stdcall Pro8_WdmCwSetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 synchronousModulation);
+		[helpcontext(71), entry("Pro8_WdmCwGetSyncMod"), helpstring("CW Get Synchronous Modulation")]
+		ViStatus __stdcall Pro8_WdmCwGetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *synchronousModulation);
+		[helpcontext(72), entry("Pro8_WdmCwSetLfMod"), helpstring("CW Set LF Modulation")]
+		ViStatus __stdcall Pro8_WdmCwSetLfMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 LFModulation);
+		[helpcontext(73), entry("Pro8_WdmCwGetLfMod"), helpstring("CW Get LF Modulation")]
+		ViStatus __stdcall Pro8_WdmCwGetLfMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *LFModulation);
+		[helpcontext(74), entry("Pro8_WdmCwSetLfModType"), helpstring("CW Set LF Modulation Type")]
+		ViStatus __stdcall Pro8_WdmCwSetLfModType(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 LFModulationType);
+		[helpcontext(75), entry("Pro8_WdmCwGetLfModType"), helpstring("CW Get LF Modulation Type")]
+		ViStatus __stdcall Pro8_WdmCwGetLfModType(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *LFModulationType);
+		[helpcontext(76), entry("Pro8_WdmEaSetCohCtrl"), helpstring("EA Set Coherence Control")]
+		ViStatus __stdcall Pro8_WdmEaSetCohCtrl(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 coherenceControl);
+		[helpcontext(77), entry("Pro8_WdmEaGetCohCtrl"), helpstring("EA Get Coherence Control")]
+		ViStatus __stdcall Pro8_WdmEaGetCohCtrl(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *coherenceControl);
+		[helpcontext(78), entry("Pro8_WdmEaSetOutput"), helpstring("EA Set Output")]
+		ViStatus __stdcall Pro8_WdmEaSetOutput(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 output);
+		[helpcontext(79), entry("Pro8_WdmEaGetOutput"), helpstring("EA Get Output")]
+		ViStatus __stdcall Pro8_WdmEaGetOutput(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *output);
+		[helpcontext(80), entry("Pro8_WdmEaSetSyncMod"), helpstring("EA Set Synchronous Modulation")]
+		ViStatus __stdcall Pro8_WdmEaSetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 synchronousModulation);
+		[helpcontext(81), entry("Pro8_WdmEaGetSyncMod"), helpstring("EA Get Synchronous Modulation")]
+		ViStatus __stdcall Pro8_WdmEaGetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *synchronousModulation);
+		[helpcontext(82), entry("Pro8_WdmEaSetLfMod"), helpstring("EA Set LF Modulation")]
+		ViStatus __stdcall Pro8_WdmEaSetLfMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 LFModulation);
+		[helpcontext(83), entry("Pro8_WdmEaGetLfMod"), helpstring("EA Get LF Modulation")]
+		ViStatus __stdcall Pro8_WdmEaGetLfMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *LFModulation);
+		[helpcontext(84), entry("Pro8_WdmEaSetLfModType"), helpstring("EA Set LF Modulation Type")]
+		ViStatus __stdcall Pro8_WdmEaSetLfModType(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 LFModulationType);
+		[helpcontext(85), entry("Pro8_WdmEaGetLfModType"), helpstring("EA Get LF Modulation Type")]
+		ViStatus __stdcall Pro8_WdmEaGetLfModType(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *LFModulationType);
+		[helpcontext(86), entry("Pro8_WdmEaSetHfMod"), helpstring("EA Set HF Modulation")]
+		ViStatus __stdcall Pro8_WdmEaSetHfMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 HFModulation);
+		[helpcontext(87), entry("Pro8_WdmEaGetHfMod"), helpstring("EA Get HF Modulation")]
+		ViStatus __stdcall Pro8_WdmEaGetHfMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *HFModulation);
+		[helpcontext(88), entry("Pro8_WdmDirSetCohCtrl"), helpstring("DIR Set Coherence Control")]
+		ViStatus __stdcall Pro8_WdmDirSetCohCtrl(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 coherenceControl);
+		[helpcontext(89), entry("Pro8_WdmDirGetCohCtrl"), helpstring("DIR Get Coherence Control")]
+		ViStatus __stdcall Pro8_WdmDirGetCohCtrl(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *coherenceControl);
+		[helpcontext(90), entry("Pro8_WdmDirSetModulation"), helpstring("DIR Set Modulation")]
+		ViStatus __stdcall Pro8_WdmDirSetModulation(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 modulation);
+		[helpcontext(91), entry("Pro8_WdmDirGetModulation"), helpstring("DIR Get Modulation")]
+		ViStatus __stdcall Pro8_WdmDirGetModulation(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *modulation);
+		[helpcontext(92), entry("Pro8_WdmDirSetOutput"), helpstring("DIR Set Output")]
+		ViStatus __stdcall Pro8_WdmDirSetOutput(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 output);
+		[helpcontext(93), entry("Pro8_WdmDirGetOutput"), helpstring("DIR Get Output")]
+		ViStatus __stdcall Pro8_WdmDirGetOutput(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *output);
+		[helpcontext(94), entry("Pro8_WdmDirSetSyncMod"), helpstring("DIR Set Synchronous Modulation")]
+		ViStatus __stdcall Pro8_WdmDirSetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 synchronousModulation);
+		[helpcontext(95), entry("Pro8_WdmDirGetSyncMod"), helpstring("DIR Get Synchronous Modulation")]
+		ViStatus __stdcall Pro8_WdmDirGetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *synchronousModulation);
+		[helpcontext(96), entry("Pro8_WdmDirSetHfMod"), helpstring("DIR Set HF Modulation")]
+		ViStatus __stdcall Pro8_WdmDirSetHfMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 HFModulation);
+		[helpcontext(97), entry("Pro8_WdmDirGetHfMod"), helpstring("DIR Get HF Modulation")]
+		ViStatus __stdcall Pro8_WdmDirGetHfMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *HFModulation);
+		[helpcontext(98), entry("Pro8_WdmDirSetLfMod"), helpstring("DIR Set LF Modulation")]
+		ViStatus __stdcall Pro8_WdmDirSetLfMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 LFModulation);
+		[helpcontext(99), entry("Pro8_WdmDirGetLfMod"), helpstring("DIR Get LF Modulation")]
+		ViStatus __stdcall Pro8_WdmDirGetLfMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *LFModulation);
+		[helpcontext(100), entry("Pro8_WdmDirSetLfModType"), helpstring("DIR Set LF Modulation Type")]
+		ViStatus __stdcall Pro8_WdmDirSetLfModType(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 LFModulationType);
+		[helpcontext(101), entry("Pro8_WdmDirGetLfModType"), helpstring("DIR Get LF Modulation Type")]
+		ViStatus __stdcall Pro8_WdmDirGetLfModType(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *LFModulationType);
+		[helpcontext(102), entry("Pro8_WdmCcdmSetOutput"), helpstring("CCDM Set Output")]
+		ViStatus __stdcall Pro8_WdmCcdmSetOutput(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 output);
+		[helpcontext(103), entry("Pro8_WdmCcdmGetOutput"), helpstring("CCDM Get Output")]
+		ViStatus __stdcall Pro8_WdmCcdmGetOutput(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *output);
+		[helpcontext(104), entry("Pro8_WdmCcdmSetSyncMod"), helpstring("CCDM Set Synchronous Modulation")]
+		ViStatus __stdcall Pro8_WdmCcdmSetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 synchronousModulation);
+		[helpcontext(105), entry("Pro8_WdmCcdmGetSyncMod"), helpstring("CCDM Get Synchronous Modulation")]
+		ViStatus __stdcall Pro8_WdmCcdmGetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *synchronousModulation);
+		[helpcontext(106), entry("Pro8_WdmCcdmSetLfMod"), helpstring("CCDM Set LF Modulation")]
+		ViStatus __stdcall Pro8_WdmCcdmSetLfMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 LFModulation);
+		[helpcontext(107), entry("Pro8_WdmCcdmGetLfMod"), helpstring("CCDM Get LF Modulation")]
+		ViStatus __stdcall Pro8_WdmCcdmGetLfMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *LFModulation);
+		[helpcontext(108), entry("Pro8_WdmCcdmSetLfModType"), helpstring("CCDM Set LF Modulation Type")]
+		ViStatus __stdcall Pro8_WdmCcdmSetLfModType(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 LFModulationType);
+		[helpcontext(109), entry("Pro8_WdmCcdmGetLfModType"), helpstring("CCDM Get LF Modulation Type")]
+		ViStatus __stdcall Pro8_WdmCcdmGetLfModType(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *LFModulationType);
+		[helpcontext(110), entry("Pro8_WdmCwdmSetOutput"), helpstring("CWDM Set Output")]
+		ViStatus __stdcall Pro8_WdmCwdmSetOutput(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 output);
+		[helpcontext(111), entry("Pro8_WdmCwdmGetOutput"), helpstring("CWDM Get Output")]
+		ViStatus __stdcall Pro8_WdmCwdmGetOutput(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *output);
+		[helpcontext(112), entry("Pro8_WdmCwdmSetSyncMod"), helpstring("CWDM Set Synchronous Modulation")]
+		ViStatus __stdcall Pro8_WdmCwdmSetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 synchronousModulation);
+		[helpcontext(113), entry("Pro8_WdmCwdmGetSyncMod"), helpstring("CWDM Get Synchronous Modulation")]
+		ViStatus __stdcall Pro8_WdmCwdmGetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *synchronousModulation);
+		[helpcontext(114), entry("Pro8_WdmCwdmSetLfMod"), helpstring("CWDM Set LF Modulation")]
+		ViStatus __stdcall Pro8_WdmCwdmSetLfMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 LFModulation);
+		[helpcontext(115), entry("Pro8_WdmCwdmGetLfMod"), helpstring("CWDM Get LF Modulation")]
+		ViStatus __stdcall Pro8_WdmCwdmGetLfMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *LFModulation);
+		[helpcontext(116), entry("Pro8_WdmCwdmSetLfModType"), helpstring("CWDM Set LF Modulation Type")]
+		ViStatus __stdcall Pro8_WdmCwdmSetLfModType(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 LFModulationType);
+		[helpcontext(117), entry("Pro8_WdmCwdmGetLfModType"), helpstring("CWDM Get LF Modulation Type")]
+		ViStatus __stdcall Pro8_WdmCwdmGetLfModType(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *LFModulationType);
+		[helpcontext(118), entry("Pro8_WdmItcSetOutput"), helpstring("WDM-ITC Set Output")]
+		ViStatus __stdcall Pro8_WdmItcSetOutput(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 output);
+		[helpcontext(119), entry("Pro8_WdmItcGetOutput"), helpstring("WDM-ITC Get Output")]
+		ViStatus __stdcall Pro8_WdmItcGetOutput(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *output);
+		[helpcontext(120), entry("Pro8_WdmItcSetSyncMod"), helpstring("WDM-ITC Set Sync. Modulation")]
+		ViStatus __stdcall Pro8_WdmItcSetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 synchronousModulation);
+		[helpcontext(121), entry("Pro8_WdmItcGetSyncMod"), helpstring("WDM-ITC Get Sync. Modulation")]
+		ViStatus __stdcall Pro8_WdmItcGetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *synchronousModulation);
+		[helpcontext(122), entry("Pro8_WdmItcSetLfMod"), helpstring("WDM-ITC Set LF Modulation")]
+		ViStatus __stdcall Pro8_WdmItcSetLfMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 LFModulation);
+		[helpcontext(123), entry("Pro8_WdmItcGetLfMod"), helpstring("WDM-ITC Get LF Modulation")]
+		ViStatus __stdcall Pro8_WdmItcGetLfMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *LFModulation);
+		[helpcontext(124), entry("Pro8_WdmItcSetLfModType"), helpstring("WDM-ITC Set LF Modulation Type")]
+		ViStatus __stdcall Pro8_WdmItcSetLfModType(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 LFModulationType);
+		[helpcontext(125), entry("Pro8_WdmItcGetLfModType"), helpstring("WDM-ITC Get LF Modulation Type")]
+		ViStatus __stdcall Pro8_WdmItcGetLfModType(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *LFModulationType);
+		[helpcontext(126), entry("Pro8_BbsSetOutput"), helpstring("BBS Set Output")]
+		ViStatus __stdcall Pro8_BbsSetOutput(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 output);
+		[helpcontext(127), entry("Pro8_BbsGetOutput"), helpstring("BBS Get Output")]
+		ViStatus __stdcall Pro8_BbsGetOutput(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *output);
+		[helpcontext(128), entry("Pro8_BbsSetSyncMod"), helpstring("BBS Set Synchronous Modulation")]
+		ViStatus __stdcall Pro8_BbsSetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 synchronousModulation);
+		[helpcontext(129), entry("Pro8_BbsGetSyncMod"), helpstring("BBS Get Synchronous Modulation")]
+		ViStatus __stdcall Pro8_BbsGetSyncMod(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *synchronousModulation);
+	};
+	[dllname("pro8.dll"), helpcontext(379), helpstring("Status Functions")]
+	module StatusFunctions{
+		[helpcontext(130), entry("Pro8_GetDESR"), helpstring("Get Dev Error Summary Register")]
+		ViStatus __stdcall Pro8_GetDESR(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt32 *deviceErrorSummaryRegister);
+		[helpcontext(131), entry("Pro8_SetDESE"), helpstring("Set Dev Error Sum. Enable Reg.")]
+		ViStatus __stdcall Pro8_SetDESE(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt32 devErrorSummaryEnableReg);
+		[helpcontext(132), entry("Pro8_GetDESE"), helpstring("Get Dev Error Sum. Enable Reg.")]
+		ViStatus __stdcall Pro8_GetDESE(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt32 *devErrorSummaryEnableReg);
+		[helpcontext(133), entry("Pro8_GetDEC"), helpstring("Get Device Error Cond. Register")]
+		ViStatus __stdcall Pro8_GetDEC(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 slot, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt32 *deviceErrorConditionRegister);
+		[helpcontext(134), entry("Pro8_GetDEE"), helpstring("Get Device Error Event Register")]
+		ViStatus __stdcall Pro8_GetDEE(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 slot, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt32 *deviceErrorEventRegister);
+		[helpcontext(135), entry("Pro8_SetEDE"), helpstring("Set Dev Error Event Enable Reg.")]
+		ViStatus __stdcall Pro8_SetEDE(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 slot, 
+			[in] ViInt32 devErrorEventEnableRegister);
+		[helpcontext(136), entry("Pro8_GetEDE"), helpstring("Get Dev Error Event Enable Reg.")]
+		ViStatus __stdcall Pro8_GetEDE(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 slot, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt32 *devErrorEventEnableRegister);
+		[helpcontext(137), entry("Pro8_GetBFC"), helpstring("Get Block Function Cond. Reg.")]
+		ViStatus __stdcall Pro8_GetBFC(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt32 *blockFunctionCondRegister);
+		[helpcontext(138), entry("Pro8_GetBFR"), helpstring("Get Block Function Event Reg.")]
+		ViStatus __stdcall Pro8_GetBFR(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt32 *blockFunctionEventRegister);
+		[helpcontext(139), entry("Pro8_SetBFE"), helpstring("Set Block Function Enable Reg.")]
+		ViStatus __stdcall Pro8_SetBFE(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt32 blockFunctionEnableRegister);
+		[helpcontext(140), entry("Pro8_GetBFE"), helpstring("Get Block Function Enable Reg.")]
+		ViStatus __stdcall Pro8_GetBFE(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt32 *blockFunctionEnableRegister);
+	};
+	[dllname("pro8.dll"), helpcontext(379), helpstring("Data Functions")]
+	module DataFunctions{
+		[helpcontext(141), entry("Pro8_LdcSetCalibration"), helpstring("LDC Set Calibration Factor")]
+		ViStatus __stdcall Pro8_LdcSetCalibration(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 calibrationFactor);
+		[helpcontext(142), entry("Pro8_LdcGetCalibration"), helpstring("LDC Get Calibration Factor")]
+		ViStatus __stdcall Pro8_LdcGetCalibration(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *calibrationFactor);
+		[helpcontext(143), entry("Pro8_LdcSetLdCurrent"), helpstring("LDC Set Laser Current")]
+		ViStatus __stdcall Pro8_LdcSetLdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 current);
+		[helpcontext(144), entry("Pro8_LdcGetLdCurrent"), helpstring("LDC Get Laser Current")]
+		ViStatus __stdcall Pro8_LdcGetLdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *current);
+		[helpcontext(145), entry("Pro8_LdcSetPdCurrent"), helpstring("LDC Set Photo Diode Current")]
+		ViStatus __stdcall Pro8_LdcSetPdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 current);
+		[helpcontext(146), entry("Pro8_LdcGetPdCurrent"), helpstring("LDC Get Photo Diode Current")]
+		ViStatus __stdcall Pro8_LdcGetPdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *current);
+		[helpcontext(147), entry("Pro8_LdcSetPower"), helpstring("LDC Set Optical Power")]
+		ViStatus __stdcall Pro8_LdcSetPower(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 opticalPower);
+		[helpcontext(148), entry("Pro8_LdcGetPower"), helpstring("LDC Get Optical Power")]
+		ViStatus __stdcall Pro8_LdcGetPower(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *opticalPower);
+		[helpcontext(149), entry("Pro8_LdcSetLdLimit"), helpstring("LDC Set Laser Diode Limit Curr.")]
+		ViStatus __stdcall Pro8_LdcSetLdLimit(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 limitCurrent);
+		[helpcontext(150), entry("Pro8_LdcGetLdLimit"), helpstring("LDC Get Laser Diode Limit Curr.")]
+		ViStatus __stdcall Pro8_LdcGetLdLimit(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *limitCurrent);
+		[helpcontext(151), entry("Pro8_LdcSetPdLimit"), helpstring("LDC Set Photo Diode Limit Curr.")]
+		ViStatus __stdcall Pro8_LdcSetPdLimit(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 limitCurrent);
+		[helpcontext(152), entry("Pro8_LdcGetPdLimit"), helpstring("LDC Get Photo Diode Limit Curr.")]
+		ViStatus __stdcall Pro8_LdcGetPdLimit(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *limitCurrent);
+		[helpcontext(153), entry("Pro8_LdcSetPowerLimit"), helpstring("LDC Set Optical Power Limit")]
+		ViStatus __stdcall Pro8_LdcSetPowerLimit(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 limitPower);
+		[helpcontext(154), entry("Pro8_LdcGetPowerLimit"), helpstring("LDC Get Optical Power Limit")]
+		ViStatus __stdcall Pro8_LdcGetPowerLimit(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *limitPower);
+		[helpcontext(155), entry("Pro8_LdcGetLdLimitPoti"), helpstring("LDC Get LD Limit Current (Poti)")]
+		ViStatus __stdcall Pro8_LdcGetLdLimitPoti(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *limitCurrent);
+		[helpcontext(156), entry("Pro8_LdcGetLdVoltage"), helpstring("LDC Get Laser Voltage")]
+		ViStatus __stdcall Pro8_LdcGetLdVoltage(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *voltage);
+		[helpcontext(157), entry("Pro8_MlcSetLdCurrent"), helpstring("MLC Set Laser Current")]
+		ViStatus __stdcall Pro8_MlcSetLdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 current);
+		[helpcontext(158), entry("Pro8_MlcGetLdCurrent"), helpstring("MLC Get Laser Current")]
+		ViStatus __stdcall Pro8_MlcGetLdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *current);
+		[helpcontext(159), entry("Pro8_MlcSetPdCurrent"), helpstring("MLC Set Photo Diode Current")]
+		ViStatus __stdcall Pro8_MlcSetPdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 current);
+		[helpcontext(160), entry("Pro8_MlcGetPdCurrent"), helpstring("MLC Get Photo Diode Current")]
+		ViStatus __stdcall Pro8_MlcGetPdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *current);
+		[helpcontext(161), entry("Pro8_MlcGetLdLimitPoti"), helpstring("MLC Get LD Limit Current (Poti)")]
+		ViStatus __stdcall Pro8_MlcGetLdLimitPoti(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *limitCurrent);
+		[helpcontext(162), entry("Pro8_TecSetThCalExp"), helpstring("TEC Set Therm Calibration (Exp)")]
+		ViStatus __stdcall Pro8_TecSetThCalExp(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 bValue, 
+			[in] ViReal64 rValue, 
+			[in] ViReal64 tValue);
+		[helpcontext(163), entry("Pro8_TecGetThCalExp"), helpstring("TEC Get Therm Calibration (Exp)")]
+		ViStatus __stdcall Pro8_TecGetThCalExp(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 values, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *bValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *rValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *tValue);
+		[helpcontext(164), entry("Pro8_TecSetThCalSH"), helpstring("TEC Set Therm Calibration (SH)")]
+		ViStatus __stdcall Pro8_TecSetThCalSH(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 c1Value, 
+			[in] ViReal64 c2Value, 
+			[in] ViReal64 c3Value);
+		[helpcontext(165), entry("Pro8_TecGetThCalSH"), helpstring("TEC Get Therm Calibration (SH)")]
+		ViStatus __stdcall Pro8_TecGetThCalSH(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 values, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *c1Value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *c2Value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *c3Value);
+		[helpcontext(166), entry("Pro8_TecSetTemp"), helpstring("TEC Set Temperature")]
+		ViStatus __stdcall Pro8_TecSetTemp(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 temperature);
+		[helpcontext(167), entry("Pro8_TecGetTemp"), helpstring("TEC Get Temperature")]
+		ViStatus __stdcall Pro8_TecGetTemp(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *temperature);
+		[helpcontext(168), entry("Pro8_TecSetRes"), helpstring("TEC Set Resistance")]
+		ViStatus __stdcall Pro8_TecSetRes(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 resistance);
+		[helpcontext(169), entry("Pro8_TecGetRes"), helpstring("TEC Get Resistance")]
+		ViStatus __stdcall Pro8_TecGetRes(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *resistance);
+		[helpcontext(170), entry("Pro8_TecSetTempWin"), helpstring("TEC Set Temperature Window")]
+		ViStatus __stdcall Pro8_TecSetTempWin(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 temperatureWindow);
+		[helpcontext(171), entry("Pro8_TecGetTempWin"), helpstring("TEC Get Temperature Window")]
+		ViStatus __stdcall Pro8_TecGetTempWin(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *temperatureWindow);
+		[helpcontext(172), entry("Pro8_TecSetResWin"), helpstring("TEC Set Resistance Window")]
+		ViStatus __stdcall Pro8_TecSetResWin(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 resistanceWindow);
+		[helpcontext(173), entry("Pro8_TecGetResWin"), helpstring("TEC Get Resistance Window")]
+		ViStatus __stdcall Pro8_TecGetResWin(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *resistanceWindow);
+		[helpcontext(174), entry("Pro8_TecSetPID"), helpstring("TEC Set PID Shares")]
+		ViStatus __stdcall Pro8_TecSetPID(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 pShare, 
+			[in] ViReal64 iShare, 
+			[in] ViReal64 dShare);
+		[helpcontext(175), entry("Pro8_TecGetPID"), helpstring("TEC Get PID Shares")]
+		ViStatus __stdcall Pro8_TecGetPID(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 values, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *pShare, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *iShare, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *dShare);
+		[helpcontext(176), entry("Pro8_TecSetPtLimit"), helpstring("TEC Set Peltier Limit Current")]
+		ViStatus __stdcall Pro8_TecSetPtLimit(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 limitCurrent);
+		[helpcontext(177), entry("Pro8_TecGetPtLimit"), helpstring("TEC Get Peltier Limit Current")]
+		ViStatus __stdcall Pro8_TecGetPtLimit(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *limitCurrent);
+		[helpcontext(178), entry("Pro8_TecGetPtLimitPoti"), helpstring("TEC Get Peltier Lim Cur (Poti)")]
+		ViStatus __stdcall Pro8_TecGetPtLimitPoti(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *limitCurrent);
+		[helpcontext(179), entry("Pro8_TecGetPtCurrent"), helpstring("TEC Get Peltier Current")]
+		ViStatus __stdcall Pro8_TecGetPtCurrent(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *current);
+		[helpcontext(180), entry("Pro8_TecGetPtVoltage"), helpstring("TEC Get Peltier Voltage")]
+		ViStatus __stdcall Pro8_TecGetPtVoltage(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *voltage);
+		[helpcontext(181), entry("Pro8_ItcSetCalibration"), helpstring("ITC Set Calibration Factor")]
+		ViStatus __stdcall Pro8_ItcSetCalibration(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 calibrationFactor);
+		[helpcontext(182), entry("Pro8_ItcGetCalibration"), helpstring("ITC Get Calibration Factor")]
+		ViStatus __stdcall Pro8_ItcGetCalibration(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *calibrationFactor);
+		[helpcontext(183), entry("Pro8_ItcSetLdCurrent"), helpstring("ITC Set Laser Current")]
+		ViStatus __stdcall Pro8_ItcSetLdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 current);
+		[helpcontext(184), entry("Pro8_ItcGetLdCurrent"), helpstring("ITC Get Laser Current")]
+		ViStatus __stdcall Pro8_ItcGetLdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *current);
+		[helpcontext(185), entry("Pro8_ItcSetPdCurrent"), helpstring("ITC Set Photo Diode Current")]
+		ViStatus __stdcall Pro8_ItcSetPdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 current);
+		[helpcontext(186), entry("Pro8_ItcGetPdCurrent"), helpstring("ITC Get Photo Diode Current")]
+		ViStatus __stdcall Pro8_ItcGetPdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *current);
+		[helpcontext(187), entry("Pro8_ItcSetPower"), helpstring("ITC Set Optical Power")]
+		ViStatus __stdcall Pro8_ItcSetPower(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 opticalPower);
+		[helpcontext(188), entry("Pro8_ItcGetPower"), helpstring("ITC Get Optical Power")]
+		ViStatus __stdcall Pro8_ItcGetPower(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *opticalPower);
+		[helpcontext(189), entry("Pro8_ItcSetBiasVoltage"), helpstring("ITC Set Bias Voltage")]
+		ViStatus __stdcall Pro8_ItcSetBiasVoltage(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 biasVoltage);
+		[helpcontext(190), entry("Pro8_ItcGetBiasVoltage"), helpstring("ITC Get Bias Voltage")]
+		ViStatus __stdcall Pro8_ItcGetBiasVoltage(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *biasVoltage);
+		[helpcontext(191), entry("Pro8_ItcSetLdLimit"), helpstring("ITC Set Laser Diode Limit Curr.")]
+		ViStatus __stdcall Pro8_ItcSetLdLimit(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 limitCurrent);
+		[helpcontext(192), entry("Pro8_ItcGetLdLimit"), helpstring("ITC Get Laser Diode Limit Curr.")]
+		ViStatus __stdcall Pro8_ItcGetLdLimit(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *limitCurrent);
+		[helpcontext(193), entry("Pro8_ItcGetLdLimitPoti"), helpstring("ITC Get LD Limit Current (Poti)")]
+		ViStatus __stdcall Pro8_ItcGetLdLimitPoti(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *limitCurrent);
+		[helpcontext(194), entry("Pro8_ItcGetLdVoltage"), helpstring("ITC Get Laser Voltage")]
+		ViStatus __stdcall Pro8_ItcGetLdVoltage(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *voltage);
+		[helpcontext(195), entry("Pro8_ItcSetThCalExp"), helpstring("ITC Set Therm Calibration (Exp)")]
+		ViStatus __stdcall Pro8_ItcSetThCalExp(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 bValue, 
+			[in] ViReal64 rValue, 
+			[in] ViReal64 tValue);
+		[helpcontext(196), entry("Pro8_ItcGetThCalExp"), helpstring("ITC Get Therm Calibration (Exp)")]
+		ViStatus __stdcall Pro8_ItcGetThCalExp(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 values, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *bValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *rValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *tValue);
+		[helpcontext(197), entry("Pro8_ItcSetThCalSH"), helpstring("ITC Set Therm Calibration (SH)")]
+		ViStatus __stdcall Pro8_ItcSetThCalSH(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 c1Value, 
+			[in] ViReal64 c2Value, 
+			[in] ViReal64 c3Value);
+		[helpcontext(198), entry("Pro8_ItcGetThCalSH"), helpstring("ITC Get Therm Calibration (SH)")]
+		ViStatus __stdcall Pro8_ItcGetThCalSH(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 values, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *c1Value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *c2Value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *c3Value);
+		[helpcontext(199), entry("Pro8_ItcSetTemp"), helpstring("ITC Set Temperature")]
+		ViStatus __stdcall Pro8_ItcSetTemp(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 temperature);
+		[helpcontext(200), entry("Pro8_ItcGetTemp"), helpstring("ITC Get Temperature")]
+		ViStatus __stdcall Pro8_ItcGetTemp(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *temperature);
+		[helpcontext(201), entry("Pro8_ItcSetRes"), helpstring("ITC Set Resistance")]
+		ViStatus __stdcall Pro8_ItcSetRes(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 resistance);
+		[helpcontext(202), entry("Pro8_ItcGetRes"), helpstring("ITC Get Resistance")]
+		ViStatus __stdcall Pro8_ItcGetRes(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *resistance);
+		[helpcontext(203), entry("Pro8_ItcSetTempWin"), helpstring("ITC Set Temperature Window")]
+		ViStatus __stdcall Pro8_ItcSetTempWin(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 temperatureWindow);
+		[helpcontext(204), entry("Pro8_ItcGetTempWin"), helpstring("ITC Get Temperature Window")]
+		ViStatus __stdcall Pro8_ItcGetTempWin(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *temperatureWindow);
+		[helpcontext(205), entry("Pro8_ItcSetResWin"), helpstring("ITC Set Resistance Window")]
+		ViStatus __stdcall Pro8_ItcSetResWin(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 resistanceWindow);
+		[helpcontext(206), entry("Pro8_ItcGetResWin"), helpstring("ITC Get Resistance Window")]
+		ViStatus __stdcall Pro8_ItcGetResWin(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *resistanceWindow);
+		[helpcontext(207), entry("Pro8_ItcSetPID"), helpstring("ITC Set PID Shares")]
+		ViStatus __stdcall Pro8_ItcSetPID(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 pShare, 
+			[in] ViReal64 iShare, 
+			[in] ViReal64 dShare);
+		[helpcontext(208), entry("Pro8_ItcGetPID"), helpstring("ITC Get PID Shares")]
+		ViStatus __stdcall Pro8_ItcGetPID(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 values, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *pShare, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *iShare, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *dShare);
+		[helpcontext(209), entry("Pro8_ItcSetPtLimit"), helpstring("ITC Set Peltier Limit Current")]
+		ViStatus __stdcall Pro8_ItcSetPtLimit(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 limitCurrent);
+		[helpcontext(210), entry("Pro8_ItcGetPtLimit"), helpstring("ITC Get Peltier Limit Current")]
+		ViStatus __stdcall Pro8_ItcGetPtLimit(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *limitCurrent);
+		[helpcontext(211), entry("Pro8_ItcGetPtCurrent"), helpstring("ITC Get Peltier Current")]
+		ViStatus __stdcall Pro8_ItcGetPtCurrent(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *current);
+		[helpcontext(212), entry("Pro8_ItcGetPtVoltage"), helpstring("ITC Get Peltier Voltage")]
+		ViStatus __stdcall Pro8_ItcGetPtVoltage(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *voltage);
+		[helpcontext(213), entry("Pro8_PdaSetCalibration"), helpstring("PDA Set Calibration Factor")]
+		ViStatus __stdcall Pro8_PdaSetCalibration(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 calibrationFactor);
+		[helpcontext(214), entry("Pro8_PdaGetCalibration"), helpstring("PDA Get Calibration Factor")]
+		ViStatus __stdcall Pro8_PdaGetCalibration(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *calibrationFactor);
+		[helpcontext(215), entry("Pro8_PdaGetPdCurrent"), helpstring("PDA Get Photo Diode Current")]
+		ViStatus __stdcall Pro8_PdaGetPdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *current);
+		[helpcontext(216), entry("Pro8_PdaGetPower"), helpstring("PDA Get Optical Power")]
+		ViStatus __stdcall Pro8_PdaGetPower(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *opticalPower);
+		[helpcontext(217), entry("Pro8_PdaSetBiasVoltage"), helpstring("PDA Set Bias Voltage")]
+		ViStatus __stdcall Pro8_PdaSetBiasVoltage(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 biasVoltage);
+		[helpcontext(218), entry("Pro8_PdaGetBiasVoltage"), helpstring("PDA Get Bias Voltage")]
+		ViStatus __stdcall Pro8_PdaGetBiasVoltage(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *biasVoltage);
+		[helpcontext(219), entry("Pro8_PdaSetFwdCurr"), helpstring("PDA Set Forward Current")]
+		ViStatus __stdcall Pro8_PdaSetFwdCurr(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 forwardCurrent);
+		[helpcontext(220), entry("Pro8_PdaGetFwdCurr"), helpstring("PDA Get Forward Current")]
+		ViStatus __stdcall Pro8_PdaGetFwdCurr(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *forwardCurrent);
+		[helpcontext(221), entry("Pro8_PdaGetFwdVoltage"), helpstring("PDA Get Forward Voltage")]
+		ViStatus __stdcall Pro8_PdaGetFwdVoltage(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *forwardVoltage);
+		[helpcontext(222), entry("Pro8_LsSetPowerdBm"), helpstring("LS Set Power (dBm)")]
+		ViStatus __stdcall Pro8_LsSetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 power);
+		[helpcontext(223), entry("Pro8_LsGetPowerdBm"), helpstring("LS Get Power (dBm)")]
+		ViStatus __stdcall Pro8_LsGetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(224), entry("Pro8_LsSetPowerW"), helpstring("LS Set Power (W)")]
+		ViStatus __stdcall Pro8_LsSetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 power);
+		[helpcontext(225), entry("Pro8_LsGetPowerW"), helpstring("LS Get Power (W)")]
+		ViStatus __stdcall Pro8_LsGetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(226), entry("Pro8_LsSetTempDiff"), helpstring("LS Set Temperature Difference")]
+		ViStatus __stdcall Pro8_LsSetTempDiff(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 temperatureDifference);
+		[helpcontext(227), entry("Pro8_LsGetTempDifference"), helpstring("LS Get Temperature Difference")]
+		ViStatus __stdcall Pro8_LsGetTempDifference(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *temperatureDifference);
+		[helpcontext(228), entry("Pro8_SledSetPowerdBm"), helpstring("SLED Set Power (dBm)")]
+		ViStatus __stdcall Pro8_SledSetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 power);
+		[helpcontext(229), entry("Pro8_SledGetPowerdBm"), helpstring("SLED Get Power (dBm)")]
+		ViStatus __stdcall Pro8_SledGetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(230), entry("Pro8_SledSetPowerW"), helpstring("SLED Set Power (W)")]
+		ViStatus __stdcall Pro8_SledSetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 power);
+		[helpcontext(231), entry("Pro8_SledGetPowerW"), helpstring("SLED Get Power (W)")]
+		ViStatus __stdcall Pro8_SledGetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(232), entry("Pro8_WdmCwSetCoherence"), helpstring("CW Set Coherence")]
+		ViStatus __stdcall Pro8_WdmCwSetCoherence(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 coherenceControl);
+		[helpcontext(233), entry("Pro8_WdmCwGetCoherence"), helpstring("CW Get Coherence")]
+		ViStatus __stdcall Pro8_WdmCwGetCoherence(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *coherenceControl);
+		[helpcontext(234), entry("Pro8_WdmCwSetPowerdBm"), helpstring("CW Set Power (dBm)")]
+		ViStatus __stdcall Pro8_WdmCwSetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 power);
+		[helpcontext(235), entry("Pro8_WdmCwGetPowerdBm"), helpstring("CW Get Power (dBm)")]
+		ViStatus __stdcall Pro8_WdmCwGetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(236), entry("Pro8_WdmCwSetPowerW"), helpstring("CW Set Power (W)")]
+		ViStatus __stdcall Pro8_WdmCwSetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 power);
+		[helpcontext(237), entry("Pro8_WdmCwGetPowerW"), helpstring("CW Get Power (W)")]
+		ViStatus __stdcall Pro8_WdmCwGetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(238), entry("Pro8_WdmCwSetWavelength"), helpstring("CW Set Wavelength")]
+		ViStatus __stdcall Pro8_WdmCwSetWavelength(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 wavelength);
+		[helpcontext(239), entry("Pro8_WdmCwGetWavelength"), helpstring("CW Get Wavelength")]
+		ViStatus __stdcall Pro8_WdmCwGetWavelength(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *wavelength);
+		[helpcontext(240), entry("Pro8_WdmCwSetFrequency"), helpstring("CW Set Frequency")]
+		ViStatus __stdcall Pro8_WdmCwSetFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 frequency);
+		[helpcontext(241), entry("Pro8_WdmCwGetFrequency"), helpstring("CW Get Frequency")]
+		ViStatus __stdcall Pro8_WdmCwGetFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *frequency);
+		[helpcontext(242), entry("Pro8_WdmCwSetLfAmplitude"), helpstring("CW Set LF Amplitude")]
+		ViStatus __stdcall Pro8_WdmCwSetLfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 LFAmplitude);
+		[helpcontext(243), entry("Pro8_WdmCwGetLfAmplitude"), helpstring("CW Get LF Amplitude")]
+		ViStatus __stdcall Pro8_WdmCwGetLfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *LFAmplitude);
+		[helpcontext(244), entry("Pro8_WdmCwSetLfFrequency"), helpstring("CW Set LF Frequency")]
+		ViStatus __stdcall Pro8_WdmCwSetLfFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 LFFrequency);
+		[helpcontext(245), entry("Pro8_WdmCwGetLfFrequency"), helpstring("CW Get LF Frequency")]
+		ViStatus __stdcall Pro8_WdmCwGetLfFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *LFFrequency);
+		[helpcontext(246), entry("Pro8_WdmCwGetMaxHfVoltage"), helpstring("CW Get Max HF Voltage")]
+		ViStatus __stdcall Pro8_WdmCwGetMaxHfVoltage(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *maxHFModVoltage);
+		[helpcontext(247), entry("Pro8_WdmEaSetPowerdBm"), helpstring("EA Set Power (dBm)")]
+		ViStatus __stdcall Pro8_WdmEaSetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 power);
+		[helpcontext(248), entry("Pro8_WdmEaGetPowerdBm"), helpstring("EA Get Power (dBm)")]
+		ViStatus __stdcall Pro8_WdmEaGetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(249), entry("Pro8_WdmEaSetPowerW"), helpstring("EA Set Power (W)")]
+		ViStatus __stdcall Pro8_WdmEaSetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 power);
+		[helpcontext(250), entry("Pro8_WdmEaGetPowerW"), helpstring("EA Get Power (W)")]
+		ViStatus __stdcall Pro8_WdmEaGetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(251), entry("Pro8_WdmEaSetWavelength"), helpstring("EA Set Wavelength")]
+		ViStatus __stdcall Pro8_WdmEaSetWavelength(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 wavelength);
+		[helpcontext(252), entry("Pro8_WdmEaGetWavelength"), helpstring("EA Get Wavelength")]
+		ViStatus __stdcall Pro8_WdmEaGetWavelength(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *wavelength);
+		[helpcontext(253), entry("Pro8_WdmEaSetFrequency"), helpstring("EA Set Frequency")]
+		ViStatus __stdcall Pro8_WdmEaSetFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 frequency);
+		[helpcontext(254), entry("Pro8_WdmEaGetFrequency"), helpstring("EA Get Frequency")]
+		ViStatus __stdcall Pro8_WdmEaGetFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *frequency);
+		[helpcontext(255), entry("Pro8_WdmEaSetThreshold"), helpstring("EA Set ECL Threshold")]
+		ViStatus __stdcall Pro8_WdmEaSetThreshold(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 thresholdVoltage);
+		[helpcontext(256), entry("Pro8_WdmEaGetThreshold"), helpstring("EA Get ECL Threshold")]
+		ViStatus __stdcall Pro8_WdmEaGetThreshold(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *thresholdVoltage);
+		[helpcontext(257), entry("Pro8_WdmEaSetModVoltage"), helpstring("EA Set Modulation Voltage")]
+		ViStatus __stdcall Pro8_WdmEaSetModVoltage(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 modulationVoltage);
+		[helpcontext(258), entry("Pro8_WdmEaGetModVoltage"), helpstring("EA Get Modulation Voltage")]
+		ViStatus __stdcall Pro8_WdmEaGetModVoltage(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *modulationVoltage);
+		[helpcontext(259), entry("Pro8_WdmEaSetLfAmplitude"), helpstring("EA Set LF Amplitude")]
+		ViStatus __stdcall Pro8_WdmEaSetLfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 LFAmplitude);
+		[helpcontext(260), entry("Pro8_WdmEaGetLfAmplitude"), helpstring("EA Get LF Amplitude")]
+		ViStatus __stdcall Pro8_WdmEaGetLfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *LFAmplitude);
+		[helpcontext(261), entry("Pro8_WdmEaSetLfFrequency"), helpstring("EA Set LF Frequency")]
+		ViStatus __stdcall Pro8_WdmEaSetLfFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 LFFrequency);
+		[helpcontext(262), entry("Pro8_WdmEaGetLfFrequency"), helpstring("EA Get LF Frequency")]
+		ViStatus __stdcall Pro8_WdmEaGetLfFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *LFFrequency);
+		[helpcontext(263), entry("Pro8_WdmEaSetHfAmplitude"), helpstring("EA Set HF Amplitude")]
+		ViStatus __stdcall Pro8_WdmEaSetHfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 HFAmplitude);
+		[helpcontext(264), entry("Pro8_WdmEaGetHfAmplitude"), helpstring("EA Get HF Amplitude")]
+		ViStatus __stdcall Pro8_WdmEaGetHfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *HFAmplitude);
+		[helpcontext(265), entry("Pro8_WdmDirSetPowerdBm"), helpstring("DIR Set Power (dBm)")]
+		ViStatus __stdcall Pro8_WdmDirSetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 power);
+		[helpcontext(266), entry("Pro8_WdmDirGetPowerdBm"), helpstring("DIR Get Power (dBm)")]
+		ViStatus __stdcall Pro8_WdmDirGetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(267), entry("Pro8_WdmDirGetAvPowerdBm"), helpstring("DIR Get Average Power (dBm)")]
+		ViStatus __stdcall Pro8_WdmDirGetAvPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(268), entry("Pro8_WdmDirSetPowerW"), helpstring("DIR Set Power (W)")]
+		ViStatus __stdcall Pro8_WdmDirSetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 power);
+		[helpcontext(269), entry("Pro8_WdmDirGetPowerW"), helpstring("DIR Get Power (W)")]
+		ViStatus __stdcall Pro8_WdmDirGetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(270), entry("Pro8_WdmDirGetAvPowerW"), helpstring("DIR Get Average Power (W)")]
+		ViStatus __stdcall Pro8_WdmDirGetAvPowerW(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(271), entry("Pro8_WdmDirSetWavelength"), helpstring("DIR Set Wavelength")]
+		ViStatus __stdcall Pro8_WdmDirSetWavelength(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 wavelength);
+		[helpcontext(272), entry("Pro8_WdmDirGetWavelength"), helpstring("DIR Get Wavelength")]
+		ViStatus __stdcall Pro8_WdmDirGetWavelength(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *wavelength);
+		[helpcontext(273), entry("Pro8_WdmDirSetFrequency"), helpstring("DIR Set Frequency")]
+		ViStatus __stdcall Pro8_WdmDirSetFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 frequency);
+		[helpcontext(274), entry("Pro8_WdmDirGetFrequency"), helpstring("DIR Get Frequency")]
+		ViStatus __stdcall Pro8_WdmDirGetFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *frequency);
+		[helpcontext(275), entry("Pro8_WdmDirSetThreshold"), helpstring("DIR Set ECL Threshold")]
+		ViStatus __stdcall Pro8_WdmDirSetThreshold(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 thresholdVoltage);
+		[helpcontext(276), entry("Pro8_WdmDirGetThreshold"), helpstring("DIR Get ECL Threshold")]
+		ViStatus __stdcall Pro8_WdmDirGetThreshold(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *thresholdVoltage);
+		[helpcontext(277), entry("Pro8_WdmDirSetModCurrent"), helpstring("DIR Set Modulation Current")]
+		ViStatus __stdcall Pro8_WdmDirSetModCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 modulationCurrent);
+		[helpcontext(278), entry("Pro8_WdmDirGetModCurrent"), helpstring("DIR Get Modulation Current")]
+		ViStatus __stdcall Pro8_WdmDirGetModCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *modulationCurrent);
+		[helpcontext(279), entry("Pro8_WdmDirSetHfAmplitude"), helpstring("DIR Set HF Amplitude")]
+		ViStatus __stdcall Pro8_WdmDirSetHfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 HFAmplitude);
+		[helpcontext(280), entry("Pro8_WdmDirGetHfAmplitude"), helpstring("DIR Get HF Amplitude")]
+		ViStatus __stdcall Pro8_WdmDirGetHfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *LFAmplitude);
+		[helpcontext(281), entry("Pro8_WdmDirSetLfAmplitude"), helpstring("DIR Set LF Amplitude")]
+		ViStatus __stdcall Pro8_WdmDirSetLfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 LFAmplitude);
+		[helpcontext(282), entry("Pro8_WdmDirGetLfAmplitude"), helpstring("DIR Get LF Amplitude")]
+		ViStatus __stdcall Pro8_WdmDirGetLfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *LFAmplitude);
+		[helpcontext(283), entry("Pro8_WdmDirSetLfFrequency"), helpstring("DIR Set LF Frequency")]
+		ViStatus __stdcall Pro8_WdmDirSetLfFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 LFFrequency);
+		[helpcontext(284), entry("Pro8_WdmDirGetLfFrequency"), helpstring("DIR Get LF Frequency")]
+		ViStatus __stdcall Pro8_WdmDirGetLfFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *LFFrequency);
+		[helpcontext(285), entry("Pro8_WdmCcdmSetCoherence"), helpstring("CCDM Set Coherence")]
+		ViStatus __stdcall Pro8_WdmCcdmSetCoherence(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 coherenceControl);
+		[helpcontext(286), entry("Pro8_WdmCcdmGetCoherence"), helpstring("CCDM Get Coherence")]
+		ViStatus __stdcall Pro8_WdmCcdmGetCoherence(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *coherenceControl);
+		[helpcontext(287), entry("Pro8_WdmCcdmSetPowerdBm"), helpstring("CCDM Set Power (dBm)")]
+		ViStatus __stdcall Pro8_WdmCcdmSetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 power);
+		[helpcontext(288), entry("Pro8_WdmCcdmGetPowerdBm"), helpstring("CCDM Get Power (dBm)")]
+		ViStatus __stdcall Pro8_WdmCcdmGetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(289), entry("Pro8_WdmCcdmSetPowerW"), helpstring("CCDM Set Power (W)")]
+		ViStatus __stdcall Pro8_WdmCcdmSetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 power);
+		[helpcontext(290), entry("Pro8_WdmCcdmGetPowerW"), helpstring("CCDM Get Power (W)")]
+		ViStatus __stdcall Pro8_WdmCcdmGetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(291), entry("Pro8_WdmCcdmSetWavelength"), helpstring("CCDM Set Wavelength")]
+		ViStatus __stdcall Pro8_WdmCcdmSetWavelength(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 wavelength);
+		[helpcontext(292), entry("Pro8_WdmCcdmGetWavelength"), helpstring("CCDM Get Wavelength")]
+		ViStatus __stdcall Pro8_WdmCcdmGetWavelength(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *wavelength);
+		[helpcontext(293), entry("Pro8_WdmCcdmSetFrequency"), helpstring("CCDM Set Frequency")]
+		ViStatus __stdcall Pro8_WdmCcdmSetFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 frequency);
+		[helpcontext(294), entry("Pro8_WdmCcdmGetFrequency"), helpstring("CCDM Get Frequency")]
+		ViStatus __stdcall Pro8_WdmCcdmGetFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *frequency);
+		[helpcontext(295), entry("Pro8_WdmCcdmSetLfAmplitude"), helpstring("CCDM Set LF Amplitude")]
+		ViStatus __stdcall Pro8_WdmCcdmSetLfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 LFAmplitude);
+		[helpcontext(296), entry("Pro8_WdmCcdmGetLfAmplitude"), helpstring("CCDM Get LF Amplitude")]
+		ViStatus __stdcall Pro8_WdmCcdmGetLfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *LFAmplitude);
+		[helpcontext(297), entry("Pro8_WdmCcdmSetLfFrequency"), helpstring("CCDM Set LF Frequency")]
+		ViStatus __stdcall Pro8_WdmCcdmSetLfFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 LFFrequency);
+		[helpcontext(298), entry("Pro8_WdmCcdmGetLfFrequency"), helpstring("CCDM Get LF Frequency")]
+		ViStatus __stdcall Pro8_WdmCcdmGetLfFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *LFFrequency);
+		[helpcontext(299), entry("Pro8_WdmCcdmGetMaxHfVoltage"), helpstring("CCDM Get Max HF Voltage")]
+		ViStatus __stdcall Pro8_WdmCcdmGetMaxHfVoltage(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *maxHFModVoltage);
+		[helpcontext(300), entry("Pro8_WdmCwdmSetPowerdBm"), helpstring("CWDM Set Power (dBm)")]
+		ViStatus __stdcall Pro8_WdmCwdmSetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 power);
+		[helpcontext(301), entry("Pro8_WdmCwdmGetPowerdBm"), helpstring("CWDM Get Power (dBm)")]
+		ViStatus __stdcall Pro8_WdmCwdmGetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(302), entry("Pro8_WdmCwdmSetPowerW"), helpstring("CWDM Set Power (W)")]
+		ViStatus __stdcall Pro8_WdmCwdmSetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 power);
+		[helpcontext(303), entry("Pro8_WdmCwdmGetPowerW"), helpstring("CWDM Get Power (W)")]
+		ViStatus __stdcall Pro8_WdmCwdmGetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(304), entry("Pro8_WdmCwdmSetTempDiff"), helpstring("CWDM Set Temperature Difference")]
+		ViStatus __stdcall Pro8_WdmCwdmSetTempDiff(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 temperatureDifference);
+		[helpcontext(305), entry("Pro8_WdmCwdmGetTempDifference"), helpstring("CWDM Get Temperature Difference")]
+		ViStatus __stdcall Pro8_WdmCwdmGetTempDifference(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *temperatureDifference);
+		[helpcontext(306), entry("Pro8_WdmCwdmGetWavelength"), helpstring("CWDM Get Wavelength")]
+		ViStatus __stdcall Pro8_WdmCwdmGetWavelength(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *wavelength);
+		[helpcontext(307), entry("Pro8_WdmCwdmGetFrequency"), helpstring("CWDM Get Frequency")]
+		ViStatus __stdcall Pro8_WdmCwdmGetFrequency(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *frequency);
+		[helpcontext(308), entry("Pro8_WdmCwdmSetLfAmplitude"), helpstring("CWDM Set LF Amplitude")]
+		ViStatus __stdcall Pro8_WdmCwdmSetLfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 LFAmplitude);
+		[helpcontext(309), entry("Pro8_WdmCwdmGetLfAmplitude"), helpstring("CWDM Get LF Amplitude")]
+		ViStatus __stdcall Pro8_WdmCwdmGetLfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *LFAmplitude);
+		[helpcontext(310), entry("Pro8_WdmCwdmSetLfFrequency"), helpstring("CWDM Set LF Frequency")]
+		ViStatus __stdcall Pro8_WdmCwdmSetLfFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 LFFrequency);
+		[helpcontext(311), entry("Pro8_WdmCwdmGetLfFrequency"), helpstring("CWDM Get LF Frequency")]
+		ViStatus __stdcall Pro8_WdmCwdmGetLfFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *LFFrequency);
+		[helpcontext(312), entry("Pro8_WdmItcSetLdCurrent"), helpstring("WDM-ITC Set Laser Current")]
+		ViStatus __stdcall Pro8_WdmItcSetLdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 current);
+		[helpcontext(313), entry("Pro8_WdmItcGetLdCurrent"), helpstring("WDM-ITC Get Laser Current")]
+		ViStatus __stdcall Pro8_WdmItcGetLdCurrent(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *current);
+		[helpcontext(314), entry("Pro8_WdmItcSetLdLimit"), helpstring("WDM-ITC Set LD Limit Current")]
+		ViStatus __stdcall Pro8_WdmItcSetLdLimit(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 limitCurrent);
+		[helpcontext(315), entry("Pro8_WdmItcGetLdLimit"), helpstring("WDM-ITC Get LD Limit Current")]
+		ViStatus __stdcall Pro8_WdmItcGetLdLimit(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *limitCurrent);
+		[helpcontext(316), entry("Pro8_WdmItcSetTemp"), helpstring("WDM-ITC Set TEC Temperature")]
+		ViStatus __stdcall Pro8_WdmItcSetTemp(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 temperature);
+		[helpcontext(317), entry("Pro8_WdmItcGetTemp"), helpstring("WDM-ITC Get TEC Temperature")]
+		ViStatus __stdcall Pro8_WdmItcGetTemp(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *temperature);
+		[helpcontext(318), entry("Pro8_WdmItcSetRes"), helpstring("WDM-ITC Set TEC Resistance")]
+		ViStatus __stdcall Pro8_WdmItcSetRes(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 resistance);
+		[helpcontext(319), entry("Pro8_WdmItcGetRes"), helpstring("WDM-ITC Get TEC Resistance")]
+		ViStatus __stdcall Pro8_WdmItcGetRes(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *resistance);
+		[helpcontext(320), entry("Pro8_WdmItcSetLfAmplitude"), helpstring("WDM-ITC Set LF Amplitude")]
+		ViStatus __stdcall Pro8_WdmItcSetLfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 LFAmplitude);
+		[helpcontext(321), entry("Pro8_WdmItcGetLfAmplitude"), helpstring("WDM-ITC Get LF Amplitude")]
+		ViStatus __stdcall Pro8_WdmItcGetLfAmplitude(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *LFAmplitude);
+		[helpcontext(322), entry("Pro8_WdmItcSetLfFrequency"), helpstring("WDM-ITC Set LF Frequency")]
+		ViStatus __stdcall Pro8_WdmItcSetLfFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViReal64 LFFrequency);
+		[helpcontext(323), entry("Pro8_WdmItcGetLfFrequency"), helpstring("WDM-ITC Get LF Frequency")]
+		ViStatus __stdcall Pro8_WdmItcGetLfFrequency(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 value, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *LFFrequency);
+		[helpcontext(324), entry("Pro8_BbsGetPowerdBm"), helpstring("BBS Get Power (dBm)")]
+		ViStatus __stdcall Pro8_BbsGetPowerdBm(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+		[helpcontext(325), entry("Pro8_BbsGetPowerW"), helpstring("BBS Get Power (W)")]
+		ViStatus __stdcall Pro8_BbsGetPowerW(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *power);
+	};
+	[dllname("pro8.dll"), helpcontext(379), helpstring("Electrical Characterisation")]
+	module ElectricalCharacterisation{
+		[helpcontext(326), entry("Pro8_ElchSetParameters"), helpstring("Set ELCH Parameters")]
+		ViStatus __stdcall Pro8_ElchSetParameters(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 steps, 
+			[in] ViInt16 measurementValues);
+		[helpcontext(327), entry("Pro8_ElchGetParameters"), helpstring("Get ELCH Parameters")]
+		ViStatus __stdcall Pro8_ElchGetParameters(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *steps, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *measurementValues);
+		[helpcontext(328), entry("Pro8_ElchRun"), helpstring("Run Electrical Characterisation")]
+		ViStatus __stdcall Pro8_ElchRun(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 function);
+		[helpcontext(329), entry("Pro8_ElchGetMeasVal"), helpstring("Get ELCH Measurement Values")]
+		ViStatus __stdcall Pro8_ElchGetMeasVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 measurementValues, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *value1, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *value2, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *value3, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *value4, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *value5, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *value6, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *value7, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *value8);
+		[helpcontext(330), entry("Pro8_LdcSetElchSetVal"), helpstring("LDC Set ELCH Set Values")]
+		ViStatus __stdcall Pro8_LdcSetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in] ViReal64 startValue, 
+			[in] ViReal64 stopValue);
+		[helpcontext(331), entry("Pro8_LdcGetElchSetVal"), helpstring("LDC Get ELCH Set Values")]
+		ViStatus __stdcall Pro8_LdcGetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *startValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *stopValue);
+		[helpcontext(332), entry("Pro8_LdcSetElchMeasVal"), helpstring("LDC Set ELCH Measurement Value")]
+		ViStatus __stdcall Pro8_LdcSetElchMeasVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 measurementParameter, 
+			[in] ViInt16 position);
+		[helpcontext(333), entry("Pro8_LdcGetElchMeasVal"), helpstring("LDC Get ELCH Measurement Value")]
+		ViStatus __stdcall Pro8_LdcGetElchMeasVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 measurementParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *position);
+		[helpcontext(334), entry("Pro8_MlcSetElchSetVal"), helpstring("MLC Set ELCH Set Values")]
+		ViStatus __stdcall Pro8_MlcSetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in] ViReal64 startValue, 
+			[in] ViReal64 stopValue);
+		[helpcontext(335), entry("Pro8_MlcGetElchSetVal"), helpstring("MLC Get ELCH Set Values")]
+		ViStatus __stdcall Pro8_MlcGetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *startValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *stopValue);
+		[helpcontext(336), entry("Pro8_MlcSetElchMeasVal"), helpstring("MLC Set ELCH Measurement Value")]
+		ViStatus __stdcall Pro8_MlcSetElchMeasVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 measurementParameter, 
+			[in] ViInt16 position);
+		[helpcontext(337), entry("Pro8_MlcGetElchMeasVal"), helpstring("MLC Get ELCH Measurement Value")]
+		ViStatus __stdcall Pro8_MlcGetElchMeasVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 measurementParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *position);
+		[helpcontext(338), entry("Pro8_TecSetElchMeasVal"), helpstring("TEC Set ELCH Measurement Value")]
+		ViStatus __stdcall Pro8_TecSetElchMeasVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 measurementParameter, 
+			[in] ViInt16 position);
+		[helpcontext(339), entry("Pro8_TecGetElchMeasVal"), helpstring("TEC Get ELCH Measurement Value")]
+		ViStatus __stdcall Pro8_TecGetElchMeasVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 measurementParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *position);
+		[helpcontext(340), entry("Pro8_ItcSetElchSetVal"), helpstring("ITC Set ELCH Set Values")]
+		ViStatus __stdcall Pro8_ItcSetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in] ViReal64 startValue, 
+			[in] ViReal64 stopValue);
+		[helpcontext(341), entry("Pro8_ItcGetElchSetVal"), helpstring("ITC Get ELCH Set Values")]
+		ViStatus __stdcall Pro8_ItcGetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *startValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *stopValue);
+		[helpcontext(342), entry("Pro8_ItcSetElchMeasVal"), helpstring("ITC Set ELCH Measurement Value")]
+		ViStatus __stdcall Pro8_ItcSetElchMeasVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 measurementParameter, 
+			[in] ViInt16 position);
+		[helpcontext(343), entry("Pro8_ItcGetElchMeasVal"), helpstring("ITC Get ELCH Measurement Value")]
+		ViStatus __stdcall Pro8_ItcGetElchMeasVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 measurementParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *position);
+		[helpcontext(344), entry("Pro8_PdaSetElchSetVal"), helpstring("PDA Set ELCH Set Values")]
+		ViStatus __stdcall Pro8_PdaSetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in] ViReal64 startValue, 
+			[in] ViReal64 stopValue);
+		[helpcontext(345), entry("Pro8_PdaGetElchSetVal"), helpstring("PDA Get ELCH Set Values")]
+		ViStatus __stdcall Pro8_PdaGetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *startValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *stopValue);
+		[helpcontext(346), entry("Pro8_PdaSetElchMeasVal"), helpstring("PDA Set ELCH Measurement Value")]
+		ViStatus __stdcall Pro8_PdaSetElchMeasVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 measurementParameter, 
+			[in] ViInt16 position);
+		[helpcontext(347), entry("Pro8_PdaGetElchMeasVal"), helpstring("PDA Get ELCH Measurement Value")]
+		ViStatus __stdcall Pro8_PdaGetElchMeasVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 measurementParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *position);
+		[helpcontext(348), entry("Pro8_LsSetElchSetVal"), helpstring("LS Set ELCH Set Values")]
+		ViStatus __stdcall Pro8_LsSetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in] ViReal64 startValue, 
+			[in] ViReal64 stopValue);
+		[helpcontext(349), entry("Pro8_LsGetElchSetVal"), helpstring("LS Get ELCH Set Values")]
+		ViStatus __stdcall Pro8_LsGetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *startValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *stopValue);
+		[helpcontext(350), entry("Pro8_SledSetElchSetVal"), helpstring("SLED Set ELCH Set Values")]
+		ViStatus __stdcall Pro8_SledSetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in] ViReal64 startValue, 
+			[in] ViReal64 stopValue);
+		[helpcontext(351), entry("Pro8_SledGetElchSetVal"), helpstring("SLED Get ELCH Set Values")]
+		ViStatus __stdcall Pro8_SledGetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *startValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *stopValue);
+		[helpcontext(352), entry("Pro8_CwSetElchSetVal"), helpstring("CW Set ELCH Set Values")]
+		ViStatus __stdcall Pro8_CwSetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in] ViReal64 startValue, 
+			[in] ViReal64 stopValue);
+		[helpcontext(353), entry("Pro8_CwGetElchSetVal"), helpstring("CW Get ELCH Set Values")]
+		ViStatus __stdcall Pro8_CwGetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *startValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *stopValue);
+		[helpcontext(354), entry("Pro8_EaSetElchSetVal"), helpstring("EA Set ELCH Set Values")]
+		ViStatus __stdcall Pro8_EaSetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in] ViReal64 startValue, 
+			[in] ViReal64 stopValue);
+		[helpcontext(355), entry("Pro8_EaGetElchSetVal"), helpstring("EA Get ELCH Set Values")]
+		ViStatus __stdcall Pro8_EaGetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *startValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *stopValue);
+		[helpcontext(356), entry("Pro8_DirSetElchSetVal"), helpstring("DIR Set ELCH Set Values")]
+		ViStatus __stdcall Pro8_DirSetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in] ViReal64 startValue, 
+			[in] ViReal64 stopValue);
+		[helpcontext(357), entry("Pro8_DirGetElchSetVal"), helpstring("DIR Get ELCH Set Values")]
+		ViStatus __stdcall Pro8_DirGetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *startValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *stopValue);
+		[helpcontext(358), entry("Pro8_CcdmSetElchSetVal"), helpstring("CCDM Set ELCH Set Values")]
+		ViStatus __stdcall Pro8_CcdmSetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in] ViReal64 startValue, 
+			[in] ViReal64 stopValue);
+		[helpcontext(359), entry("Pro8_CcdmGetElchSetVal"), helpstring("CCDM Get ELCH Set Values")]
+		ViStatus __stdcall Pro8_CcdmGetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *startValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *stopValue);
+		[helpcontext(360), entry("Pro8_CcdmSetElchMeasVal"), helpstring("CCDM Set ELCH Measurement Value")]
+		ViStatus __stdcall Pro8_CcdmSetElchMeasVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 measurementParameter, 
+			[in] ViInt16 position);
+		[helpcontext(361), entry("Pro8_CcdmGetElchMeasVal"), helpstring("CCDM Get ELCH Measurement Value")]
+		ViStatus __stdcall Pro8_CcdmGetElchMeasVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 measurementParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *position);
+		[helpcontext(362), entry("Pro8_CwdmSetElchSetVal"), helpstring("CWDM Set ELCH Set Values")]
+		ViStatus __stdcall Pro8_CwdmSetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in] ViReal64 startValue, 
+			[in] ViReal64 stopValue);
+		[helpcontext(363), entry("Pro8_CwdmGetElchSetVal"), helpstring("CWDM Get ELCH Set Values")]
+		ViStatus __stdcall Pro8_CwdmGetElchSetVal(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt16 setParameter, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *startValue, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViReal64 *stopValue);
+	};
+	[dllname("pro8.dll"), helpcontext(379), helpstring("Utility Functions")]
+	module UtilityFunctions{
+		[helpcontext(364), entry("Pro8_writeInstrData"), helpstring("Write To Instrument")]
+		ViStatus __stdcall Pro8_writeInstrData(
+			[in] ViSession instrumentHandle, 
+			[in] ViString writeBuffer);
+		[helpcontext(365), entry("Pro8_readInstrData"), helpstring("Read Instrument Data")]
+		ViStatus __stdcall Pro8_readInstrData(
+			[in] ViSession instrumentHandle, 
+			[in] ViInt32 numberBytesToRead, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 1), custom(746B27E2-FBD7-11d1-B311-0060970535CB, "[]")] LPSTR readBuffer, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt32 *numBytesRead);
+		[helpcontext(366), entry("Pro8_WaitForFinishedBit"), helpstring("Wait for Finished Bit")]
+		ViStatus __stdcall Pro8_WaitForFinishedBit(
+			[in] ViSession instrumentHandle);
+		[helpcontext(367), entry("Pro8_reset"), helpstring("Reset")]
+		ViStatus __stdcall Pro8_reset(
+			[in] ViSession instrumentHandle);
+		[helpcontext(368), entry("Pro8_selfTest"), helpstring("Self-Test")]
+		ViStatus __stdcall Pro8_selfTest(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *selfTestResult);
+		[helpcontext(369), entry("Pro8_errorQuery"), helpstring("Error-Query")]
+		ViStatus __stdcall Pro8_errorQuery(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt32 *errorCode, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 1), custom(746B27E2-FBD7-11d1-B311-0060970535CB, "[]")] LPSTR errorMessage);
+		[helpcontext(370), entry("Pro8_errorMessage"), helpstring("Error Message")]
+		ViStatus __stdcall Pro8_errorMessage(
+			[in] ViSession instrumentHandle, 
+			[in] ViStatus statusCode, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 1), custom(746B27E2-FBD7-11d1-B311-0060970535CB, "[]")] LPSTR message);
+		[helpcontext(371), entry("Pro8_identificationQuery"), helpstring("Identification Query")]
+		ViStatus __stdcall Pro8_identificationQuery(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 1), custom(746B27E2-FBD7-11d1-B311-0060970535CB, "[]")] LPSTR manufacturerName, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 1), custom(746B27E2-FBD7-11d1-B311-0060970535CB, "[]")] LPSTR instrumentName, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 1), custom(746B27E2-FBD7-11d1-B311-0060970535CB, "[]")] LPSTR instrumentSerialNumber, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 1), custom(746B27E2-FBD7-11d1-B311-0060970535CB, "[]")] LPSTR firmwareRevision);
+		[helpcontext(372), entry("Pro8_GetSlotConfiguration"), helpstring("Get Slot Configuration")]
+		ViStatus __stdcall Pro8_GetSlotConfiguration(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot1Type, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot1Subtype, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot2Type, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot2Subtype, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot3Type, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot3Subtype, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot4Type, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot4Subtype, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot5Type, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot5Subtype, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot6Type, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot6Subtype, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot7Type, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot7Subtype, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot8Type, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *slot8Subtype);
+		[helpcontext(373), entry("Pro8_SlotDataQuery"), helpstring("Slot Data Query")]
+		ViStatus __stdcall Pro8_SlotDataQuery(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *typeCode, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *subtypeCode, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 1), custom(746B27E2-FBD7-11d1-B311-0060970535CB, "[]")] LPSTR idetificationString, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte1, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte2, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte3, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte4, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte5, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte6, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte7, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte8, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte9, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte10);
+		[helpcontext(374), entry("Pro8_SlotDataQueryEx"), helpstring("Slot Data Query Extended")]
+		ViStatus __stdcall Pro8_SlotDataQueryEx(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *typeCode, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *subtypeCode, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 1), custom(746B27E2-FBD7-11d1-B311-0060970535CB, "[]")] LPSTR idetificationString, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 1), custom(746B27E2-FBD7-11d1-B311-0060970535CB, "[]")] LPSTR serialNumber, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte1, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte2, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte3, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte4, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte5, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte6, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte7, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte8, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte9, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViInt16 *optionByte10);
+		[helpcontext(375), entry("Pro8_revisionQuery"), helpstring("Revision Query")]
+		ViStatus __stdcall Pro8_revisionQuery(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 1), custom(746B27E2-FBD7-11d1-B311-0060970535CB, "[]")] LPSTR instrumentDriverRevision, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 1), custom(746B27E2-FBD7-11d1-B311-0060970535CB, "[]")] LPSTR firmwareRevision);
+		[helpcontext(376), entry("Pro8_SetAnswerMode"), helpstring("Set Answer Mode")]
+		ViStatus __stdcall Pro8_SetAnswerMode(
+			[in] ViSession instrumentHandle, 
+			[in] ViBoolean answerMode);
+		[helpcontext(377), entry("Pro8_GetAnswerMode"), helpstring("Get Answer Mode")]
+		ViStatus __stdcall Pro8_GetAnswerMode(
+			[in] ViSession instrumentHandle, 
+			[in, out, custom(53D57340-9A16-11d0-A62C-0020AF16F78E, 0)] ViBoolean *answerMode);
+	};
+	[dllname("pro8.dll"), helpcontext(379), helpstring("Close")]
+	module Close{
+		[helpcontext(378), entry("Pro8_close"), helpstring("Close")]
+		ViStatus __stdcall Pro8_close(
+			[in] ViSession instrumentHandle);
+	};
+};

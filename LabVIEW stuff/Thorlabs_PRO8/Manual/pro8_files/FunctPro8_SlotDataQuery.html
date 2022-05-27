@@ -1,0 +1,314 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <link rel="stylesheet" href="htmlhelp.css" type="text/css">
+    <title>Pro8_SlotDataQuery</title>
+  </head>
+  <body>
+    <h1>Pro8_SlotDataQuery</h1>
+    <p class="syntax">
+      ViStatus Pro8_SlotDataQuery (ViSession instrumentHandle, ViPInt16 typeCode,
+                             ViPInt16 subtypeCode,
+                             ViChar _VI_FAR identificationString[],
+                             ViPInt16 optionByte1, ViPInt16 optionByte2,
+                             ViPInt16 optionByte3, ViPInt16 optionByte4,
+                             ViPInt16 optionByte5, ViPInt16 optionByte6,
+                             ViPInt16 optionByte7, ViPInt16 optionByte8,
+                             ViPInt16 optionByte9, ViPInt16 optionByte10);
+    </p>
+    <h2 class="purpose">Purpose</h2>
+    <p class="body">
+    This function reads the type code, subtype code, option bytes and the identification string of the active slot.
+    <br/>
+    Valid return values for type codes and subtype codes are:
+    <br/>
+    Module&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type&nbsp;&nbsp;Subtype
+    <br/>
+    ----------------------------------------
+    <br/>
+    LDC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;191&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+    <br/>
+    MLC (anode ground)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;47&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+    <br/>
+    MLC (cathode ground)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;47&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1
+    <br/>
+    TEC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;223&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+    <br/>
+    TEC (PT100)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;223&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1
+    <br/>
+    TEC (KRYO)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;223&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2
+    <br/>
+    ITC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;159&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+    <br/>
+    PDA (1 channel)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;107&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+    <br/>
+    PDA (2 channel)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;107&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1
+    <br/>
+    PDA (1 channel, UFWD)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;107&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2
+    <br/>
+    PDA (2 channel, UFWD)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;107&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3
+    <br/>
+    LS (DIL)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;247&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+    <br/>
+    LS (BFY)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;243&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3
+    <br/>
+    LS (B-Type)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;249&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3
+    <br/>
+    SLED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;243&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7
+    <br/>
+    SLED (B-Type)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;249&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7
+    <br/>
+    WDM-CW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;243&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2
+    <br/>
+    WDM-CW (B-Type)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;249&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2
+    <br/>
+    WDM-EA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;243&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+    <br/>
+    WDM-EA (B-Type)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;249&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+    <br/>
+    WDM-DIR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;243&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6
+    <br/>
+    WDM-DIR (B-Type)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;249&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6
+    <br/>
+    WDM-CCDM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;243&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4
+    <br/>
+    WDM-CCDM (B-Type)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;249&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4
+    <br/>
+    OSW (1-&gt;8)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;227&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+    <br/>
+    OSW (2-&gt;2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;227&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1
+    <br/>
+    OSW (1-&gt;2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;227&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2
+    <br/>
+    OSW (1-&gt;4)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;227&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3
+    <br/>
+    WDM-CWDM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;249&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9
+    <br/>
+    WDM-ITC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;249&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8
+    <br/>
+    BBS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;249&nbsp;&nbsp;&nbsp;&nbsp;10
+    </p>
+    <h2>Parameters</h2>
+    <table class="borderless" summary="Parameter help">
+      <tr>
+        <td valign="top"><em class="label">Input</em></td>
+      </tr>
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">instrumentHandle</td>
+        <td class="paramDataType">ViSession</td>
+        <td>
+    <p class="body">
+    This control accepts the Instrument Handle returned by the Initialize function to select the desired instrument driver session.
+    <br/>
+    Default Value:&nbsp;&nbsp;None
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top"><em class="label">Output</em></td>
+      </tr>
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">typeCode</td>
+        <td class="paramDataType">ViInt16 (passed by reference)</td>
+        <td>
+    <p class="body">
+    This control returns the type code of the active slot.
+    <br/>
+    Note: You may pass VI_NULL if you don't need this value.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">subtypeCode</td>
+        <td class="paramDataType">ViInt16 (passed by reference)</td>
+        <td>
+    <p class="body">
+    This control returns the subtype code of the active slot.
+    <br/>
+    Note: You may pass VI_NULL if you don't need this value.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">identificationString</td>
+        <td class="paramDataType">ViChar[]</td>
+        <td>
+    <p class="body">
+    This control returns the identification string of the active slot.
+    <br/>
+    Note:
+    <br/>
+    The array must contain at least 21 elements ViChar[21]. You may pass VI_NULL if you don't need this value.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">optionByte1</td>
+        <td class="paramDataType">ViInt16 (passed by reference)</td>
+        <td>
+    <p class="body">
+    This control returns the option byte 1 of the active slot.
+    <br/>
+    Note:
+    <br/>
+    For detailed description of the option bytes see your users manual. You may pass VI_NULL if you don't need this value.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">optionByte2</td>
+        <td class="paramDataType">ViInt16 (passed by reference)</td>
+        <td>
+    <p class="body">
+    This control returns the option byte 2 of the active slot.
+    <br/>
+    Note:
+    <br/>
+    For detailed description of the option bytes see your users manual. You may pass VI_NULL if you don't need this value.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">optionByte3</td>
+        <td class="paramDataType">ViInt16 (passed by reference)</td>
+        <td>
+    <p class="body">
+    This control returns the option byte 3 of the active slot.
+    <br/>
+    Note:
+    <br/>
+    For detailed description of the option bytes see your users manual. You may pass VI_NULL if you don't need this value.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">optionByte4</td>
+        <td class="paramDataType">ViInt16 (passed by reference)</td>
+        <td>
+    <p class="body">
+    This control returns the option byte 4 of the active slot.
+    <br/>
+    Note:
+    <br/>
+    For detailed description of the option bytes see your users manual. You may pass VI_NULL if you don't need this value.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">optionByte5</td>
+        <td class="paramDataType">ViInt16 (passed by reference)</td>
+        <td>
+    <p class="body">
+    This control returns the option byte 5 of the active slot.
+    <br/>
+    Note:
+    <br/>
+    For detailed description of the option bytes see your users manual. You may pass VI_NULL if you don't need this value.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">optionByte6</td>
+        <td class="paramDataType">ViInt16 (passed by reference)</td>
+        <td>
+    <p class="body">
+    This control returns the option byte 6 of the active slot.
+    <br/>
+    Note:
+    <br/>
+    For detailed description of the option bytes see your users manual. You may pass VI_NULL if you don't need this value.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">optionByte7</td>
+        <td class="paramDataType">ViInt16 (passed by reference)</td>
+        <td>
+    <p class="body">
+    This control returns the option byte 7 of the active slot.
+    <br/>
+    Note:
+    <br/>
+    For detailed description of the option bytes see your users manual. You may pass VI_NULL if you don't need this value.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">optionByte8</td>
+        <td class="paramDataType">ViInt16 (passed by reference)</td>
+        <td>
+    <p class="body">
+    This control returns the option byte 8 of the active slot.
+    <br/>
+    Note:
+    <br/>
+    For detailed description of the option bytes see your users manual. You may pass VI_NULL if you don't need this value.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">optionByte9</td>
+        <td class="paramDataType">ViInt16 (passed by reference)</td>
+        <td>
+    <p class="body">
+    This control returns the option byte 9 of the active slot.
+    <br/>
+    Note:
+    <br/>
+    For detailed description of the option bytes see your users manual. You may pass VI_NULL if you don't need this value.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">optionByte10</td>
+        <td class="paramDataType">ViInt16 (passed by reference)</td>
+        <td>
+    <p class="body">
+    This control returns the option byte 10 of the active slot.
+    <br/>
+    Note:
+    <br/>
+    For detailed description of the option bytes see your users manual. You may pass VI_NULL if you don't need this value.
+    </p>
+        </td>
+      </tr>
+    </table>
+    <h2>Return Value</h2>
+    <table class="borderless" summary="Return value help">
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">status</td>
+        <td class="paramDataType">ViStatus</td>
+        <td>
+    <p class="body">
+    This control contains the status code returned by the function call.
+    <br/>
+    For Status Codes see function &lt;Error Message&gt;.
+    </p>
+        </td>
+      </tr>
+    </table>
+    <h2>References</h2>
+    <p class="body">
+      <a href="ClassUtility%20Functions.html">Utility Functions</a><br/>
+      <a href="Thorlabs%20PRO800,8000%20VXIpnp%20Instr%20Driver.html">Thorlabs PRO800/8000 VXIpnp Instr Driver</a><br/>
+      <a href="Alphabetical%20Function%20Index.html">Alphabetical Function Index</a><br/>
+      <a href="Hierarchical%20Function%20Index.html">Hierarchical Function Index</a><br/>
+    </p>
+  </body>
+</html>

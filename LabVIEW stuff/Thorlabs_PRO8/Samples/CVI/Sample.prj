@@ -1,0 +1,191 @@
+[Project Header]
+Version = 910
+Pathname = "/c/SVN/MUN1260/driver/09111/src/sample/CVI/Sample.prj"
+CVI Dir = "/c/programme/national instruments/cvi2009"
+CVI Shared Dir = "/C/Programme/National Instruments/Shared/CVI"
+CVI Pub Local Dir Line0001 = "/C/Dokumente und Einstellungen/All Users/Anwendungsdaten/National Instruments/CV"
+CVI Pub Local Dir Line0002 = "I2009"
+CVI Pub Global Dir Line0001 = "/C/Dokumente und Einstellungen/All Users/Anwendungsdaten/National Instruments/CV"
+CVI Pub Global Dir Line0002 = "I"
+IVI Standard Root Dir = "/C/Programme/IVI"
+VXIplug&play Framework Dir = "/C/VXIPNP/winnt"
+IVI Standard Root 64-bit Dir = "/C/Programme/IVI"
+VXIplug&play Framework 64-bit Dir = "/C/VXIPNP/win64"
+Number of Files = 4
+Target Type = "Executable"
+Flags = 1040
+Copied From Locked InstrDrv Directory = False
+Copied from VXIPNP Directory = False
+Locked InstrDrv Name = ""
+Don't Display Deploy InstrDrv Dialog = False
+
+[File 0001]
+File Type = "Function Panel"
+Res Id = 1
+Path Is Rel = True
+Path Rel To = "VXIPlug&Play"
+Path Rel Path = "Thorlabs_PRO8/pro8.fp"
+Path = "/c/VXIPNP/WinNT/Thorlabs_PRO8/pro8.fp"
+Exclude = False
+Project Flags = 0
+Folder = "Instrument driver"
+
+[File 0002]
+File Type = "Include"
+Res Id = 2
+Path Is Rel = True
+Path Rel To = "VXIPlug&Play"
+Path Rel Path = "include/pro8.h"
+Path = "/c/VXIPNP/WinNT/include/pro8.h"
+Exclude = False
+Project Flags = 0
+Folder = "Instrument driver"
+
+[File 0003]
+File Type = "Library"
+Res Id = 3
+Path Is Rel = True
+Path Rel To = "VXIPlug&Play"
+Path Rel Path = "lib/msc/pro8.lib"
+Path = "/c/VXIPNP/WinNT/lib/msc/pro8.lib"
+Exclude = False
+Project Flags = 0
+Folder = "Instrument driver"
+
+[File 0004]
+File Type = "CSource"
+Res Id = 4
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "sample.c"
+Path = "/c/SVN/MUN1260/driver/09111/src/sample/CVI/sample.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "Source"
+
+[Folders]
+Source Files Folder Not Added Yet = True
+Include Files Folder Not Added Yet = True
+User Interface Files Folder Not Added Yet = True
+Instrument Files Folder Not Added Yet = True
+Folder 0 = "Instrument driver"
+Folder 1 = "Source"
+
+[Compiler Options]
+Default Calling Convention = "cdecl"
+Require Prototypes = True
+Require Return Values = True
+Enable Pointer Mismatch Warning = False
+Enable Unreachable Code Warning = False
+Enable Unreferenced Identifiers Warning = False
+Enable Assignment In Conditional Warning = False
+O Option Compatible With 5.0 = False
+Enable C99 Extensions = True
+Uninitialized Locals Compile Warning = "Conservative"
+Precompile Prefix Header = False
+Prefix Header File = ""
+
+[Run Options]
+Stack Size = 250000
+Image Base Address = 4194304
+Image Base Address x64 = 4194304
+
+[Compiler Defines]
+Compiler Defines = "/DWIN32_LEAN_AND_MEAN"
+
+[Create Executable]
+Executable File_Debug Is Rel = True
+Executable File_Debug Rel To = "Project"
+Executable File_Debug Rel Path = "Sample.exe"
+Executable File_Debug = "/c/SVN/MUN1260/driver/09111/src/sample/CVI/Sample.exe"
+Executable File_Release Is Rel = True
+Executable File_Release Rel To = "Project"
+Executable File_Release Rel Path = "Sample.exe"
+Executable File_Release = "/c/SVN/MUN1260/driver/09111/src/sample/CVI/Sample.exe"
+Executable File_Debug64 Is Rel = True
+Executable File_Debug64 Rel To = "Project"
+Executable File_Debug64 Rel Path = "Sample.exe"
+Executable File_Debug64 = "/c/SVN/MUN1260/driver/09111/src/sample/CVI/Sample.exe"
+Executable File_Release64 Is Rel = True
+Executable File_Release64 Rel To = "Project"
+Executable File_Release64 Rel Path = "Sample.exe"
+Executable File_Release64 = "/c/SVN/MUN1260/driver/09111/src/sample/CVI/Sample.exe"
+Icon File Is Rel = False
+Icon File = ""
+Application Title = ""
+Numeric File Version = "1,0,0,0"
+Numeric Prod Version = "1,0,0,0"
+Comments = ""
+Comments Ex = ""
+Company Name = "Thorlabs GmbH"
+Company Name Ex = "Thorlabs GmbH"
+File Version = "1.0"
+File Version Ex = "%f1.%f2"
+Legal Copyright = "Copyright © Thorlabs 2010"
+Legal Copyright Ex = "Copyright © %company %Y"
+Legal Trademarks = ""
+Legal Trademarks Ex = ""
+Private Build = ""
+Private Build Ex = ""
+Product Version = "1.0"
+Product Version Ex = "%p1.%p2"
+Special Build = ""
+Special Build Ex = ""
+DLL Exports = "Include File Symbols"
+DLL Import Library Choice = "Gen Lib For Current Mode"
+Use IVI Subdirectories for Import Libraries = False
+Use VXIPNP Subdirectories for Import Libraries = False
+Use Dflt Import Lib Base Name = True
+Where to Copy DLL = "Do not copy"
+Custom Directory to Copy DLL Is Rel = False
+Custom Directory to Copy DLL = ""
+Generate Source Documentation = "None"
+Add Type Lib To DLL = False
+Include Type Lib Help Links = False
+TLB Help Style = "HLP"
+Type Lib FP File Is Rel = False
+Type Lib FP File = ""
+Type Lib Guid = ""
+Runtime Support = "Full Runtime Support"
+Instrument Driver Support Only = False
+Embed Project .UIRs = False
+Generate Map File = False
+
+[External Compiler Support]
+UIR Callbacks File Option = 0
+Using LoadExternalModule = False
+Create Project Symbols File = True
+UIR Callbacks Obj File Is Rel = False
+UIR Callbacks Obj File = ""
+Project Symbols H File Is Rel = False
+Project Symbols H File = ""
+Project Symbols Obj File Is Rel = False
+Project Symbols Obj File = ""
+
+[ActiveX Server Options]
+Specification File Is Rel = False
+Specification File = ""
+Source File Is Rel = False
+Source File = ""
+Include File Is Rel = False
+Include File = ""
+IDL File Is Rel = False
+IDL File = ""
+Register ActiveX Server = False
+
+[Signing Info]
+Sign = True
+Sign Debug Build = False
+Store = "My"
+Certificate = "Thorlabs GmbH"
+Timestamp URL = "http://timestamp.verisign.com/scripts/timstamp.dll"
+URL = "http://www.thorlabs.com"
+
+[Manifest Info]
+Embed = False
+
+[tpcSection]
+tpcEnabled = 0
+tpcOverrideEnvironment = 0
+

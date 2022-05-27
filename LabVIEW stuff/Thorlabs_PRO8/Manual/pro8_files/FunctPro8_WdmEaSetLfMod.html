@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <link rel="stylesheet" href="htmlhelp.css" type="text/css">
+    <title>Pro8_WdmEaSetLfMod</title>
+  </head>
+  <body>
+    <h1>Pro8_WdmEaSetLfMod</h1>
+    <p class="syntax">
+      ViStatus Pro8_WdmEaSetLfMod (ViSession instrumentHandle,
+                             ViInt16 LFModulation);
+    </p>
+    <h2 class="purpose">Purpose</h2>
+    <p class="body">
+    This function switches the internal low frequency modulation on or off.
+    <br/>
+    Note:
+    <br/>
+    This function only works with a 'B' type module which returns 249 as its type code. To get information about type codes see functions 'Get Slot Configuration' and 'Slot Data Query'.
+    </p>
+    <h2>Parameters</h2>
+    <table class="borderless" summary="Parameter help">
+      <tr>
+        <td valign="top"><em class="label">Input</em></td>
+      </tr>
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">instrumentHandle</td>
+        <td class="paramDataType">ViSession</td>
+        <td>
+    <p class="body">
+    This control accepts the Instrument Handle returned by the Initialize function to select the desired instrument driver session.
+    <br/>
+    Default Value:&nbsp;&nbsp;None
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">LFModulation</td>
+        <td class="paramDataType">ViInt16</td>
+        <td>
+    <p class="body">
+    This control specifies the state of the low frequency modulation.
+    <br/>
+    Valid Range:
+    <br/>
+    VI_OFF (0) - low frequency modulation off (Default Value)
+    <br/>
+    VI_ON&nbsp;&nbsp;(1) - low frequency modulation on
+    </p>
+        </td>
+      </tr>
+    </table>
+    <h2>Return Value</h2>
+    <table class="borderless" summary="Return value help">
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">status</td>
+        <td class="paramDataType">ViStatus</td>
+        <td>
+    <p class="body">
+    This control contains the status code returned by the function call.
+    <br/>
+    For Status Codes see function &lt;Error Message&gt;.
+    </p>
+        </td>
+      </tr>
+    </table>
+    <h2>References</h2>
+    <p class="body">
+      <a href="ClassWDM-EA%20Functions.html">WDM-EA Functions</a><br/>
+      <a href="ClassConfiguration%20Functions.html">Configuration Functions</a><br/>
+      <a href="Thorlabs%20PRO800,8000%20VXIpnp%20Instr%20Driver.html">Thorlabs PRO800/8000 VXIpnp Instr Driver</a><br/>
+      <a href="Alphabetical%20Function%20Index.html">Alphabetical Function Index</a><br/>
+      <a href="Hierarchical%20Function%20Index.html">Hierarchical Function Index</a><br/>
+    </p>
+  </body>
+</html>

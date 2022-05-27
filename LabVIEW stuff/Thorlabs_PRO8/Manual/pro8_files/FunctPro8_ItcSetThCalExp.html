@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <link rel="stylesheet" href="htmlhelp.css" type="text/css">
+    <title>Pro8_ItcSetThCalExp</title>
+  </head>
+  <body>
+    <h1>Pro8_ItcSetThCalExp</h1>
+    <p class="syntax">
+      ViStatus Pro8_ItcSetThCalExp (ViSession instrumentHandle, ViReal64 bValue,
+                              ViReal64 rValue, ViReal64 tValue);
+    </p>
+    <h2 class="purpose">Purpose</h2>
+    <p class="body">
+    This function calibrates a thermistor using the exponential method.
+    </p>
+    <h2>Parameters</h2>
+    <table class="borderless" summary="Parameter help">
+      <tr>
+        <td valign="top"><em class="label">Input</em></td>
+      </tr>
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">instrumentHandle</td>
+        <td class="paramDataType">ViSession</td>
+        <td>
+    <p class="body">
+    This control accepts the Instrument Handle returned by the Initialize function to select the desired instrument driver session.
+    <br/>
+    Default Value:&nbsp;&nbsp;None
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">bValue</td>
+        <td class="paramDataType">ViReal64</td>
+        <td>
+    <p class="body">
+    This control specifies the B-value (energy constant) [K].
+    <br/>
+    Default Value: 3900.0 K
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">rValue</td>
+        <td class="paramDataType">ViReal64</td>
+        <td>
+    <p class="body">
+    This control specifies the R-value (thermistor nominal resistance at temperature set as T-value) [Ohm].
+    <br/>
+    Default Value: 10000.0 Ohm
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">tValue</td>
+        <td class="paramDataType">ViReal64</td>
+        <td>
+    <p class="body">
+    This control specifies the T-value (nominal temperature) [°C].
+    <br/>
+    Default Value: 25 °C
+    </p>
+        </td>
+      </tr>
+    </table>
+    <h2>Return Value</h2>
+    <table class="borderless" summary="Return value help">
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">status</td>
+        <td class="paramDataType">ViStatus</td>
+        <td>
+    <p class="body">
+    This control contains the status code returned by the function call.
+    <br/>
+    For Status Codes see function &lt;Error Message&gt;.
+    </p>
+        </td>
+      </tr>
+    </table>
+    <h2>References</h2>
+    <p class="body">
+      <a href="ClassITC%20Functions.html">ITC Functions</a><br/>
+      <a href="ClassData%20Functions.html">Data Functions</a><br/>
+      <a href="Thorlabs%20PRO800,8000%20VXIpnp%20Instr%20Driver.html">Thorlabs PRO800/8000 VXIpnp Instr Driver</a><br/>
+      <a href="Alphabetical%20Function%20Index.html">Alphabetical Function Index</a><br/>
+      <a href="Hierarchical%20Function%20Index.html">Hierarchical Function Index</a><br/>
+    </p>
+  </body>
+</html>

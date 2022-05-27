@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <link rel="stylesheet" href="htmlhelp.css" type="text/css">
+    <title>Pro8_init</title>
+  </head>
+  <body>
+    <h1>Pro8_init</h1>
+    <p class="syntax">
+      ViStatus Pro8_init (ViRsrc resourceName, ViBoolean IDQuery,
+                    ViBoolean resetDevice, ViPSession instrumentHandle);
+    </p>
+    <h2 class="purpose">Purpose</h2>
+    <p class="body">
+    This function performs the following initialization actions:
+    <br/>
+    - Opens a session to the Default Resource Manager resource and a session to the specified device using the interface and address specified in the Resource_Name control.
+    <br/>
+    - Performs an identification query on the Instrument.
+    <br/>
+    - Clears all errors in the instruments error queue.
+    <br/>
+    - Resets the instrument to a known state.
+    <br/>
+    - Sends initialization commands to the instrument that set any necessary programmatic variables such as Headers Off, Short Command form, and Data Transfer Binary to the state necessary for the operation of the instrument driver.
+    <br/>
+    - Returns an Instrument Handle which is used to differentiate between different sessions of this instrument driver.
+    <br/>
+    - Each time this function is invoked a Unique Session is opened.&nbsp;&nbsp;It is possible to have more than one session open for the same resource.
+    </p>
+    <h2>Parameters</h2>
+    <table class="borderless" summary="Parameter help">
+      <tr>
+        <td valign="top"><em class="label">Input</em></td>
+      </tr>
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">resourceName</td>
+        <td class="paramDataType">ViRsrc</td>
+        <td>
+    <p class="body">
+    This control specifies the interface and address of the device that is to be initialized (Instrument Descriptor). The exact grammar to be used in this control is shown in the note below.
+    <br/>
+    Default Value:&nbsp;&nbsp;&quot;GPIB::10::INSTR&quot;
+    <br/>
+    Notes:
+    <br/>
+    (1) Based on the Instrument Descriptor, this operation establishes a communication session with a device.&nbsp;&nbsp;The grammar for the Instrument Descriptor is shown below.&nbsp;&nbsp;Optional parameters are shown in square brackets ([]).
+    <br/>
+    Interface&nbsp;&nbsp;&nbsp;Grammar
+    <br/>
+    ------------------------------------------------------
+    <br/>
+    GPIB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GPIB[board]::primary address[::secondary address]
+    <br/>
+    [::INSTR]
+    <br/>
+    The GPIB keyword is used with GPIB instruments.
+    <br/>
+    The default value for optional parameters are shown below.
+    <br/>
+    Optional Parameter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default Value
+    <br/>
+    -----------------------------------------
+    <br/>
+    board&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+    <br/>
+    secondary address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;none - 31
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">IDQuery</td>
+        <td class="paramDataType">ViBoolean</td>
+        <td>
+    <p class="body">
+    This control specifies if an ID Query is sent to the instrument during the initialization procedure.
+    <br/>
+    Valid Range:
+    <br/>
+    VI_OFF (0) - Skip Query
+    <br/>
+    VI_ON&nbsp;&nbsp;(1) - Do Query (Default Value)
+    <br/>
+    Note:
+    <br/>
+    Under normal circumstances the ID Query ensures that the instrument initialized is the type supported by this driver. However circumstances may arise where it is undesirable to send an ID Query to the instrument.&nbsp;&nbsp;In those cases; set this control to &quot;Skip Query&quot; and this function will initialize the selected interface, without doing an ID Query.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">resetDevice</td>
+        <td class="paramDataType">ViBoolean</td>
+        <td>
+    <p class="body">
+    This control specifies if the instrument is to be reset to its power-on settings during the initialization procedure.
+    <br/>
+    Valid Range:
+    <br/>
+    VI_OFF (0) - Don't Reset
+    <br/>
+    VI_ON&nbsp;&nbsp;(1) - Reset Device (Default Value)
+    <br/>
+    Note:
+    <br/>
+    If you do not want the instrument reset. Set this control to &quot;Don't Reset&quot; while initializing the instrument.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top"><em class="label">Output</em></td>
+      </tr>
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">instrumentHandle</td>
+        <td class="paramDataType">ViSession (passed by reference)</td>
+        <td>
+    <p class="body">
+    This control returns an Instrument Handle that is used in all subsequent function calls to differentiate between different sessions of this instrument driver.
+    <br/>
+    Note:
+    <br/>
+    Each time this function is invoked a Unique Session is opened.&nbsp;&nbsp;It is possible to have more than one session open for the same resource.
+    </p>
+        </td>
+      </tr>
+    </table>
+    <h2>Return Value</h2>
+    <table class="borderless" summary="Return value help">
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">status</td>
+        <td class="paramDataType">ViStatus</td>
+        <td>
+    <p class="body">
+    This control contains the status code returned by the function call.
+    <br/>
+    For Status Codes see function &lt;Error Message&gt;.
+    </p>
+        </td>
+      </tr>
+    </table>
+    <h2>References</h2>
+    <p class="body">
+      <a href="Thorlabs%20PRO800,8000%20VXIpnp%20Instr%20Driver.html">Thorlabs PRO800/8000 VXIpnp Instr Driver</a><br/>
+      <a href="Alphabetical%20Function%20Index.html">Alphabetical Function Index</a><br/>
+      <a href="Hierarchical%20Function%20Index.html">Hierarchical Function Index</a><br/>
+    </p>
+  </body>
+</html>

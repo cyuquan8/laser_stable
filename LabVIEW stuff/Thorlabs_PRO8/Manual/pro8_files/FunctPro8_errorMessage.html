@@ -1,0 +1,411 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <link rel="stylesheet" href="htmlhelp.css" type="text/css">
+    <title>Pro8_errorMessage</title>
+  </head>
+  <body>
+    <h1>Pro8_errorMessage</h1>
+    <p class="syntax">
+      ViStatus Pro8_errorMessage (ViSession instrumentHandle, ViStatus statusCode,
+                            ViChar _VI_FAR message[]);
+    </p>
+    <h2 class="purpose">Purpose</h2>
+    <p class="body">
+    This function takes the Status Code returned by the instrument driver functions, interprets it and returns it as a user readable string.
+    <br/>
+    Status Codes and Descriptions:
+    <br/>
+    Status&nbsp;&nbsp;&nbsp;&nbsp;Description
+    <br/>
+    -------------------------------------------------
+    <br/>
+    0&nbsp;&nbsp;No error (the call was successful).
+    <br/>
+    --------&nbsp;&nbsp;--- VISA Errors ---
+    <br/>
+    BFFF0000&nbsp;&nbsp;Miscellaneous or system error occurred.
+    <br/>
+    BFFF000E&nbsp;&nbsp;Invalid session handle.
+    <br/>
+    BFFF000F&nbsp;&nbsp;Session could not be opened with a lock because the
+    <br/>
+    resource is already locked.
+    <br/>
+    BFFF0011&nbsp;&nbsp;Specified resource is not present.
+    <br/>
+    BFFF0012&nbsp;&nbsp;Invalid resource string (parsing error).
+    <br/>
+    BFFF0013&nbsp;&nbsp;Specified access mode is invalid.
+    <br/>
+    BFFF0015&nbsp;&nbsp;Timeout occurred before operation could complete.
+    <br/>
+    BFFF0034&nbsp;&nbsp;Violation of raw write protocol occurred.
+    <br/>
+    BFFF0035&nbsp;&nbsp;Violation of raw read protocol occurred.
+    <br/>
+    BFFF0036&nbsp;&nbsp;Device reported an output protocol error.
+    <br/>
+    BFFF0037&nbsp;&nbsp;Device reported an input protocol error.
+    <br/>
+    BFFF0038&nbsp;&nbsp;Bus error occurred during transfer.
+    <br/>
+    BFFF003A&nbsp;&nbsp;Invalid setup (attributes are not consistent).
+    <br/>
+    BFFF003C&nbsp;&nbsp;Insufficient resources to allocate system data.
+    <br/>
+    BFFF005F&nbsp;&nbsp;No listeners condition was detected.
+    <br/>
+    BFFF0060&nbsp;&nbsp;This interface is not the controller in charge.
+    <br/>
+    BFFF0067&nbsp;&nbsp;Operation is not supported on this session.
+    <br/>
+    BFFF0071&nbsp;&nbsp;The user buffer is not valid for the required size.
+    <br/>
+    BFFF0072&nbsp;&nbsp;The resource is valid but not currently accessible.
+    <br/>
+    3FFF0077&nbsp;&nbsp;The specified configuration either does not exist or
+    <br/>
+    could not be loaded; using VISA-specified defaults.
+    <br/>
+    3FFF007D&nbsp;&nbsp;Session opened successfully, but the device at the
+    <br/>
+    specified address is not responding.
+    <br/>
+    --------&nbsp;&nbsp;--- Instrument Driver Errors and Warnings ---
+    <br/>
+    3FFF0085&nbsp;&nbsp;Unknown Status Code - VI_WARN_UNKNOWN_STATUS
+    <br/>
+    3FFC0101&nbsp;&nbsp;ID Query not supported - VI_WARN_NSUP_ID_QUERY&nbsp;&nbsp;&nbsp;
+    <br/>
+    3FFC0102&nbsp;&nbsp;Reset not supported - VI_WARN_NSUP_RESET&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br/>
+    3FFC0103&nbsp;&nbsp;Self Test not supported - VI_WARN_NSUP_SELF_TEST&nbsp;&nbsp;
+    <br/>
+    3FFC0104&nbsp;&nbsp;Error Query not supported - VI_WARN_NSUP_ERROR_QUERY
+    <br/>
+    3FFC0105&nbsp;&nbsp;Revision Query not supported - VI_WARN_NSUP_REV_QUERY&nbsp;&nbsp;
+    <br/>
+    3FFF0005&nbsp;&nbsp;The specified termination character was read.
+    <br/>
+    3FFF0006&nbsp;&nbsp;The specified number of bytes was read.
+    <br/>
+    BFFC0001&nbsp;&nbsp;Parameter 1 out of range.
+    <br/>
+    BFFC0002&nbsp;&nbsp;Parameter 2 out of range.
+    <br/>
+    BFFC0003&nbsp;&nbsp;Parameter 3 out of range.
+    <br/>
+    BFFC0004&nbsp;&nbsp;Parameter 4 out of range.
+    <br/>
+    BFFC0005&nbsp;&nbsp;Parameter 5 out of range.
+    <br/>
+    BFFC0006&nbsp;&nbsp;Parameter 6 out of range.
+    <br/>
+    BFFC0007&nbsp;&nbsp;Parameter 7 out of range.
+    <br/>
+    BFFC0008&nbsp;&nbsp;Parameter 8 out of range.
+    <br/>
+    BFFC0011&nbsp;&nbsp;Instrument returned invalid response to ID Query
+    <br/>
+    BFFC0800&nbsp;&nbsp;Error Opening File&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VI_ERROR_INSTR_FILE_OPEN
+    <br/>
+    BFFC0801&nbsp;&nbsp;Error Writing to File&nbsp;&nbsp;&nbsp;VI_ERROR_INSTR_FILE_WRITE
+    <br/>
+    BFFC0803&nbsp;&nbsp;Invalid Response VI_ERROR_INSTR_INTERPRETING_RESPONSE
+    <br/>
+    BFFC0804&nbsp;&nbsp;Error Polling Instruments FIN Bit
+    <br/>
+    BFFC0805&nbsp;&nbsp;Error querying Instrument Error Queue
+    <br/>
+    --------&nbsp;&nbsp;--- General Instrument Errors ---
+    <br/>
+    BFFC0964&nbsp;&nbsp;Unknown command
+    <br/>
+    BFFC0965&nbsp;&nbsp;Invalid character
+    <br/>
+    BFFC0966&nbsp;&nbsp;Invalid numeric parameter
+    <br/>
+    BFFC0967&nbsp;&nbsp;Invalid text parameter
+    <br/>
+    BFFC0968&nbsp;&nbsp;Missing parameter
+    <br/>
+    BFFC0969&nbsp;&nbsp;Invalid separator
+    <br/>
+    BFFC096B&nbsp;&nbsp;Empty slot
+    <br/>
+    BFFC096C&nbsp;&nbsp;Parameter can not be set
+    <br/>
+    BFFC096D&nbsp;&nbsp;Wrong compound
+    <br/>
+    BFFC096E&nbsp;&nbsp;Unknown compound
+    <br/>
+    BFFC096F&nbsp;&nbsp;Wrong parameter
+    <br/>
+    BFFC0970&nbsp;&nbsp;Wrong command for the selected port
+    <br/>
+    BFFC09BE&nbsp;&nbsp;Parser buffer overflow
+    <br/>
+    BFFC09C8&nbsp;&nbsp;Data out of range
+    <br/>
+    BFFC0A2C&nbsp;&nbsp;Hardware error
+    <br/>
+    BFFC0A2D&nbsp;&nbsp;Software error
+    <br/>
+    BFFC0A2E&nbsp;&nbsp;Not implemented jet
+    <br/>
+    BFFC0A30&nbsp;&nbsp;Update required&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BFFC0A36&nbsp;&nbsp;ELCH set value initialisation not complete&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BFFC0A37&nbsp;&nbsp;ELCH read value(s) initialisation not complete
+    <br/>
+    BFFC0A40&nbsp;&nbsp;EEPROM write failed
+    <br/>
+    BFFC0A41&nbsp;&nbsp;EEPROM read back failed
+    <br/>
+    BFFC0A42&nbsp;&nbsp;EEPROM compare failed
+    <br/>
+    BFFC0A90&nbsp;&nbsp;Too many errors
+    <br/>
+    BFFC0A9A&nbsp;&nbsp;Query interrupted
+    <br/>
+    BFFC0AA4&nbsp;&nbsp;Query unterminated
+    <br/>
+    BFFC0AF4&nbsp;&nbsp;IEEE receive buffer overflow
+    <br/>
+    BFFC0B58&nbsp;&nbsp;Serial receive buffer overflow
+    <br/>
+    BFFC0B59&nbsp;&nbsp;Serial send timeout occoured
+    <br/>
+    --------&nbsp;&nbsp;--- LDC Module Errors ---
+    <br/>
+    BFFC0CE9&nbsp;&nbsp;Interlock is open
+    <br/>
+    BFFC0CEA&nbsp;&nbsp;Open circuit
+    <br/>
+    BFFC0CEB&nbsp;&nbsp;Over temperature
+    <br/>
+    BFFC0CEC&nbsp;&nbsp;Internal power failure
+    <br/>
+    BFFC0CED&nbsp;&nbsp;No LD polarity change during laser on
+    <br/>
+    BFFC0CEE&nbsp;&nbsp;No PD polarity change during laser on
+    <br/>
+    BFFC0CEF&nbsp;&nbsp;No setting of ILD during constant power mode
+    <br/>
+    BFFC0CF0&nbsp;&nbsp;No setting of IMD during constant current mode
+    <br/>
+    BFFC0CF1&nbsp;&nbsp;Attempt to activate TWIN durin laser on
+    <br/>
+    BFFC0CF2&nbsp;&nbsp;Temperature is out of window
+    <br/>
+    BFFC0CF3&nbsp;&nbsp;No TEC in the system
+    <br/>
+    BFFC0CF4&nbsp;&nbsp;No bias change during laser on
+    <br/>
+    BFFC0CF6&nbsp;&nbsp;No calibrating of PD during laser on
+    <br/>
+    BFFC0CF7&nbsp;&nbsp;No TEC in this slot
+    <br/>
+    BFFC0CF8&nbsp;&nbsp;No mode change during laser on
+    <br/>
+    BFFC0CFB&nbsp;&nbsp;No PD polarity change during bias on in CP mode
+    <br/>
+    --------&nbsp;&nbsp;--- MLC Module Errors ---
+    <br/>
+    BFFC0F41&nbsp;&nbsp;Interlock is open
+    <br/>
+    BFFC0F43&nbsp;&nbsp;Over temperature
+    <br/>
+    BFFC0F44&nbsp;&nbsp;Internal power failure
+    <br/>
+    BFFC0F47&nbsp;&nbsp;No setting of ILD during constant power mode
+    <br/>
+    BFFC0F48&nbsp;&nbsp;No setting of IMD during constant current mode
+    <br/>
+    BFFC0F50&nbsp;&nbsp;No mode change during laser on
+    <br/>
+    BFFC0F53&nbsp;&nbsp;No range change during laser on
+    <br/>
+    BFFC0F54&nbsp;&nbsp;Temperature is out of window
+    <br/>
+    BFFC0F55&nbsp;&nbsp;No TEC in the system
+    <br/>
+    BFFC0F56&nbsp;&nbsp;Attempt to activate TWIN durin laser on
+    <br/>
+    BFFC0F57&nbsp;&nbsp;No TEC in this slot
+    <br/>
+    --------&nbsp;&nbsp;--- TEC Module Errors ---
+    <br/>
+    BFFC0D4F&nbsp;&nbsp;Over temperature
+    <br/>
+    BFFC0D50&nbsp;&nbsp;Wrong or no sensor
+    <br/>
+    BFFC0D51&nbsp;&nbsp;No calibrating of thermistor during TEC on
+    <br/>
+    BFFC0D52&nbsp;&nbsp;Wrong command for this sensor
+    <br/>
+    BFFC0D53&nbsp;&nbsp;No sensor change during TEC on allowed
+    <br/>
+    BFFC0D6A&nbsp;&nbsp;Command not valid for this module
+    <br/>
+    --------&nbsp;&nbsp;--- ITC Module Errors ---
+    <br/>
+    BFFC0E15&nbsp;&nbsp;Interlock is open
+    <br/>
+    BFFC0E16&nbsp;&nbsp;Open circuit
+    <br/>
+    BFFC0E17&nbsp;&nbsp;Over temperature
+    <br/>
+    BFFC0E18&nbsp;&nbsp;Internal power failure
+    <br/>
+    BFFC0E19&nbsp;&nbsp;No calibrating of thermistor during TEC on
+    <br/>
+    BFFC0E1A&nbsp;&nbsp;No calibrating of PD during laser on
+    <br/>
+    BFFC0E1B&nbsp;&nbsp;No setting of ILD during constant power mode
+    <br/>
+    BFFC0E1C&nbsp;&nbsp;No setting of IMD during constant current mode
+    <br/>
+    BFFC0E1D&nbsp;&nbsp;No LD polarity change during laser on
+    <br/>
+    BFFC0E1E&nbsp;&nbsp;No PD polarity change during laser on
+    <br/>
+    BFFC0E1F&nbsp;&nbsp;No mode change during laser on&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br/>
+    BFFC0E20&nbsp;&nbsp;Wrong or no sensor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br/>
+    BFFC0E21&nbsp;&nbsp;Wrong command for this sensor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br/>
+    BFFC0E22&nbsp;&nbsp;No sensor change during TEC on allowed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br/>
+    BFFC0E23&nbsp;&nbsp;Temperature is out of window
+    <br/>
+    BFFC0E24&nbsp;&nbsp;Attempt to activate TWIN durin laser on
+    <br/>
+    --------&nbsp;&nbsp;--- PDA Module Errors ---
+    <br/>
+    BFFC0E79&nbsp;&nbsp;Can't switch on BIAS while photo current is negative
+    <br/>
+    BFFC0E7A&nbsp;&nbsp;Attempt to change polarity while BIAS is on
+    <br/>
+    BFFC0E7B&nbsp;&nbsp;Attempt to change measurement range while BIAS is on
+    <br/>
+    BFFC0E7C&nbsp;&nbsp;Attempt to measure Ufwd while BIAS is on
+    <br/>
+    BFFC0E7D&nbsp;&nbsp;Ufwd measurement failed - accuracy error
+    <br/>
+    BFFC0E7E&nbsp;&nbsp;Ufwd measurement failed - voltage overflow
+    <br/>
+    --------&nbsp;&nbsp;--- LS/SLED/WDM Module Errors ---
+    <br/>
+    BFFC0DB1&nbsp;&nbsp;Over temperature&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br/>
+    BFFC0DB2&nbsp;&nbsp;Internal power failure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br/>
+    BFFC0DB3&nbsp;&nbsp;Temperature is out of window&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br/>
+    BFFC0DB4&nbsp;&nbsp;Shutter error- fiber missing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br/>
+    BFFC0DCE&nbsp;&nbsp;Command not valid for this module
+    <br/>
+    BFFC0E00&nbsp;&nbsp;Service-Mode Error 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br/>
+    BFFC0E01&nbsp;&nbsp;Service-Mode Error 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br/>
+    BFFC0E02&nbsp;&nbsp;No power change during modulation on allowed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br/>
+    BFFC0E04&nbsp;&nbsp;Calibration required&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br/>
+    BFFC0E05&nbsp;&nbsp;No change of LF modulation type while modulation on&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <br/>
+    BFFC0E06&nbsp;&nbsp;No LF-modulation possible - amplitude too high
+    <br/>
+    BFFC0E07&nbsp;&nbsp;Command not valid in service mode
+    <br/>
+    BFFC0E08&nbsp;&nbsp;Command only valid in service mode
+    <br/>
+    BFFC0E09&nbsp;&nbsp;No output power tune for this module
+    </p>
+    <h2>Parameters</h2>
+    <table class="borderless" summary="Parameter help">
+      <tr>
+        <td valign="top"><em class="label">Input</em></td>
+      </tr>
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">instrumentHandle</td>
+        <td class="paramDataType">ViSession</td>
+        <td>
+    <p class="body">
+    This control accepts the Instrument Handle returned by the Initialize function to select the desired instrument driver session.
+    <br/>
+    Default Value:&nbsp;&nbsp;VI_NULL
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">statusCode</td>
+        <td class="paramDataType">ViStatus</td>
+        <td>
+    <p class="body">
+    This control accepts the Status Code returned from the instrument driver functions.
+    <br/>
+    Default Value:
+    <br/>
+    0 - VI_SUCCESS
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top"><em class="label">Output</em></td>
+      </tr>
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">message</td>
+        <td class="paramDataType">ViChar[]</td>
+        <td>
+    <p class="body">
+    This control returns the interpreted Status Code as a user readable message string.
+    <br/>
+    Note:
+    <br/>
+    The array must contain at least 256 elements ViChar[256].
+    </p>
+        </td>
+      </tr>
+    </table>
+    <h2>Return Value</h2>
+    <table class="borderless" summary="Return value help">
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">status</td>
+        <td class="paramDataType">ViStatus</td>
+        <td>
+    <p class="body">
+    This control contains the status code returned by the function call.
+    <br/>
+    For Status Codes see function help.
+    </p>
+        </td>
+      </tr>
+    </table>
+    <h2>References</h2>
+    <p class="body">
+      <a href="ClassUtility%20Functions.html">Utility Functions</a><br/>
+      <a href="Thorlabs%20PRO800,8000%20VXIpnp%20Instr%20Driver.html">Thorlabs PRO800/8000 VXIpnp Instr Driver</a><br/>
+      <a href="Alphabetical%20Function%20Index.html">Alphabetical Function Index</a><br/>
+      <a href="Hierarchical%20Function%20Index.html">Hierarchical Function Index</a><br/>
+    </p>
+  </body>
+</html>

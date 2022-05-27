@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <link rel="stylesheet" href="htmlhelp.css" type="text/css">
+    <title>Pro8_readInstrData</title>
+  </head>
+  <body>
+    <h1>Pro8_readInstrData</h1>
+    <p class="syntax">
+      ViStatus Pro8_readInstrData (ViSession instrumentHandle,
+                             ViInt32 numberBytesToRead,
+                             ViChar _VI_FAR readBuffer[],
+                             ViPInt32 numBytesRead);
+    </p>
+    <h2 class="purpose">Purpose</h2>
+    <p class="body">
+    This function reads data from the instrument's output buffer and returns it to the specified variable in memory.
+    <br/>
+    Notes:
+    <br/>
+    (1) Because the instrument may return both numeric and text data in response to queries this function returns the data in string format.
+    <br/>
+    (2) If valid data is not available at the instrument's output buffer when this function is called the instrument will hang up and the function will not return until it times out.&nbsp;&nbsp;If the time-out is disabled this function will hang indefinitely and it may be necessary to reboot the computer to break out.
+    </p>
+    <h2>Parameters</h2>
+    <table class="borderless" summary="Parameter help">
+      <tr>
+        <td valign="top"><em class="label">Input</em></td>
+      </tr>
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">instrumentHandle</td>
+        <td class="paramDataType">ViSession</td>
+        <td>
+    <p class="body">
+    This control accepts the Instrument Handle returned by the Initialize function to select the desired instrument driver session.
+    <br/>
+    Default Value:&nbsp;&nbsp;None
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">numberBytesToRead</td>
+        <td class="paramDataType">ViInt32</td>
+        <td>
+    <p class="body">
+    The number of bytes specified by this control should be greater than or equal to the number of bytes which are to be read from the instrument. If the actual number of bytes to be read is greater than the number this control specifies then multiple reads will be required to empty the instrument's output buffer.
+    <br/>
+    If the instrument's output buffer is not emptied the instrument may return invalid data when future reads are performed.
+    <br/>
+    Default Value:&nbsp;&nbsp;50 (See NOTE 2)
+    <br/>
+    Notes:
+    <br/>
+    (1) If NO DATA is available at the instrument's output buffer when this function is called the instrument will hang up and the function will not return until it times out.&nbsp;&nbsp;If the time-out is disabled, this function will hang indefinitely and it may be necessary to reboot the computer.
+    <br/>
+    (2) If the number of bytes expected is greater than 50 the value of this control may be increased. If the actual number of bytes read is larger than the declared size of the read buffer a run-time error will be generated.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top"><em class="label">Output</em></td>
+      </tr>
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">readBuffer</td>
+        <td class="paramDataType">ViChar[]</td>
+        <td>
+    <p class="body">
+    The incoming data from the instrument is placed into this variable.
+    <br/>
+    Notes:
+    <br/>
+    (1) Because the instrument may return both numeric and text data in response to queries this function returns the data in string format.
+    <br/>
+    (2) This function does not overwrite any old data left in the string variable from the last time the function was called. String data in LabWindows/CVI is terminated with an ASCII null(0x0) and string manipulation functions will only recognize data before the ASCII null.
+    <br/>
+    (3) The declared size of the string variable must be greater than the actual number of bytes read from the instrument if it is not a run-time error will be generated.
+    </p>
+        </td>
+      </tr>
+      <tr>
+        <td class="paramName">numBytesRead</td>
+        <td class="paramDataType">ViInt32 (passed by reference)</td>
+        <td>
+    <p class="body">
+    This variable contains the actual number of bytes read from the instrument. This is the value which is returned by the read function.
+    <br/>
+    Note:
+    <br/>
+    If the actual number of bytes read is less than the number of bytes specified in the Number Bytes To Read control then the output buffer has probably been emptied. If the read function fails and the number of bytes read is 0, the most probable cause for the failure is there was no data available at the instrument's output buffer.
+    </p>
+        </td>
+      </tr>
+    </table>
+    <h2>Return Value</h2>
+    <table class="borderless" summary="Return value help">
+      <tr>
+        <td class="tablehead">Name</td>
+        <td class="tablehead">Type</td>
+        <td class="tablehead">Description</td>
+      </tr>
+      <tr>
+        <td class="paramName">status</td>
+        <td class="paramDataType">ViStatus</td>
+        <td>
+    <p class="body">
+    This control contains the status code returned by the function call.
+    <br/>
+    For Status Codes see function &lt;Error Message&gt;.
+    </p>
+        </td>
+      </tr>
+    </table>
+    <h2>References</h2>
+    <p class="body">
+      <a href="ClassUtility%20Functions.html">Utility Functions</a><br/>
+      <a href="Thorlabs%20PRO800,8000%20VXIpnp%20Instr%20Driver.html">Thorlabs PRO800/8000 VXIpnp Instr Driver</a><br/>
+      <a href="Alphabetical%20Function%20Index.html">Alphabetical Function Index</a><br/>
+      <a href="Hierarchical%20Function%20Index.html">Hierarchical Function Index</a><br/>
+    </p>
+  </body>
+</html>
