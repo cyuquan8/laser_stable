@@ -324,14 +324,15 @@ class maddpgv2_mlp_replay_buffer:
 
             # obtain goal for agent drones from given goal_index from org_replay_buffer
             # goal here for good agent is the time_elapsed in episode
-            goal = self.org_replay_buffer.actor_state_log_list[agent_index][goal_index][:self.goal_dims]
-
+            goal = self.org_replay_buffer.actor_state_log_list[agent_index][goal_index][1:self.goal_dims + 1]
+            print(goal)
+            print(goal.shape)
         # store goal in additional replay buffer
         self.add_goals_replay_buffer_list[add_goals_index].actor_goals_log_list[agent_index][time_step] = goal
         self.add_goals_replay_buffer_list[add_goals_index].critic_goals_log[time_step][agent_index * self.goal_dims: agent_index * self.goal_dims + self.goal_dims] = goal
 
         # obtain wf_state
-        wf_state = self.add_goals_replay_buffer_list[add_goals_index].actor_state_log_list[agent_index][time_step][:self.goal_dims]
+        wf_state = self.add_goals_replay_buffer_list[add_goals_index].actor_state_log_list[agent_index][time_step][1:self.goal_dims + 1]
 
          # iterate over range of datapoints
         for index in range(len(wf_state)):
