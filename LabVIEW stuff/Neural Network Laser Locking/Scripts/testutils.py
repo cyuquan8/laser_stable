@@ -8,8 +8,8 @@ import shutil
 import numpy as np
 
 
-NUMBER_OF_EPISODES = 10
-EPISODE_TIME_STEP_LIMIT = 5
+NUMBER_OF_EPISODES = 144
+EPISODE_TIME_STEP_LIMIT = 100
 
 def reward(state, gt_state):
 

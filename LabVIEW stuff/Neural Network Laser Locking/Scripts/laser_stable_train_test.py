@@ -23,8 +23,9 @@ CSV_LOG_DIRECTORY											= "csv_log" + '/' + SCENARIO_NAME
 LABVIEW_LOG_DIRECTORY										= "labview_log" +  '/' + SCENARIO_NAME
 TENSORBOARD_LOG_DIRECTORY									= "tensorboard_log" +  '/' + SCENARIO_NAME + '/' + TRAINING_NAME
 GOAL_PATH													= "goal.csv"
-NUMBER_OF_EPISODES 											= 10
-EPISODE_TIME_STEP_LIMIT										= 5
+CONFIG 														= np.loadtxt(fname=".\\config.txt", delimiter = ',')
+NUMBER_OF_EPISODES 											= int(CONFIG[0])
+EPISODE_TIME_STEP_LIMIT										= int(CONFIG[1])
 SAVE_MODEL_RATE 											= 1
 SAVE_CSV_LOG												= True
 
