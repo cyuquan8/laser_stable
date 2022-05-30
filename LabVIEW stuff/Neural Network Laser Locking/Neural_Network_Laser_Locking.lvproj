@@ -19,7 +19,8 @@
 			<Item Name="WG_set_ramp_parameters.vi" Type="VI" URL="../Waveform Generator.llb/WG_set_ramp_parameters.vi"/>
 		</Item>
 		<Item Name="Oscilloscope" Type="Folder">
-			<Item Name="Tektronix TBS 2000 Series Read Quadruple Channels.vi" Type="VI" URL="../Tektronix TBS 2000 Series Read Quadruple Channels.vi"/>
+			<Item Name="OS_read_four_channels.vi" Type="VI" URL="../OS_read_four_channels.vi"/>
+			<Item Name="OS_read_first_channel.vi" Type="VI" URL="../Oscilloscope.llb/OS_read_first_channel.vi"/>
 		</Item>
 		<Item Name="State Machine" Type="Folder">
 			<Property Name="NI.SortType" Type="Int">3</Property>
@@ -46,9 +47,10 @@
 			<Item Name="laser.jpg" Type="Document" URL="../Graphics/laser.jpg"/>
 		</Item>
 		<Item Name="Python Interface" Type="Folder">
+			<Item Name="Implement Action.vi" Type="VI" URL="../lock-box.llb/Implement Action.vi"/>
 			<Item Name="Write State.vi" Type="VI" URL="../lock-box.llb/Write State.vi"/>
+			<Item Name="Read Action.vi" Type="VI" URL="../lock-box.llb/Read Action.vi"/>
 		</Item>
-		<Item Name="Read Action.vi" Type="VI" URL="../lock-box.llb/Read Action.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="instr.lib" Type="Folder">
 				<Item Name="Agilent 33XXX Series.lvlib" Type="Library" URL="/&lt;instrlib&gt;/Agilent 33XXX Series/Agilent 33XXX Series.lvlib"/>
@@ -98,16 +100,6 @@
 				<Item Name="Write Delimited Spreadsheet (I64).vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Write Delimited Spreadsheet (I64).vi"/>
 				<Item Name="Write Delimited Spreadsheet (DBL).vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Write Delimited Spreadsheet (DBL).vi"/>
 				<Item Name="Write Delimited Spreadsheet.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Write Delimited Spreadsheet.vi"/>
-				<Item Name="Find First Error.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Find First Error.vi"/>
-				<Item Name="Close File+.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Close File+.vi"/>
-				<Item Name="compatReadText.vi" Type="VI" URL="/&lt;vilib&gt;/_oldvers/_oldvers.llb/compatReadText.vi"/>
-				<Item Name="Read File+ (string).vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Read File+ (string).vi"/>
-				<Item Name="Open File+.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Open File+.vi"/>
-				<Item Name="Read Lines From File (with error IO).vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Read Lines From File (with error IO).vi"/>
-				<Item Name="Read Delimited Spreadsheet (string).vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Read Delimited Spreadsheet (string).vi"/>
-				<Item Name="Read Delimited Spreadsheet (I64).vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Read Delimited Spreadsheet (I64).vi"/>
-				<Item Name="Read Delimited Spreadsheet (DBL).vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Read Delimited Spreadsheet (DBL).vi"/>
-				<Item Name="Read Delimited Spreadsheet.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Read Delimited Spreadsheet.vi"/>
 			</Item>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
