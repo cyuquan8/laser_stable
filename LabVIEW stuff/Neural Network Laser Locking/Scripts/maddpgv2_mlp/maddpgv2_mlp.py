@@ -9,12 +9,13 @@ import torch as T
 import torch.nn.functional as F
 from maddpgv2_mlp.maddpgv2_mlp_agent import maddpgv2_mlp_agent
 from maddpgv2_mlp.maddpgv2_mlp_replay_buffer import maddpgv2_mlp_replay_buffer
+from utils.utils import plot_grad_flow
 
 class maddpgv2_mlp:
     
-    def __init__(self, mode, scenario_name, training_name, discount_rate, lr_actor, lr_critic, num_agents, actor_dropout_p, critic_dropout_p, state_fc_input_dims, actor_state_fc_output_dims, 
-                 critic_state_fc_output_dims, action_dims, goal_fc_input_dims, tau, actor_action_noise, actor_action_range, mem_size, batch_size, update_target, grad_clipping, grad_norm_clip, 
-                 num_of_add_goals, goal_strategy):
+    def __init__(self, mode, scenario_name, training_name, discount_rate, lr_actor, lr_critic, optimizer, actor_lr_scheduler, critic_lr_scheduler, num_agents, actor_dropout_p, critic_dropout_p, 
+                 state_fc_input_dims, actor_state_fc_output_dims, critic_state_fc_output_dims, action_dims, goal_fc_input_dims, tau, actor_action_noise, actor_action_range, mem_size, batch_size, update_target, 
+                 grad_clipping, grad_norm_clip, num_of_add_goals, goal_strategy, waveform_threshold, *args, **kwargs):
             
         """ class constructor for attributes of the maddpg class (for multiple agents) """
         
@@ -27,6 +28,9 @@ class maddpgv2_mlp:
         # dimensions of action space
         self.actions_dims = action_dims
         
+        # action range
+        self.action_range = actor_action_range
+
         # batch of memory to sample
         self.batch_size = batch_size
         
@@ -45,10 +49,11 @@ class maddpgv2_mlp:
 
             # append maddpg agent to list
             self.maddpgv2_mlp_agents_list.append(maddpgv2_mlp_agent(mode = mode, scenario_name = scenario_name, training_name = training_name, discount_rate = discount_rate, lr_actor = lr_actor, 
-                                                                    lr_critic = lr_critic, num_agents = num_agents, actor_dropout_p = actor_dropout_p, critic_dropout_p = critic_dropout_p, 
-                                                                    state_fc_input_dims = state_fc_input_dims[i], actor_state_fc_output_dims = actor_state_fc_output_dims, 
-                                                                    critic_state_fc_output_dims = critic_state_fc_output_dims, action_dims = action_dims, goal_fc_input_dims = goal_fc_input_dims[i], 
-                                                                    tau = tau, actor_action_noise = actor_action_noise, actor_action_range = actor_action_range))
+                                                                    lr_critic = lr_critic, optimizer = optimizer, actor_lr_scheduler = actor_lr_scheduler, critic_lr_scheduler = critic_lr_scheduler, 
+                                                                    num_agents = num_agents, actor_dropout_p = actor_dropout_p, critic_dropout_p = critic_dropout_p, state_fc_input_dims = state_fc_input_dims[i], 
+                                                                    actor_state_fc_output_dims = actor_state_fc_output_dims, critic_state_fc_output_dims = critic_state_fc_output_dims, action_dims = action_dims, 
+                                                                    goal_fc_input_dims = goal_fc_input_dims[i], tau = tau, actor_action_noise = actor_action_noise, actor_action_range = actor_action_range, 
+                                                                    *args, **kwargs))
             
             # update actor model_names attributes for checkpoints
             self.maddpgv2_mlp_agents_list[i].maddpgv2_mlp_actor.model_name = "maddpgv2_mlp_actor"
@@ -86,7 +91,7 @@ class maddpgv2_mlp:
             # create replay buffer
             self.replay_buffer = maddpgv2_mlp_replay_buffer(mem_size = mem_size, num_agents = num_agents, actions_dims = action_dims, actor_input_dims = state_fc_input_dims, 
                                                             critic_input_dims = state_fc_input_dims[i] * num_agents, goal_dims = goal_fc_input_dims[i], 
-                                                            num_of_add_goals = num_of_add_goals, goal_strategy = goal_strategy)
+                                                            num_of_add_goals = num_of_add_goals, goal_strategy = goal_strategy, waveform_threshold = waveform_threshold)
     
         # if test mode
         elif mode == 'test':
@@ -99,7 +104,7 @@ class maddpgv2_mlp:
             # create replay buffer
             self.replay_buffer = maddpgv2_mlp_replay_buffer(mem_size = mem_size, num_agents = num_agents, actions_dims = action_dims, actor_input_dims = state_fc_input_dims, 
                                                             critic_input_dims = state_fc_input_dims[i] * num_agents, goal_dims = goal_fc_input_dims[i], 
-                                                            num_of_add_goals = num_of_add_goals, goal_strategy = goal_strategy)
+                                                            num_of_add_goals = num_of_add_goals, goal_strategy = goal_strategy, waveform_threshold = waveform_threshold)
                 
             # load all models
             self.load_all_models()
@@ -126,10 +131,13 @@ class maddpgv2_mlp:
         
         """ function to apply gradients for maddpgv2 to learn from replay buffer """
 
+        # for anomaly detection
+        T.autograd.set_detect_anomaly(True)
+
         # doesnt not apply gradients if memory does not have at least batch_size number of logs
         if self.replay_buffer.org_replay_buffer.mem_counter < self.batch_size:
             
-            return np.nan, np.nan, np.nan, np.nan
+            return np.nan, np.nan, np.nan, np.nan, np.nan, np.nan
         
         # sample replay buffer
         actor_state_arr, actor_state_prime_arr, actor_action_arr, actor_goals_arr, critic_state_arr, critic_state_prime_arr, critic_goals_arr, rewards, terminal = \
@@ -166,6 +174,9 @@ class maddpgv2_mlp:
             # feed actor_state_prime tensor to target actor to obtain actions
             curr_target_actor_actions_prime = agent.maddpgv2_mlp_target_actor.forward(actor_state_prime)
             
+            # multiply by action_range
+            curr_target_actor_actions_prime = T.mul(curr_target_actor_actions_prime, self.action_range)
+
             # append actions to curr_target_actor_actions_prime_list
             curr_target_actor_actions_prime_list.append(curr_target_actor_actions_prime)
             
@@ -175,6 +186,9 @@ class maddpgv2_mlp:
             # feed actor_state tensor to actor to obtain actions
             curr_actor_actions = agent.maddpgv2_mlp_actor.forward(actor_state)
             
+            # multiply by action_range
+            curr_actor_actions = T.mul(curr_actor_actions, self.action_range)
+
             # append actions to curr_actor_actions_list
             curr_actor_actions_list.append(curr_actor_actions)
             
@@ -191,6 +205,8 @@ class maddpgv2_mlp:
         critic_loss_list = []
         actor_grad_norm_list = []
         critic_grad_norm_list = []
+        actor_learning_rate_list = []
+        critic_learning_rate_list = []
 
         # enumerate over agents
         for agent_index, agent in enumerate(self.maddpgv2_mlp_agents_list):
@@ -219,6 +235,10 @@ class maddpgv2_mlp:
             # critic model back propagation
             critic_loss.backward(retain_graph = True)
             
+            # visualise gradient flow
+            print("Critic Gradients: ")
+            plot_grad_flow(agent.maddpgv2_mlp_critic.named_parameters())
+
             # check if gradient clipping is needed
             if self.grad_clipping == True:
             
@@ -228,6 +248,9 @@ class maddpgv2_mlp:
             # apply gradients to critic model
             agent.maddpgv2_mlp_critic.optimizer.step()
             
+            # update critic learning rate scheduler
+            agent.maddpgv2_mlp_critic.scheduler.step()
+
             # set critic to eval mode to calculate actor loss
             agent.maddpgv2_mlp_critic.eval()
             
@@ -247,6 +270,10 @@ class maddpgv2_mlp:
             # actor model back propagation
             actor_loss.backward(retain_graph = True, inputs = list(agent.maddpgv2_mlp_actor.parameters()))
             
+            # visualise gradient flow
+            print("Actor Gradients: ")
+            plot_grad_flow(agent.maddpgv2_mlp_actor.named_parameters())
+
             # check if gradient clipping is needed
             if self.grad_clipping == True:
             
@@ -256,6 +283,9 @@ class maddpgv2_mlp:
             # apply gradients to actor model
             agent.maddpgv2_mlp_actor.optimizer.step()
             
+            # update critic learning rate scheduler
+            agent.maddpgv2_mlp_actor.scheduler.step()
+
             # increment of apply_grad_counter
             self.apply_grad_counter += 1 
             
@@ -289,14 +319,18 @@ class maddpgv2_mlp:
                 # append clipped gradients
                 actor_grad_norm_list.append(actor_grad_norm.item())
                 critic_grad_norm_list.append(critic_grad_norm.item())
-
+                print(actor_grad_norm.item())
             else:
 
                 # append 0.0 if there is no gradient clipping
                 actor_grad_norm_list.append(0.0)
                 critic_grad_norm_list.append(0.0)
 
-        return actor_loss_list, critic_loss_list, actor_grad_norm_list, critic_grad_norm_list
+            # obtain learning rate
+            actor_learning_rate_list.append(agent.maddpgv2_mlp_critic.scheduler.get_last_lr()[0])
+            critic_learning_rate_list.append(agent.maddpgv2_mlp_actor.scheduler.get_last_lr()[0])
+
+        return actor_loss_list, critic_loss_list, actor_grad_norm_list, critic_grad_norm_list, actor_learning_rate_list, critic_learning_rate_list
            
     def save_all_models(self):
         

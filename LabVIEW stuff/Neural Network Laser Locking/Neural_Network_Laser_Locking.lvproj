@@ -32,8 +32,8 @@
 			<Item Name="Scope Channel 2.ctl" Type="VI" URL="../lock-box.llb/Scope Channel 2.ctl"/>
 			<Item Name="Scope Channel 3.ctl" Type="VI" URL="../lock-box.llb/Scope Channel 3.ctl"/>
 			<Item Name="Scope Channel 4.ctl" Type="VI" URL="../lock-box.llb/Scope Channel 4.ctl"/>
-			<Item Name="Scope Horizontal.ctl" Type="VI" URL="../lock-box.llb/Scope Horizontal.ctl"/>
 			<Item Name="Scope Trigger.ctl" Type="VI" URL="../lock-box.llb/Scope Trigger.ctl"/>
+			<Item Name="Scope Horizontal.ctl" Type="VI" URL="../lock-box.llb/Scope Horizontal.ctl"/>
 			<Item Name="Scope Parameters.ctl" Type="VI" URL="../lock-box.llb/Scope Parameters.ctl"/>
 			<Item Name="Waveform Generator Control.ctl" Type="VI" URL="../lock-box.llb/Waveform Generator Control.ctl"/>
 			<Item Name="Waveform Generator Init.ctl" Type="VI" URL="../lock-box.llb/Waveform Generator Init.ctl"/>

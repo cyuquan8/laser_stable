@@ -8,8 +8,8 @@ from utils.nn import maddpgv2_mlp_actor_model, maddpgv2_mlp_critic_model
 
 class maddpgv2_mlp_agent:
     
-    def __init__(self, mode, scenario_name, training_name, discount_rate, lr_actor, lr_critic, num_agents, actor_dropout_p, critic_dropout_p, state_fc_input_dims, actor_state_fc_output_dims, 
-                 critic_state_fc_output_dims, action_dims, goal_fc_input_dims, tau, actor_action_noise, actor_action_range):
+    def __init__(self, mode, scenario_name, training_name, discount_rate, lr_actor, lr_critic, optimizer, actor_lr_scheduler, critic_lr_scheduler, num_agents, actor_dropout_p, critic_dropout_p, state_fc_input_dims, 
+                 actor_state_fc_output_dims, critic_state_fc_output_dims, action_dims, goal_fc_input_dims, tau, actor_action_noise, actor_action_range, *args, **kwargs):
         
         """ class constructor for maddpg agent attributes """
           
@@ -36,23 +36,25 @@ class maddpgv2_mlp_agent:
 
         # intialise actor model 
         self.maddpgv2_mlp_actor = maddpgv2_mlp_actor_model(model = "maddpgv2_mlp_actor", model_name = None, mode = mode, scenario_name = scenario_name, training_name = training_name, 
-                                                           learning_rate = self.lr_actor, dropout_p = actor_dropout_p, fc_input_dims = state_fc_input_dims + goal_fc_input_dims, 
-                                                           fc_output_dims = actor_state_fc_output_dims, tanh_actions_dims = action_dims)
+                                                           learning_rate = self.lr_actor, optimizer = optimizer, lr_scheduler = actor_lr_scheduler, dropout_p = actor_dropout_p, 
+                                                           fc_input_dims = state_fc_input_dims + goal_fc_input_dims, fc_output_dims = actor_state_fc_output_dims, tanh_actions_dims = action_dims, *args, **kwargs)
                          
         # intialise target actor model
         self.maddpgv2_mlp_target_actor = maddpgv2_mlp_actor_model(model = "maddpgv2_mlp_actor", model_name = None, mode = mode, scenario_name = scenario_name, training_name = training_name, 
-                                                                  learning_rate = self.lr_actor, dropout_p = actor_dropout_p, fc_input_dims = state_fc_input_dims + goal_fc_input_dims, 
-                                                                  fc_output_dims = actor_state_fc_output_dims, tanh_actions_dims = action_dims)
+                                                                  learning_rate = self.lr_actor, optimizer = optimizer, lr_scheduler = actor_lr_scheduler, dropout_p = actor_dropout_p, 
+                                                                  fc_input_dims = state_fc_input_dims + goal_fc_input_dims, fc_output_dims = actor_state_fc_output_dims, tanh_actions_dims = action_dims, *args, 
+                                                                  **kwargs)
 
         # intialise critic model
         self.maddpgv2_mlp_critic = maddpgv2_mlp_critic_model(model = "maddpgv2_mlp_critic", model_name = None, mode = mode, scenario_name = scenario_name, training_name = training_name, 
-                                                             learning_rate = self.lr_critic, dropout_p = critic_dropout_p, 
-                                                             fc_input_dims = (state_fc_input_dims + action_dims + goal_fc_input_dims) * num_agents, fc_output_dims = critic_state_fc_output_dims)
+                                                             learning_rate = self.lr_critic, optimizer = optimizer, lr_scheduler = critic_lr_scheduler, dropout_p = critic_dropout_p, 
+                                                             fc_input_dims = (state_fc_input_dims + action_dims + goal_fc_input_dims) * num_agents, fc_output_dims = critic_state_fc_output_dims, *args, **kwargs)
 
         # intialise target critic model
         self.maddpgv2_mlp_target_critic = maddpgv2_mlp_critic_model(model = "maddpgv2_mlp_critic", model_name = None, mode = mode, scenario_name = scenario_name, training_name = training_name, 
-                                                             learning_rate = self.lr_critic, dropout_p = critic_dropout_p, 
-                                                             fc_input_dims = (state_fc_input_dims + action_dims + goal_fc_input_dims) * num_agents, fc_output_dims = critic_state_fc_output_dims)
+                                                                    learning_rate = self.lr_critic, optimizer = optimizer, lr_scheduler = critic_lr_scheduler, dropout_p = critic_dropout_p, 
+                                                                    fc_input_dims = (state_fc_input_dims + action_dims + goal_fc_input_dims) * num_agents, fc_output_dims = critic_state_fc_output_dims, *args, 
+                                                                    **kwargs)
 
         # hard update target models' weights to online network to match initialised weights
         self.update_maddpgv2_mlp_target_models(tau = 1)
