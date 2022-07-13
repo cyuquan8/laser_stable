@@ -13,7 +13,8 @@ from utils.utils import dynamic_peak_finder
 
 class maddpgv2_lstm_replay_buffer:
     
-    def __init__(self, mem_size, num_agents, actions_dims, actor_input_dims, critic_input_dims, goal_dims, num_of_add_goals, goal_strategy, waveform_threshold):
+    def __init__(self, mem_size, num_agents, actions_dims, actor_input_dims, critic_input_dims, goal_dims, num_of_add_goals, goal_strategy, waveform_prominence, number_of_peaks_threshold, 
+                 reward_multiplier_constant):
         
         """ class constructor that initialises memory states attributes """
 
@@ -31,8 +32,14 @@ class maddpgv2_lstm_replay_buffer:
         # goal_strategy == "future" : replay with num_of_add_goals random states which come from the same episode as the transition being replayed and were observed after it
         self.goal_strategy = goal_strategy
 
-        # threshold for the waveform for the reward function
-        self.waveform_threshold = waveform_threshold
+        # prominence for waveform for the reward function
+        self.waveform_prominence = waveform_prominence
+
+        # number of peaks threshold
+        self.number_of_peaks_threshold = number_of_peaks_threshold
+
+        # reward multiplier constant
+        self.reward_multiplier_constant = reward_multiplier_constant
 
         # list to store additional replay buffers
         self.add_goals_replay_buffer_list = []
@@ -184,23 +191,25 @@ class maddpgv2_lstm_replay_buffer:
 
             # obtain goal for agent drones from given goal_index from org_replay_buffer
             # goal here for good agent is the time_elapsed in episode
-            goal = self.org_replay_buffer.actor_state_log_list[agent_index][goal_index][1:self.goal_dims + 1]
+            goal = self.org_replay_buffer.actor_state_log_list[agent_index][goal_index][3:self.goal_dims + 3]
+            norm_goal = np.linalg.norm(goal)
             goal = goal - goal.mean()
-            goal[abs(goal) <= self.waveform_threshold] = 0
-            goal = dynamic_peak_finder(goal)
+            goal = goal / max(abs(goal))
+            goal = dynamic_peak_finder(x = goal, prominence = self.waveform_prominence, number_of_peaks_threshold = self.number_of_peaks_threshold)
             
         # store goal in additional replay buffer
         self.add_goals_replay_buffer_list[add_goals_index].actor_goals_log_list[agent_index][time_step] = goal
         self.add_goals_replay_buffer_list[add_goals_index].critic_goals_log[time_step][agent_index * self.goal_dims: agent_index * self.goal_dims + self.goal_dims] = goal
 
         # obtain wf_state
-        wf_state = self.add_goals_replay_buffer_list[add_goals_index].actor_state_log_list[agent_index][time_step][1:self.goal_dims + 1]
+        wf_state = self.add_goals_replay_buffer_list[add_goals_index].actor_state_log_list[agent_index][time_step][3:self.goal_dims + 3]
+        norm_wf_state = np.linalg.norm(wf_state)
         wf_state = wf_state - wf_state.mean()
-        wf_state[abs(wf_state) <= self.waveform_threshold] = 0
+        wf_state = wf_state / max(abs(wf_state))
         wf_state = dynamic_peak_finder(wf_state)
 
         # correlate
-        corr_auto = np.correlate(wf_state, goal, "full")
+        corr_auto = np.correlate(wf_state, goal, "full") / (norm_wf_state * norm_goal) * self.reward_multiplier_constant
 
         # cal reward
         rew += np.sum(np.absolute(corr_auto))

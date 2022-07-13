@@ -7,55 +7,72 @@ import os
 import shutil
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.fft import fft
-from scipy.special import softmax
+from scipy.signal import find_peaks
 from matplotlib.lines import Line2D
 
-def dynamic_peak_finder(x):
+def dynamic_peak_finder(x, prominence, number_of_peaks_threshold):
 
-    """ function to isolate the maximum positive and negative peaks """
+    """ function to find peaks and remove minor peaks from a unit scaled waveform """
 
-    # remove duplicates
-    x_unique = np.unique(x)
+    # # remove duplicates
+    # x_unique = np.unique(x)
 
-    # sorted in ascending order
-    sorted_indices = np.argsort(x_unique)
+    # # sorted in ascending order
+    # sorted_indices = np.argsort(x_unique)
 
-    # obtain top 2 max and min peaks
-    if len(sorted_indices) == 1:
+    # # obtain top 2 max and min peaks
+    # if len(sorted_indices) == 1:
 
-        ind_max_1, ind_max_2, ind_min_1, ind_min_2 = sorted_indices[0], sorted_indices[0], sorted_indices[0], sorted_indices[0] 
+    #     ind_max_1, ind_max_2, ind_min_1, ind_min_2 = sorted_indices[0], sorted_indices[0], sorted_indices[0], sorted_indices[0] 
+
+    # else:
+
+    #     ind_max_1, ind_max_2, ind_min_1, ind_min_2 = sorted_indices[-1], sorted_indices[-2], sorted_indices[0], sorted_indices[1]
+    #     mid_max_1_2 = (x_unique[ind_max_1] + x_unique[ind_max_2]) / 2
+    #     mid_min_1_2 = (x_unique[ind_min_1] + x_unique[ind_min_2]) / 2
+
+    # # thresholding
+    # for i in range(len(x)):
+
+    #     if ((x[i] > 0) and (x[i] <= mid_max_1_2)) or ((x[i] < 0) and (x[i] >= mid_min_1_2)):
+
+    #         x[i] = 0
+    
+    # find peaks based on prominence range
+    peaks, _ = find_peaks(x, prominence = prominence)
+
+    # set temporary array of zeros
+    temp = np.zeros(x.shape)
+    
+    # check if number of peaks in waveform exceeds threshold
+    if len(peaks) > number_of_peaks_threshold:
+        
+        # return array of zeros
+        return temp
 
     else:
 
-        ind_max_1, ind_max_2, ind_min_1, ind_min_2 = sorted_indices[-1], sorted_indices[-2], sorted_indices[0], sorted_indices[1]
-        mid_max_1_2 = (x_unique[ind_max_1] + x_unique[ind_max_2]) / 2
-        mid_min_1_2 = (x_unique[ind_min_1] + x_unique[ind_min_2]) / 2
+        # place peak values of waveform on temporary array
+        np.put(temp, peaks, x[peaks])
 
-    # thresholding
-    for i in range(len(x)):
+    return temp
 
-        if ((x[i] > 0) and (x[i] <= mid_max_1_2)) or ((x[i] < 0) and (x[i] >= mid_min_1_2)):
-
-            x[i] = 0
-    
-    return x
-
-def reward(state, gt_state, waveform_threshold):
+def reward(state, gt_state, waveform_prominence, number_of_peaks_threshold, norm_goal, reward_multiplier_constant):
 
     """ function that generates reward for laser_stable environment """
     """ note that gt_state is already transformed """
 
     rew = 0
 
-    # obtain fft, threshold, softmaxed waveform state
-    wf_state = state[1:]
+    # waveform processing
+    wf_state = state[3:]
+    norm_wf_state = np.linalg.norm(wf_state)
     wf_state = wf_state - wf_state.mean()
-    wf_state[abs(wf_state) <= waveform_threshold] = 0
-    wf_state = dynamic_peak_finder(wf_state)
+    wf_state = wf_state / max(abs(wf_state))
+    wf_state = dynamic_peak_finder(x = wf_state, prominence = waveform_prominence, number_of_peaks_threshold = number_of_peaks_threshold)
 
     # correlate
-    corr_auto = np.correlate(wf_state, gt_state, "full")
+    corr_auto = np.correlate(wf_state, gt_state, "full") / (norm_wf_state * norm_goal) * reward_multiplier_constant
 
     # cal reward
     rew += np.sum(np.absolute(corr_auto))
@@ -68,7 +85,7 @@ def is_terminating(curr_time_step, terminal_time_step):
 
     return True if curr_time_step >= (terminal_time_step - 1) else False
 
-def terminating_condition(curr_state, gt_state, curr_time_step, terminal_time_step, error_threshold, waveform_threshold):
+def terminating_condition(curr_state, gt_state, curr_time_step, terminal_time_step, reward_threshold, waveform_prominence, number_of_peaks_threshold, norm_goal, reward_multiplier_constant):
 
     """ function that returns terminating condition for laser_stable environment """
     """ 0 for in progress, 1 for success, 2 for fail """
@@ -82,7 +99,7 @@ def terminating_condition(curr_state, gt_state, curr_time_step, terminal_time_st
     else:
 
         # check if absolute value of reward exceeds error threshold
-        if abs(reward(curr_state, gt_state, waveform_threshold)[0]) > error_threshold:
+        if abs(reward(curr_state, gt_state, waveform_prominence, number_of_peaks_threshold, norm_goal, reward_multiplier_constant)[0]) > reward_threshold:
 
             # return succeed
             return 1

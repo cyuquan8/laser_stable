@@ -40,16 +40,22 @@ SAVE_CSV_LOG												= True
 # env options
 NUMBER_OF_AGENTS 											= 1
 GOAL_DIMENSIONS												= 2000
-STATE_DIMENSIONS 											= GOAL_DIMENSIONS + 1
-ACTION_DIMENSIONS  											= 1
+STATE_DIMENSIONS 											= GOAL_DIMENSIONS + 3
+CURRENT_ACTION_DIMENSIONS									= 1
+RAMP_ACTION_DIMENSIONS										= 2
+ACTION_DIMENSIONS  											= CURRENT_ACTION_DIMENSIONS + RAMP_ACTION_DIMENSIONS
 ACTION_NOISE												= 1.0
 EXPONENTIAL_NOISE_DECAY										= True
 DECAY_CONSTANT												= 0.001
 ACTION_RANGE												= 1.0
-ERROR_THRESHOLD												= 10
-WAVEFORM_THRESHOLD 											= 0.15
+REWARD_THRESHOLD											= 10
+WAVEFORM_PROMINENCE 	 									= (0.2, None)
+REWARD_MULTIPLIER_CONSTANT									= 1000
+NUMBER_OF_PEAKS_THRESHOLD									= 3
 CURRENT_LOWER_BOUND											= 0.121
 CURRENT_UPPER_BOUND											= 0.125
+RAMP_LOWER_BOUND											= 1
+RAMP_UPPER_BOUND 											= 5
 
 # define hyperparameters for maddpgv2_mlp
 MADDPGV2_MLP_DISCOUNT_RATE 									= 0.99
@@ -125,7 +131,8 @@ def train_test(MODE):
 										   goal_fc_input_dims = [GOAL_DIMENSIONS for i in range(NUMBER_OF_AGENTS)], tau = MADDPGV2_MLP_TAU, actor_action_noise = ACTION_NOISE, 
 										   actor_action_range = ACTION_RANGE, mem_size = MADDPGV2_MLP_MEMORY_SIZE, batch_size = MADDPGV2_MLP_BATCH_SIZE, update_target = MADDPGV2_MLP_UPDATE_TARGET, 
 										   grad_clipping = MADDPGV2_MLP_GRADIENT_CLIPPING, grad_norm_clip = MADDPGV2_MLP_GRADIENT_NORM_CLIP, num_of_add_goals = MADDPGV2_MLP_ADDITIONAL_GOALS, 
-										   goal_strategy = MADDPGV2_MLP_GOAL_STRATEGY, waveform_threshold = WAVEFORM_THRESHOLD, actor_lr_scheduler_T_0 = MADDPGV2_MLP_ACTOR_COSINE_ANNEALING_RESTART_ITERATION, 
+										   goal_strategy = MADDPGV2_MLP_GOAL_STRATEGY, waveform_prominence = WAVEFORM_PROMINENCE, number_of_peaks_threshold = NUMBER_OF_PEAKS_THRESHOLD, 
+										   reward_multiplier_constant = REWARD_MULTIPLIER_CONSTANT, actor_lr_scheduler_T_0 = MADDPGV2_MLP_ACTOR_COSINE_ANNEALING_RESTART_ITERATION, 
 										   actor_lr_scheduler_eta_min = MADDPGV2_MLP_ACTOR_COSINE_ANNEALING_MINIMUM_LEARNING_RATE, critic_lr_scheduler_T_0 = MADDPGV2_MLP_CRITIC_COSINE_ANNEALING_RESTART_ITERATION, 
 										   critic_lr_scheduler_eta_min = MADDPGV2_MLP_CRITIC_COSINE_ANNEALING_MINIMUM_LEARNING_RATE)
 
@@ -145,7 +152,8 @@ def train_test(MODE):
 											 critic_lstm_num_layers = [MADDPGV2_LSTM_CRITIC_NUMBER_OF_LAYERS for i in range(NUMBER_OF_AGENTS)], tau = MADDPGV2_LSTM_TAU, actor_action_noise = ACTION_NOISE, 
 											 actor_action_range = ACTION_RANGE, mem_size = MADDPGV2_LSTM_MEMORY_SIZE, batch_size = MADDPGV2_LSTM_BATCH_SIZE, update_target = MADDPGV2_LSTM_UPDATE_TARGET, 
 											 grad_clipping = MADDPGV2_LSTM_GRADIENT_CLIPPING, grad_norm_clip = MADDPGV2_LSTM_GRADIENT_NORM_CLIP, num_of_add_goals = MADDPGV2_LSTM_ADDITIONAL_GOALS, 
-											 goal_strategy = MADDPGV2_LSTM_GOAL_STRATEGY, waveform_threshold = WAVEFORM_THRESHOLD, actor_lr_scheduler_T_0 = MADDPGV2_LSTM_ACTOR_COSINE_ANNEALING_RESTART_ITERATION, 
+											 goal_strategy = MADDPGV2_LSTM_GOAL_STRATEGY, waveform_prominence = WAVEFORM_PROMINENCE, number_of_peaks_threshold = NUMBER_OF_PEAKS_THRESHOLD, 
+											 reward_multiplier_constant = REWARD_MULTIPLIER_CONSTANT, actor_lr_scheduler_T_0 = MADDPGV2_LSTM_ACTOR_COSINE_ANNEALING_RESTART_ITERATION, 
 											 actor_lr_scheduler_eta_min = MADDPGV2_LSTM_ACTOR_COSINE_ANNEALING_MINIMUM_LEARNING_RATE, 
 											 critic_lr_scheduler_T_0 = MADDPGV2_LSTM_CRITIC_COSINE_ANNEALING_RESTART_ITERATION, 
 											 critic_lr_scheduler_eta_min = MADDPGV2_LSTM_CRITIC_COSINE_ANNEALING_MINIMUM_LEARNING_RATE)
@@ -176,17 +184,19 @@ def train_test(MODE):
 	if MODEL == "maddpgv2_mlp":
 
 		goal = MADDPGV2_MLP_GOAL
+		norm_goal = np.linalg.norm(goal)
 		goal = goal - goal.mean()
-		goal[abs(goal) <= WAVEFORM_THRESHOLD] = 0
-		goal = dynamic_peak_finder(MADDPGV2_MLP_GOAL)
+		goal = goal / max(abs(goal))
+		goal = dynamic_peak_finder(x = goal, prominence = WAVEFORM_PROMINENCE, number_of_peaks_threshold = NUMBER_OF_PEAKS_THRESHOLD)
 	
 	# set up agent actor goals for maddpgv2_lstm
 	elif MODEL == "maddpgv2_lstm":
 
 		goal = MADDPGV2_LSTM_GOAL
+		norm_goal = np.linalg.norm(goal)
 		goal = goal - goal.mean()
-		goal[abs(goal) <= WAVEFORM_THRESHOLD] = 0
-		goal = dynamic_peak_finder(MADDPGV2_LSTM_GOAL)
+		goal = goal / max(abs(goal))
+		goal = dynamic_peak_finder(x = goal, prominence = WAVEFORM_PROMINENCE, number_of_peaks_threshold = NUMBER_OF_PEAKS_THRESHOLD)
 
 	# iterate over number of episodes
 	for eps in range(1, NUMBER_OF_EPISODES + 1): 
@@ -301,17 +311,46 @@ def train_test(MODE):
 
 			# iterate over agents
 			for i in range(NUMBER_OF_AGENTS):
+				
+				# initialise empty list for labview actions
+				labview_actions_list = []
 
-				# check if implementing action
+				# check if implementing action for current 
 				if ((actor_states[i][0] + actions[i][0] * 0.001) <= CURRENT_LOWER_BOUND) or ((actor_states[i][0] + actions[i][0] * 0.001) >= CURRENT_UPPER_BOUND):
-
-					# save action of to bring to lower bound to csv for labview to open and implement if new current exceeds bound 
-					np.savetxt(fname = LABVIEW_LOG_DIRECTORY + "/episode_" + str(eps) + "_time_step_" + str(ep_time_step) + "_action.csv", X = np.array([0.0]), delimiter = ',', fmt = '%1.5f')
+					
+					# append action of 0 to csv for labview to open and implement if new current exceeds bound 
+					labview_actions_list.append(0.0)
 
 				else:
+					
+					# append current action from policy to csv for labview to open and implement
+					labview_actions_list.append(actions[i][0] * 0.001)
 
-					# save action from policy to csv for labview to open and implement
-					np.savetxt(fname = LABVIEW_LOG_DIRECTORY + "/episode_" + str(eps) + "_time_step_" + str(ep_time_step) + "_action.csv", X = np.array([actions[i][0] * 0.001]), delimiter = ',', fmt = '%1.5f')
+				# check if implementing action for ramp upper 
+				if (actor_states[i][1] + int(round(actions[i][1])) < RAMP_LOWER_BOUND) or (actor_states[i][1] + int(round(actions[i][1])) > RAMP_UPPER_BOUND):
+					
+					# append action of previous ramp upper to csv for labview to open and implement if new ramp upper exceeds bound 
+					labview_actions_list.append(0)
+
+				else:
+					
+					# append current ramp upper action from policy to csv for labview to open and implement
+					labview_actions_list.append(int(round(actions[i][1])))
+
+				# check if implementing action for ramp lower 
+				if (actor_states[i][2] + int(round(actions[i][2])) > - RAMP_LOWER_BOUND) or (actor_states[i][2] + int(round(actions[i][2])) < - RAMP_UPPER_BOUND):
+					
+					# append action of previous ramp lower to csv for labview to open and implement if new ramp upper exceeds bound 
+					labview_actions_list.append(0)
+
+				else:
+					
+					# append current ramp lower action from policy to csv for labview to open and implement
+					labview_actions_list.append(int(round(actions[i][2])))
+				
+				# save labview_actions
+				np.savetxt(fname = LABVIEW_LOG_DIRECTORY + "/episode_" + str(eps) + "_time_step_" + str(ep_time_step) + "_action.csv", 
+						   X = np.expand_dims(np.array(labview_actions_list), axis = 1), delimiter = ',', fmt = '%1.5f')
 
 			# check if previous action exists
 
@@ -367,10 +406,12 @@ def train_test(MODE):
 			for i in range(NUMBER_OF_AGENTS):
 
 				# update rewards, terminates and terminal_con
-				rewards[i], wf_state = reward(state = copy.deepcopy(actor_states_prime[i]), gt_state = goal, waveform_threshold = WAVEFORM_THRESHOLD)
+				rewards[i], wf_state = reward(state = copy.deepcopy(actor_states_prime[i]), gt_state = goal, waveform_prominence = WAVEFORM_PROMINENCE, number_of_peaks_threshold = NUMBER_OF_PEAKS_THRESHOLD, 
+											  norm_goal = norm_goal, reward_multiplier_constant = REWARD_MULTIPLIER_CONSTANT)
 				terminates[i] = is_terminating(curr_time_step = ep_time_step, terminal_time_step = EPISODE_TIME_STEP_LIMIT)
 				terminal_con[i] = terminating_condition(curr_state = copy.deepcopy(actor_states_prime[i]), gt_state = goal, curr_time_step = ep_time_step, terminal_time_step = EPISODE_TIME_STEP_LIMIT, 
-														error_threshold = ERROR_THRESHOLD, waveform_threshold = WAVEFORM_THRESHOLD)
+														reward_threshold = REWARD_THRESHOLD, waveform_prominence = WAVEFORM_PROMINENCE, number_of_peaks_threshold = NUMBER_OF_PEAKS_THRESHOLD, 
+														norm_goal = norm_goal, reward_multiplier_constant = REWARD_MULTIPLIER_CONSTANT)
 
 				# add to sum of rewards
 				sum_reward += rewards[i]

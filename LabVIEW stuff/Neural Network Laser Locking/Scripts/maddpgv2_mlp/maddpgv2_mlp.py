@@ -15,7 +15,7 @@ class maddpgv2_mlp:
     
     def __init__(self, mode, scenario_name, training_name, discount_rate, lr_actor, lr_critic, optimizer, actor_lr_scheduler, critic_lr_scheduler, num_agents, actor_dropout_p, critic_dropout_p, 
                  state_fc_input_dims, actor_state_fc_output_dims, critic_state_fc_output_dims, action_dims, goal_fc_input_dims, tau, actor_action_noise, actor_action_range, mem_size, batch_size, update_target, 
-                 grad_clipping, grad_norm_clip, num_of_add_goals, goal_strategy, waveform_threshold, *args, **kwargs):
+                 grad_clipping, grad_norm_clip, num_of_add_goals, goal_strategy, waveform_prominence, number_of_peaks_threshold, reward_multiplier_constant, *args, **kwargs):
             
         """ class constructor for attributes of the maddpg class (for multiple agents) """
         
@@ -91,7 +91,8 @@ class maddpgv2_mlp:
             # create replay buffer
             self.replay_buffer = maddpgv2_mlp_replay_buffer(mem_size = mem_size, num_agents = num_agents, actions_dims = action_dims, actor_input_dims = state_fc_input_dims, 
                                                             critic_input_dims = state_fc_input_dims[i] * num_agents, goal_dims = goal_fc_input_dims[i], 
-                                                            num_of_add_goals = num_of_add_goals, goal_strategy = goal_strategy, waveform_threshold = waveform_threshold)
+                                                            num_of_add_goals = num_of_add_goals, goal_strategy = goal_strategy, waveform_prominence = waveform_prominence, 
+                                                            number_of_peaks_threshold = number_of_peaks_threshold, reward_multiplier_constant = reward_multiplier_constant)
     
         # if test mode
         elif mode == 'test':
@@ -104,7 +105,8 @@ class maddpgv2_mlp:
             # create replay buffer
             self.replay_buffer = maddpgv2_mlp_replay_buffer(mem_size = mem_size, num_agents = num_agents, actions_dims = action_dims, actor_input_dims = state_fc_input_dims, 
                                                             critic_input_dims = state_fc_input_dims[i] * num_agents, goal_dims = goal_fc_input_dims[i], 
-                                                            num_of_add_goals = num_of_add_goals, goal_strategy = goal_strategy, waveform_threshold = waveform_threshold)
+                                                            num_of_add_goals = num_of_add_goals, goal_strategy = goal_strategy, waveform_prominence = waveform_prominence, 
+                                                            number_of_peaks_threshold = number_of_peaks_threshold, reward_multiplier_constant = reward_multiplier_constant)
                 
             # load all models
             self.load_all_models()

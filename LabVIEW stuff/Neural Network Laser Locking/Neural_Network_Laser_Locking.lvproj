@@ -26,6 +26,7 @@
 			<Property Name="NI.SortType" Type="Int">3</Property>
 			<Item Name="Globals" Type="Folder">
 				<Item Name="Episodes and Timesteps.vi" Type="VI" URL="../lock-box.llb/Episodes and Timesteps.vi"/>
+				<Item Name="Ramp Values.vi" Type="VI" URL="../lock-box.llb/Ramp Values.vi"/>
 			</Item>
 			<Item Name="main.vi" Type="VI" URL="../lock-box.llb/main.vi"/>
 			<Item Name="Scope Channel 1.ctl" Type="VI" URL="../lock-box.llb/Scope Channel 1.ctl"/>
@@ -100,6 +101,11 @@
 				<Item Name="Write Delimited Spreadsheet (I64).vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Write Delimited Spreadsheet (I64).vi"/>
 				<Item Name="Write Delimited Spreadsheet (DBL).vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Write Delimited Spreadsheet (DBL).vi"/>
 				<Item Name="Write Delimited Spreadsheet.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Write Delimited Spreadsheet.vi"/>
+				<Item Name="sub_Random U32.vi" Type="VI" URL="/&lt;vilib&gt;/numeric/sub_Random U32.vi"/>
+				<Item Name="Random Number (Range) U64.vi" Type="VI" URL="/&lt;vilib&gt;/numeric/Random Number (Range) U64.vi"/>
+				<Item Name="Random Number (Range) I64.vi" Type="VI" URL="/&lt;vilib&gt;/numeric/Random Number (Range) I64.vi"/>
+				<Item Name="Random Number (Range) DBL.vi" Type="VI" URL="/&lt;vilib&gt;/numeric/Random Number (Range) DBL.vi"/>
+				<Item Name="Random Number (Range).vi" Type="VI" URL="/&lt;vilib&gt;/numeric/Random Number (Range).vi"/>
 			</Item>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
