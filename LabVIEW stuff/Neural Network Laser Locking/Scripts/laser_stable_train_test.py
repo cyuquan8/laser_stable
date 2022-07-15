@@ -40,16 +40,16 @@ SAVE_CSV_LOG												= True
 # env options
 NUMBER_OF_AGENTS 											= 1
 GOAL_DIMENSIONS												= 2000
-STATE_DIMENSIONS 											= GOAL_DIMENSIONS + 3
 CURRENT_ACTION_DIMENSIONS									= 1
 RAMP_ACTION_DIMENSIONS										= 2
 ACTION_DIMENSIONS  											= CURRENT_ACTION_DIMENSIONS + RAMP_ACTION_DIMENSIONS
-ACTION_NOISE												= 1.0
+STATE_DIMENSIONS 											= GOAL_DIMENSIONS + ACTION_DIMENSIONS
+ACTION_NOISE												= 2.0
 EXPONENTIAL_NOISE_DECAY										= True
 DECAY_CONSTANT												= 0.001
 ACTION_RANGE												= 1.0
 REWARD_THRESHOLD											= 10
-WAVEFORM_PROMINENCE 	 									= (0.2, None)
+WAVEFORM_PROMINENCE 	 									= (0.5, None)
 REWARD_MULTIPLIER_CONSTANT									= 1000
 NUMBER_OF_PEAKS_THRESHOLD									= 3
 CURRENT_LOWER_BOUND											= 0.121
@@ -86,14 +86,14 @@ MADDPGV2_MLP_CRITIC_FC_OUTPUT_DIMS							= [512, 128]
 # define hyperparameters for maddpv2_lstm
 MADDPGV2_LSTM_DISCOUNT_RATE 								= 0.99
 MADDPGV2_LSTM_LEARNING_RATE_ACTOR 							= 0.0001
-MADDPGV2_LSTM_LEARNING_RATE_CRITIC 							= 0.00025
+MADDPGV2_LSTM_LEARNING_RATE_CRITIC 							= 0.0001
 MADDPGV2_LSTM_OPTIMIZER 									= "adam"
 MADDPGV2_LSTM_ACTOR_LEARNING_RATE_SCHEDULER 				= "cosine_annealing_with_warm_restarts"
 MADDPGV2_LSTM_ACTOR_COSINE_ANNEALING_RESTART_ITERATION		= 10000
 MADDPGV2_LSTM_ACTOR_COSINE_ANNEALING_MINIMUM_LEARNING_RATE	= 0.00005
 MADDPGV2_LSTM_CRITIC_LEARNING_RATE_SCHEDULER 				= "cosine_annealing_with_warm_restarts"
 MADDPGV2_LSTM_CRITIC_COSINE_ANNEALING_RESTART_ITERATION		= 10000
-MADDPGV2_LSTM_CRITIC_COSINE_ANNEALING_MINIMUM_LEARNING_RATE	= 0.000125
+MADDPGV2_LSTM_CRITIC_COSINE_ANNEALING_MINIMUM_LEARNING_RATE	= 0.00005
 MADDPGV2_LSTM_ACTOR_DROPOUT									= 0
 MADDPGV2_LSTM_CRITIC_DROPOUT								= 0
 MADDPGV2_LSTM_TAU 											= 0.01	  
@@ -110,10 +110,12 @@ MADDPGV2_LSTM_ACTOR_INPUT_SIZE								= 500
 MADDPGV2_LSTM_ACTOR_SEQUENCE_LENGTH							= math.ceil((STATE_DIMENSIONS + GOAL_DIMENSIONS) / MADDPGV2_LSTM_ACTOR_INPUT_SIZE)
 MADDPGV2_LSTM_ACTOR_HIDDEN_SIZE								= MADDPGV2_LSTM_ACTOR_INPUT_SIZE
 MADDPGV2_LSTM_ACTOR_NUMBER_OF_LAYERS						= 1
+MADDPGV2_LSTM_ACTOR_FC_OUTPUT_DIMENSIONS					= [512, 128]
 MADDPGV2_LSTM_CRITIC_INPUT_SIZE								= 500
 MADDPGV2_LSTM_CRITIC_SEQUENCE_LENGTH						= math.ceil((STATE_DIMENSIONS + GOAL_DIMENSIONS + ACTION_DIMENSIONS) * NUMBER_OF_AGENTS / MADDPGV2_LSTM_CRITIC_INPUT_SIZE)
 MADDPGV2_LSTM_CRITIC_HIDDEN_SIZE							= MADDPGV2_LSTM_CRITIC_INPUT_SIZE
 MADDPGV2_LSTM_CRITIC_NUMBER_OF_LAYERS						= 1
+MADDPGV2_LSTM_CRITIC_FC_OUTPUT_DIMENSIONS					= [512, 128]
 
 def train_test(MODE):
 	
@@ -145,11 +147,13 @@ def train_test(MODE):
 											 goal_dims = [GOAL_DIMENSIONS for i in range(NUMBER_OF_AGENTS)], actor_lstm_sequence_length = [MADDPGV2_LSTM_ACTOR_SEQUENCE_LENGTH for i in range(NUMBER_OF_AGENTS)], 
 											 actor_lstm_input_size = [MADDPGV2_LSTM_ACTOR_INPUT_SIZE for i in range(NUMBER_OF_AGENTS)], 
 											 actor_lstm_hidden_size = [MADDPGV2_LSTM_ACTOR_HIDDEN_SIZE for i in range(NUMBER_OF_AGENTS)], 
-											 actor_lstm_num_layers = [MADDPGV2_LSTM_ACTOR_NUMBER_OF_LAYERS for i in range(NUMBER_OF_AGENTS)], action_dims = ACTION_DIMENSIONS, 
+											 actor_lstm_num_layers = [MADDPGV2_LSTM_ACTOR_NUMBER_OF_LAYERS for i in range(NUMBER_OF_AGENTS)], 
+											 actor_fc_output_dims = [MADDPGV2_LSTM_ACTOR_FC_OUTPUT_DIMENSIONS for i in range(NUMBER_OF_AGENTS)], action_dims = ACTION_DIMENSIONS, 
 											 critic_lstm_sequence_length = [MADDPGV2_LSTM_CRITIC_SEQUENCE_LENGTH for i in range(NUMBER_OF_AGENTS)], 
 											 critic_lstm_input_size = [MADDPGV2_LSTM_CRITIC_INPUT_SIZE for i in range(NUMBER_OF_AGENTS)], 
 											 critic_lstm_hidden_size = [MADDPGV2_LSTM_CRITIC_HIDDEN_SIZE for i in range(NUMBER_OF_AGENTS)], 
-											 critic_lstm_num_layers = [MADDPGV2_LSTM_CRITIC_NUMBER_OF_LAYERS for i in range(NUMBER_OF_AGENTS)], tau = MADDPGV2_LSTM_TAU, actor_action_noise = ACTION_NOISE, 
+											 critic_lstm_num_layers = [MADDPGV2_LSTM_CRITIC_NUMBER_OF_LAYERS for i in range(NUMBER_OF_AGENTS)], 
+											 critic_fc_output_dims = [MADDPGV2_LSTM_CRITIC_FC_OUTPUT_DIMENSIONS for i in range(NUMBER_OF_AGENTS)], tau = MADDPGV2_LSTM_TAU, actor_action_noise = ACTION_NOISE, 
 											 actor_action_range = ACTION_RANGE, mem_size = MADDPGV2_LSTM_MEMORY_SIZE, batch_size = MADDPGV2_LSTM_BATCH_SIZE, update_target = MADDPGV2_LSTM_UPDATE_TARGET, 
 											 grad_clipping = MADDPGV2_LSTM_GRADIENT_CLIPPING, grad_norm_clip = MADDPGV2_LSTM_GRADIENT_NORM_CLIP, num_of_add_goals = MADDPGV2_LSTM_ADDITIONAL_GOALS, 
 											 goal_strategy = MADDPGV2_LSTM_GOAL_STRATEGY, waveform_prominence = WAVEFORM_PROMINENCE, number_of_peaks_threshold = NUMBER_OF_PEAKS_THRESHOLD, 
@@ -327,10 +331,15 @@ def train_test(MODE):
 					labview_actions_list.append(actions[i][0] * 0.001)
 
 				# check if implementing action for ramp upper 
-				if (actor_states[i][1] + int(round(actions[i][1])) < RAMP_LOWER_BOUND) or (actor_states[i][1] + int(round(actions[i][1])) > RAMP_UPPER_BOUND):
+				if actor_states[i][1] + int(round(actions[i][1])) < RAMP_LOWER_BOUND:
 					
 					# append action of previous ramp upper to csv for labview to open and implement if new ramp upper exceeds bound 
-					labview_actions_list.append(0)
+					labview_actions_list.append(RAMP_LOWER_BOUND - actor_states[i][1])
+				
+				elif actor_states[i][1] + int(round(actions[i][1])) > RAMP_UPPER_BOUND:
+
+					# append action of previous ramp upper to csv for labview to open and implement if new ramp upper exceeds bound 
+					labview_actions_list.append(RAMP_UPPER_BOUND - actor_states[i][1])
 
 				else:
 					
@@ -338,10 +347,15 @@ def train_test(MODE):
 					labview_actions_list.append(int(round(actions[i][1])))
 
 				# check if implementing action for ramp lower 
-				if (actor_states[i][2] + int(round(actions[i][2])) > - RAMP_LOWER_BOUND) or (actor_states[i][2] + int(round(actions[i][2])) < - RAMP_UPPER_BOUND):
+				if actor_states[i][2] + int(round(actions[i][2])) > - RAMP_LOWER_BOUND:
 					
 					# append action of previous ramp lower to csv for labview to open and implement if new ramp upper exceeds bound 
-					labview_actions_list.append(0)
+					labview_actions_list.append(- RAMP_LOWER_BOUND - actor_states[i][2])
+
+				elif actor_states[i][2] + int(round(actions[i][2])) < - RAMP_UPPER_BOUND:
+
+					# append action of previous ramp lower to csv for labview to open and implement if new ramp upper exceeds bound 
+					labview_actions_list.append(- RAMP_UPPER_BOUND - actor_states[i][2])
 
 				else:
 					

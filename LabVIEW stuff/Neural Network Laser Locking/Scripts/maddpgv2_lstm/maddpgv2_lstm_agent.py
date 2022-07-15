@@ -9,8 +9,8 @@ from utils.nn import maddpgv2_lstm_actor_model, maddpgv2_lstm_critic_model
 class maddpgv2_lstm_agent:
     
     def __init__(self, mode, scenario_name, training_name, discount_rate, lr_actor, lr_critic, optimizer, actor_lr_scheduler, critic_lr_scheduler, num_agents, actor_dropout_p, critic_dropout_p, 
-                 actor_lstm_sequence_length, actor_lstm_input_size, actor_lstm_hidden_size, actor_lstm_num_layers, action_dims, critic_lstm_sequence_length, critic_lstm_input_size, critic_lstm_hidden_size, 
-                 critic_lstm_num_layers, tau, actor_action_noise, actor_action_range, *args, **kwargs):
+                 actor_lstm_sequence_length, actor_lstm_input_size, actor_lstm_hidden_size, actor_lstm_num_layers, actor_fc_output_dims, action_dims, critic_lstm_sequence_length, critic_lstm_input_size, 
+                 critic_lstm_hidden_size, critic_lstm_num_layers, critic_fc_output_dims, tau, actor_action_noise, actor_action_range, *args, **kwargs):
         
         """ class constructor for maddpg agent attributes """
           
@@ -39,25 +39,25 @@ class maddpgv2_lstm_agent:
         self.maddpgv2_lstm_actor = maddpgv2_lstm_actor_model(model = "maddpgv2_lstm_actor", model_name = None, mode = mode, scenario_name = scenario_name, training_name = training_name, 
                                                              learning_rate = self.lr_actor, optimizer = optimizer, lr_scheduler = actor_lr_scheduler, dropout_p = actor_dropout_p, 
                                                              lstm_sequence_length = actor_lstm_sequence_length, lstm_input_size = actor_lstm_input_size, lstm_hidden_size = actor_lstm_hidden_size, 
-                                                             lstm_num_layers = actor_lstm_num_layers, tanh_actions_dims = action_dims, *args, **kwargs)
+                                                             lstm_num_layers = actor_lstm_num_layers, actor_fc_output_dims = actor_fc_output_dims, actions_dims = action_dims, *args, **kwargs)
                          
         # intialise target actor model
         self.maddpgv2_lstm_target_actor = maddpgv2_lstm_actor_model(model = "maddpgv2_lstm_actor", model_name = None, mode = mode, scenario_name = scenario_name, training_name = training_name, 
                                                                     learning_rate = self.lr_actor, optimizer = optimizer, lr_scheduler = actor_lr_scheduler, dropout_p = actor_dropout_p, 
                                                                     lstm_sequence_length = actor_lstm_sequence_length, lstm_input_size = actor_lstm_input_size, lstm_hidden_size = actor_lstm_hidden_size, 
-                                                                    lstm_num_layers = actor_lstm_num_layers, tanh_actions_dims = action_dims, *args, **kwargs)
+                                                                    lstm_num_layers = actor_lstm_num_layers, actor_fc_output_dims = actor_fc_output_dims, actions_dims = action_dims, *args, **kwargs)
 
         # intialise critic model
         self.maddpgv2_lstm_critic = maddpgv2_lstm_critic_model(model = "maddpgv2_lstm_critic", model_name = None, mode = mode, scenario_name = scenario_name, training_name = training_name, 
                                                                learning_rate = self.lr_critic, optimizer = optimizer, lr_scheduler = critic_lr_scheduler, dropout_p = critic_dropout_p, 
                                                                lstm_sequence_length = critic_lstm_sequence_length, lstm_input_size = critic_lstm_input_size, lstm_hidden_size = critic_lstm_hidden_size, 
-                                                               lstm_num_layers = critic_lstm_num_layers, *args, **kwargs)
+                                                               lstm_num_layers = critic_lstm_num_layers, critic_fc_output_dims = critic_fc_output_dims, *args, **kwargs)
 
         # intialise target critic model
         self.maddpgv2_lstm_target_critic = maddpgv2_lstm_critic_model(model = "maddpgv2_lstm_critic", model_name = None, mode = mode, scenario_name = scenario_name, training_name = training_name, 
                                                                       learning_rate = self.lr_critic, optimizer = optimizer, lr_scheduler = critic_lr_scheduler, dropout_p = critic_dropout_p, 
                                                                       lstm_sequence_length = critic_lstm_sequence_length, lstm_input_size = critic_lstm_input_size, lstm_hidden_size = critic_lstm_hidden_size, 
-                                                                      lstm_num_layers = critic_lstm_num_layers, *args, **kwargs)
+                                                                      lstm_num_layers = critic_lstm_num_layers, critic_fc_output_dims = critic_fc_output_dims, *args, **kwargs)
 
         # hard update target models' weights to online network to match initialised weights
         self.update_maddpgv2_lstm_target_models(tau = 1)

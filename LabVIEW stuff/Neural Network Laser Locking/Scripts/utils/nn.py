@@ -401,7 +401,7 @@ class maddpgv2_lstm_actor_model(nn.Module):
     """ class to build model for MADDPGv2 """
     
     def __init__(self, model, model_name, mode, scenario_name, training_name, learning_rate, optimizer, lr_scheduler, dropout_p, lstm_sequence_length, lstm_input_size, lstm_hidden_size, lstm_num_layers, 
-                 tanh_actions_dims, *args, **kwargs):
+                 actor_fc_output_dims, actions_dims, *args, **kwargs):
         
         """ class constructor for attributes for the actor model """
         
@@ -450,9 +450,12 @@ class maddpgv2_lstm_actor_model(nn.Module):
         self.actor_lstm = T.nn.LSTM(input_size = lstm_input_size, hidden_size = lstm_hidden_size, num_layers = lstm_num_layers, bias = True, batch_first = True, dropout = dropout_p, 
                                     bidirectional = kwargs.get("actor_lstm_bidirectional", False), proj_size = 0)
 
+        # fully connected layers with relu activation post lstm
+        self.actor_fc_layers = nn_layers(input_channels = lstm_sequence_length * lstm_input_size * 2 if kwargs.get("actor_lstm_bidirectional", False) == True else lstm_sequence_length * lstm_input_size, 
+                                         block = fc_block, output_channels = actor_fc_output_dims, activation_func = 'relu', dropout_p = dropout_p, weight_initialisation = "kaiming_uniform")
+
         # final fc_blocks for actions with no activation function
-        self.actions_layer = fc_block(input_shape = lstm_sequence_length * lstm_input_size * 2 if kwargs.get("actor_lstm_bidirectional", False) == True else lstm_sequence_length * lstm_input_size, 
-                                      output_shape = tanh_actions_dims, activation_func = "none", dropout_p = dropout_p, weight_initialisation = "default")
+        self.actions_layer = fc_block(input_shape = actor_fc_output_dims[-1], output_shape = actions_dims, activation_func = "none", dropout_p = dropout_p, weight_initialisation = "default")
         
         # check optimizer
         if optimizer == "adam":
@@ -499,8 +502,11 @@ class maddpgv2_lstm_actor_model(nn.Module):
         # change shape of x from (batch size, sequence length, hidden_size) to (batch_size, sequence length * hidden_size)
         # ignore h_n, c_n
         x = x[0].reshape(size[0], -1)
-       
-        # actor_lstm --> actions_layer
+
+        # actor_lstm --> actor_fc_layers
+        x = self.actor_fc_layers(x)
+
+        # actor_fc_layers --> actions_layer
         actions = self.actions_layer(x)
         
         return actions
@@ -510,7 +516,7 @@ class maddpgv2_lstm_critic_model(nn.Module):
     """ class to build model for MADDPGv2 """
     
     def __init__(self, model, model_name, mode, scenario_name, training_name, learning_rate, optimizer, lr_scheduler, dropout_p, lstm_sequence_length, lstm_input_size, lstm_hidden_size, lstm_num_layers, 
-                 *args, **kwargs):
+                 critic_fc_output_dims, *args, **kwargs):
         
         """ class constructor for attributes for the model """
         
@@ -559,9 +565,12 @@ class maddpgv2_lstm_critic_model(nn.Module):
         self.critic_lstm = T.nn.LSTM(input_size = lstm_input_size, hidden_size = lstm_hidden_size, num_layers = lstm_num_layers, bias = True, batch_first = True, dropout = dropout_p, 
                                      bidirectional = kwargs.get("critic_lstm_bidirectional", False), proj_size = 0)
 
+        # fully connected layers with relu activation post lstm
+        self.critic_fc_layers = nn_layers(input_channels = lstm_sequence_length * lstm_input_size * 2 if kwargs.get("actor_lstm_bidirectional", False) == True else lstm_sequence_length * lstm_input_size, 
+                                         block = fc_block, output_channels = critic_fc_output_dims, activation_func = 'relu', dropout_p = dropout_p, weight_initialisation = "kaiming_uniform")
+
         # final fc_block for Q value output w/o activation function
-        self.q_layer = fc_block(input_shape = lstm_sequence_length * lstm_input_size * 2 if kwargs.get("critic_lstm_bidirectional", False) == True else lstm_sequence_length * lstm_input_size, output_shape = 1, 
-                                activation_func = "none", dropout_p = dropout_p, weight_initialisation = "default")
+        self.q_layer = fc_block(input_shape = critic_fc_output_dims[-1], output_shape = 1, activation_func = "none", dropout_p = dropout_p, weight_initialisation = "default")
             
         # check optimizer
         if optimizer == "adam":
@@ -612,6 +621,9 @@ class maddpgv2_lstm_critic_model(nn.Module):
         # change shape of x from (batch size, sequence length, hidden_size) to (batch_size, sequence length * hidden_size)
         # ignore h_n, c_n
         conc = conc[0].reshape(size[0], -1)
+
+        # critic_lstm --> critic_fc_layers
+        conc = self.critic_fc_layers(conc)
 
         # critic_lstm --> q value
         q = self.q_layer(conc)

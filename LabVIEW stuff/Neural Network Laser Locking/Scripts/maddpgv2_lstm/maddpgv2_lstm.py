@@ -14,9 +14,9 @@ from utils.utils import plot_grad_flow
 class maddpgv2_lstm:
     
     def __init__(self, mode, scenario_name, training_name, discount_rate, lr_actor, lr_critic, optimizer, actor_lr_scheduler, critic_lr_scheduler, num_agents, actor_dropout_p, critic_dropout_p, state_dims, 
-                 goal_dims, actor_lstm_sequence_length, actor_lstm_input_size, actor_lstm_hidden_size, actor_lstm_num_layers, action_dims, critic_lstm_sequence_length, critic_lstm_input_size, 
-                 critic_lstm_hidden_size, critic_lstm_num_layers, tau, actor_action_noise, actor_action_range, mem_size, batch_size, update_target, grad_clipping, grad_norm_clip, num_of_add_goals, goal_strategy, 
-                 waveform_prominence, number_of_peaks_threshold, reward_multiplier_constant, *args, **kwargs):
+                 goal_dims, actor_lstm_sequence_length, actor_lstm_input_size, actor_lstm_hidden_size, actor_lstm_num_layers, actor_fc_output_dims, action_dims, critic_lstm_sequence_length, critic_lstm_input_size, 
+                 critic_lstm_hidden_size, critic_lstm_num_layers, critic_fc_output_dims, tau, actor_action_noise, actor_action_range, mem_size, batch_size, update_target, grad_clipping, grad_norm_clip, 
+                 num_of_add_goals, goal_strategy, waveform_prominence, number_of_peaks_threshold, reward_multiplier_constant, *args, **kwargs):
             
         """ class constructor for attributes of the maddpg class (for multiple agents) """
         
@@ -53,9 +53,10 @@ class maddpgv2_lstm:
                                                                       lr_critic = lr_critic, optimizer = optimizer, actor_lr_scheduler = actor_lr_scheduler, critic_lr_scheduler = critic_lr_scheduler,
                                                                       num_agents = num_agents, actor_dropout_p = actor_dropout_p, critic_dropout_p = critic_dropout_p, 
                                                                       actor_lstm_sequence_length = actor_lstm_sequence_length[i], actor_lstm_input_size = actor_lstm_input_size[i], 
-                                                                      actor_lstm_hidden_size = actor_lstm_hidden_size[i], actor_lstm_num_layers = actor_lstm_num_layers[i], action_dims = action_dims, 
-                                                                      critic_lstm_sequence_length = critic_lstm_sequence_length[i], critic_lstm_input_size = critic_lstm_input_size[i], 
-                                                                      critic_lstm_hidden_size = critic_lstm_hidden_size[i], critic_lstm_num_layers = critic_lstm_num_layers[i], tau = tau, 
+                                                                      actor_lstm_hidden_size = actor_lstm_hidden_size[i], actor_lstm_num_layers = actor_lstm_num_layers[i], 
+                                                                      actor_fc_output_dims = actor_fc_output_dims[i], action_dims = action_dims, critic_lstm_sequence_length = critic_lstm_sequence_length[i], 
+                                                                      critic_lstm_input_size = critic_lstm_input_size[i], critic_lstm_hidden_size = critic_lstm_hidden_size[i], 
+                                                                      critic_lstm_num_layers = critic_lstm_num_layers[i], critic_fc_output_dims = critic_fc_output_dims[i], tau = tau, 
                                                                       actor_action_noise = actor_action_noise, actor_action_range = actor_action_range, *args, **kwargs))
             
             # update actor model_names attributes for checkpoints
@@ -244,9 +245,9 @@ class maddpgv2_lstm:
             # critic model back propagation
             critic_loss.backward(retain_graph = True)
             
-            # visualise gradient flow
-            print("Critic Gradients: ")
-            plot_grad_flow(agent.maddpgv2_lstm_critic.named_parameters())
+            # # visualise gradient flow
+            # print("Critic Gradients: ")
+            # plot_grad_flow(agent.maddpgv2_lstm_critic.named_parameters())
 
             # check if gradient clipping is needed
             if self.grad_clipping == True:
@@ -279,9 +280,9 @@ class maddpgv2_lstm:
             # actor model back propagation
             actor_loss.backward(retain_graph = True, inputs = list(agent.maddpgv2_lstm_actor.parameters()))
             
-            # visualise gradient flow
-            print("Actor Gradients: ")
-            plot_grad_flow(agent.maddpgv2_lstm_actor.named_parameters())
+            # # visualise gradient flow
+            # print("Actor Gradients: ")
+            # plot_grad_flow(agent.maddpgv2_lstm_actor.named_parameters())
 
             # check if gradient clipping is needed
             if self.grad_clipping == True:
